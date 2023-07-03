@@ -1,12 +1,14 @@
+import { Routes, Route } from "react-router-dom";
+
 import './App.css';
 import {colors} from '../src/Global'
+import { HomePage } from './Container/HomePage';
  
 function App() {
   return (
-    <div className="App">
-      <h1 style={{color: colors.blackColor}} >This is NFT page</h1>
-         
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage/>}/>
+    </Routes>
   );
 }
 
