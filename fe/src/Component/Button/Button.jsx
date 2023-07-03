@@ -1,26 +1,28 @@
 import styled from "styled-components";
 
 const ButtonStyled = styled.div`
-  display: flex;
-  height: 60px;
-  padding: 0px 50px;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  max-width: fit-content;
-  border: ${(props) => (props.boderColor ? props.border : "none")};
-  border-radius: 40px;
-  background: ${(props) => props.bgColor};
-  font-weight: 500;
-  line-height: 21px;
-  color: ${(props) => props.textColor};
-  font-size: ${(props) => props.fontSize};
-  margin-right: ${(props) => (props.mr ? `${props.mr}` : "unset")};
+  button {
+    display: flex;
+    height: 60px;
+    padding: 0px 50px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    max-width: fit-content;
+    border: ${(props) => (props.boderColor ? props.border : "none")};
+    border-radius: ${(props) => props.borderRadius};
+    background: ${(props) => props.bgColor};
+    font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
+    line-height: 21px;
+    color: ${(props) => props.textColor};
+    font-size: ${(props) => props.fontSize};
+    margin-right: ${(props) => (props.mr ? `${props.mr}` : "unset")};
+  }
 `;
 
-const ButtonLargeStyled = styled.div``
+const ButtonLargeStyled = styled.div``;
 
-const ButtonSmallStyled = styled.div``
+const ButtonSmallStyled = styled.div``;
 
 const Button = ({
   textColor,
@@ -31,16 +33,13 @@ const Button = ({
   content,
   img,
   borderRadius,
+  fontWeight,
   type,
 }) => {
   if (type === "large") {
-    return (
-      <ButtonLargeStyled></ButtonLargeStyled>
-    )
+    return <ButtonLargeStyled></ButtonLargeStyled>;
   } else if (type === "small") {
-    return (
-      <ButtonSmallStyled></ButtonSmallStyled>
-    )
+    return <ButtonSmallStyled></ButtonSmallStyled>;
   } else {
     return (
       <ButtonStyled
@@ -52,9 +51,12 @@ const Button = ({
         img={img}
         borderRadius={borderRadius}
         type={type}
+        fontWeight ={fontWeight}
       >
-        <img src={img} alt="" />
-        <span>{content}</span>
+        <button>
+          <img src={img} alt="" />
+          <span>{content}</span>
+        </button>
       </ButtonStyled>
     );
   }

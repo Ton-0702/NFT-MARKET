@@ -1,7 +1,11 @@
 import styled from "styled-components";
+
 import { Button } from "../../Component/Button";
+import { Card } from "Component/Card";
 
 import rocketIcon from "../../Assets/HomePage/RocketIcon.svg";
+import banner1 from "../../Assets/HomePage/Banner1.svg";
+import avatar1 from "../../Assets/HomePage/Avatar1.svg";
 
 const HomePageStyled = styled.div`
   .container {
@@ -11,7 +15,12 @@ const HomePageStyled = styled.div`
 `;
 
 const BannerStyled = styled.div`
-  display: flex;
+  margin-bottom: 160px;
+
+  .container {
+    display: flex;
+    column-gap: 30px;
+  }
 
   .banner_left {
     width: 50%;
@@ -72,6 +81,26 @@ const BannerStyled = styled.div`
   }
 `;
 
+const TrendingCollectionStyled = styled.div`
+  .header_trending_collection h3 {
+    color: #fff;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    text-transform: capitalize;
+  }
+
+  .header_trending_collection p {
+    color: #fff;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%;
+    text-transform: capitalize;
+  }
+`;
+
 const HomePage = () => {
   return (
     <HomePageStyled>
@@ -89,6 +118,8 @@ const HomePage = () => {
               borderRadius={"20px"}
               bgColor={"#A259FF"}
               textColor={"#FFF"}
+              fontSize={"16px"}
+              fontWeight={"600"}
             ></Button>
             <div className="statistical">
               <div className="statistical_left">
@@ -105,9 +136,26 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="banner_right"></div>
+          <div className="banner_right">
+            <Card
+              title={"Space Walking"}
+              img_product={banner1}
+              bgColor={"#3B3B3B"}
+              borderRadius={"20px"}
+              img_artist={avatar1}
+              name_artist={"Animakid"}
+            ></Card>
+          </div>
         </div>
       </BannerStyled>
+      <TrendingCollectionStyled>
+        <div className="container">
+          <div className="header_trending_collection">
+            <h3>Trending Collection</h3>
+            <p>Checkout our weekly updated trending collection.</p>
+          </div>
+        </div>
+      </TrendingCollectionStyled>
     </HomePageStyled>
   );
 };
