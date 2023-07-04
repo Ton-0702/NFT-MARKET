@@ -8,7 +8,6 @@ const ButtonStyled = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
-    max-width: fit-content;
     border: ${(props) => (props.boderColor ? props.border : "none")};
     border-radius: ${(props) => props.borderRadius};
     background: ${(props) => props.bgColor};

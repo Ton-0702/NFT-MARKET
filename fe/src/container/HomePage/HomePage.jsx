@@ -12,14 +12,32 @@ import trending3 from "../../assets/HomePage/Trending3.svg";
 import trending4 from "../../assets/HomePage/Trending4.svg";
 import trending5 from "../../assets/HomePage/Trending5.svg";
 
-
 const HomePageStyled = styled.div`
+  padding: 30px;
+
   .container {
     width: 1050px;
     margin: 0px auto;
   }
+
+  @media (max-width: 480px) {
+    .container {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .container {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) and (min-width: 992px) {
+  }
 `;
- 
+
 const BannerStyled = styled.div`
   margin-bottom: 160px;
 
@@ -43,7 +61,6 @@ const BannerStyled = styled.div`
     line-height: 110%;
     text-transform: capitalize;
     display: flex;
-    width: 510px;
     flex-direction: column;
     justify-content: center;
     flex: 1 0 0;
@@ -85,6 +102,76 @@ const BannerStyled = styled.div`
   .banner_right {
     width: 50%;
   }
+
+  @media (max-width: 480px) {
+    margin-bottom: 80px;
+    /* width: max-content; */
+    .container {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .banner_left {
+      width: unset;
+      margin-bottom: 40px;
+    }
+
+    .banner_left h1 {
+      font-size: 28px;
+    }
+
+    .banner_left p {
+      font-size: 16px;
+    }
+
+    .banner_left button {
+      width: 100%;
+    }
+
+    .banner_left .statistical {
+      justify-content: space-between;
+      column-gap: unset;
+    }
+
+    .banner_left .statistical h4 {
+      font-size: 22px;
+    }
+
+    .banner_left .statistical span {
+      font-size: 16px;
+    }
+
+    .banner_right {
+      width: unset;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    margin-bottom: 120px;
+    .container {
+      width: 100%;
+    }
+
+    .banner_left h1 {
+      font-size: 38px;
+    }
+
+    .banner_left .statistical {
+      justify-content: space-between;
+      column-gap: 40px;
+    }
+
+    .banner_left .statistical h4 {
+      font-size: 22px;
+    }
+
+    .banner_left .statistical span {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 769px) and (min-width: 992px) {
+  }
 `;
 
 const TrendingCollectionStyled = styled.div`
@@ -106,10 +193,41 @@ const TrendingCollectionStyled = styled.div`
     text-transform: capitalize;
   }
 
-  .body_trending_collection{
+  .body_trending_collection {
     display: grid;
     grid-template-columns: auto auto auto;
     justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    .body_trending_collection {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .header_trending_collection{
+      margin-bottom: 40px;
+    }
+
+    .header_trending_collection h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .header_trending_collection p {
+      font-size: 16px;
+    }
+
+    .body_trending_collection {
+      grid-template-columns: auto auto;
+      gap:30px;
+    }
+  }
+
+  @media (min-width: 769px) and (min-width: 992px) {
   }
 `;
 
@@ -157,7 +275,6 @@ const HomePage = () => {
               img_artist={avatar1}
               name_artist={"Animakid"}
             ></Card>
-            
           </div>
         </div>
       </BannerStyled>
@@ -168,9 +285,33 @@ const HomePage = () => {
             <p>Checkout our weekly updated trending collection.</p>
           </div>
           <div className="body_trending_collection">
-            <Card img_product={[trending1, trending2, trending3]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
-            <Card img_product={[trending1, trending2, trending3, trending4, trending5]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
-            <Card img_product={[trending1, trending2, trending3, trending4]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
+            <Card
+              img_product={[trending1, trending2, trending3]}
+              img_artist={avatar1}
+              type={"TrendingCollection"}
+              name_artist={"MrFox"}
+              title={"DSGN Animals"}
+            ></Card>
+            <Card
+              img_product={[
+                trending1,
+                trending2,
+                trending3,
+                trending4,
+                trending5,
+              ]}
+              img_artist={avatar1}
+              type={"TrendingCollection"}
+              name_artist={"MrFox"}
+              title={"DSGN Animals"}
+            ></Card>
+            <Card
+              img_product={[trending1, trending2, trending3, trending4]}
+              img_artist={avatar1}
+              type={"TrendingCollection"}
+              name_artist={"MrFox"}
+              title={"DSGN Animals"}
+            ></Card>
           </div>
         </div>
       </TrendingCollectionStyled>

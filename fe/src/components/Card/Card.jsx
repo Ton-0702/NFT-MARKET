@@ -3,8 +3,8 @@ import React from "react";
 import ReactHtmlParser from "react-html-parser";
 
 const CardStyled = styled.div`
-  width: 510px;
-  height: 505px;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   background: ${(props) => props.bgColor};
@@ -18,6 +18,7 @@ const CardStyled = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 20px 20px 0 0;
   }
 
   .body_cart {
@@ -56,7 +57,7 @@ const CardSmallStyled = styled.div``;
 
 const CardTrendingCollectionStyled = styled.div`
   width: 330px;
-  height: 525px;
+  height: auto;
   display: flex;
   flex-direction: column;
   background: ${(props) => props.bgColor};
@@ -135,6 +136,10 @@ const CardTrendingCollectionStyled = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;
 
