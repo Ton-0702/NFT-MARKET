@@ -14,7 +14,7 @@ const HomePageStyled = styled.div`
     margin: 0px auto;
   }
 `;
-
+ 
 const BannerStyled = styled.div`
   margin-bottom: 160px;
 

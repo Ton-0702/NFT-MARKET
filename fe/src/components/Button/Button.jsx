@@ -19,7 +19,7 @@ const ButtonStyled = styled.div`
     margin-right: ${(props) => (props.mr ? `${props.mr}` : "unset")};
   }
 `;
-
+ 
 const ButtonLargeStyled = styled.div``;
 
 const ButtonSmallStyled = styled.div``;

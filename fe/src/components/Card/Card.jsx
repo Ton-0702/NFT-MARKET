@@ -10,7 +10,7 @@ const CardStyled = styled.div`
 
   .header_cart {
     height: 80%;
-  }
+  } 
 
   .header_cart img {
     width: 100%;
