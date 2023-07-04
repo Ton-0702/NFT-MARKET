@@ -1,8 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import './App.css';
-import {colors} from '../src/Global'
-import { HomePage } from './Container/HomePage';
+import { HomePage } from './container/HomePage';
  
 function App() {
   return (

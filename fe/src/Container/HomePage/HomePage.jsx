@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-import { Button } from "../../Component/Button";
-import { Card } from "Component/Card";
+import { Card } from "components/Card";
+import { Button } from "components/Button";
 
-import rocketIcon from "../../Assets/HomePage/RocketIcon.svg";
-import banner1 from "../../Assets/HomePage/Banner1.svg";
-import avatar1 from "../../Assets/HomePage/Avatar1.svg";
+import rocketIcon from "../../assets/HomePage/RocketIcon.svg";
+import banner1 from "../../assets/HomePage/Banner1.svg";
+import avatar1 from "../../assets/HomePage/Avatar1.svg";
+
 
 const HomePageStyled = styled.div`
   .container {
@@ -153,6 +154,9 @@ const HomePage = () => {
           <div className="header_trending_collection">
             <h3>Trending Collection</h3>
             <p>Checkout our weekly updated trending collection.</p>
+          </div>
+          <div className="body_trending_collection">
+            <Card img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
           </div>
         </div>
       </TrendingCollectionStyled>
