@@ -4,7 +4,7 @@ const ButtonStyled = styled.div`
   button {
     display: flex;
     height: 60px;
-    padding: 0px 50px;
+    padding: ${(props) => props.padding};
     justify-content: center;
     align-items: center;
     gap: 12px;
@@ -19,7 +19,7 @@ const ButtonStyled = styled.div`
     margin-right: ${(props) => (props.mr ? `${props.mr}` : "unset")};
   }
 `;
- 
+
 const ButtonLargeStyled = styled.div``;
 
 const ButtonSmallStyled = styled.div``;
@@ -35,6 +35,8 @@ const Button = ({
   borderRadius,
   fontWeight,
   type,
+  padding,
+  onSubmit,
 }) => {
   if (type === "large") {
     return <ButtonLargeStyled></ButtonLargeStyled>;
@@ -51,9 +53,11 @@ const Button = ({
         img={img}
         borderRadius={borderRadius}
         type={type}
-        fontWeight ={fontWeight}
+        fontWeight={fontWeight}
+        padding={padding}
+        onsubmit={onSubmit}
       >
-        <button>
+        <button onsubmit={onSubmit}>
           <img src={img} alt="" />
           <span>{content}</span>
         </button>
