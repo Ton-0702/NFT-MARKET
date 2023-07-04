@@ -1,3 +1,3 @@
 import { colors } from "./Global";
 
-export {colors}
+export {colors} 
