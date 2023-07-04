@@ -6,6 +6,11 @@ import { Button } from "components/Button";
 import rocketIcon from "../../assets/HomePage/RocketIcon.svg";
 import banner1 from "../../assets/HomePage/Banner1.svg";
 import avatar1 from "../../assets/HomePage/Avatar1.svg";
+import trending1 from "../../assets/HomePage/Trending1.svg";
+import trending2 from "../../assets/HomePage/Trending2.svg";
+import trending3 from "../../assets/HomePage/Trending3.svg";
+import trending4 from "../../assets/HomePage/Trending4.svg";
+import trending5 from "../../assets/HomePage/Trending5.svg";
 
 
 const HomePageStyled = styled.div`
@@ -100,6 +105,12 @@ const TrendingCollectionStyled = styled.div`
     line-height: 160%;
     text-transform: capitalize;
   }
+
+  .body_trending_collection{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+  }
 `;
 
 const HomePage = () => {
@@ -146,6 +157,7 @@ const HomePage = () => {
               img_artist={avatar1}
               name_artist={"Animakid"}
             ></Card>
+            
           </div>
         </div>
       </BannerStyled>
@@ -156,7 +168,9 @@ const HomePage = () => {
             <p>Checkout our weekly updated trending collection.</p>
           </div>
           <div className="body_trending_collection">
-            <Card img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
+            <Card img_product={[trending1, trending2, trending3]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
+            <Card img_product={[trending1, trending2, trending3, trending4, trending5]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
+            <Card img_product={[trending1, trending2, trending3, trending4]} img_artist={avatar1} type={"TrendingCollection"} name_artist={"MrFox"} title={"DSGN Animals"}></Card>
           </div>
         </div>
       </TrendingCollectionStyled>
