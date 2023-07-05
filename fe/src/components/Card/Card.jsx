@@ -143,6 +143,104 @@ const CardTrendingCollectionStyled = styled.div`
   }
 `;
 
+const CardTopCreatorHomePage = styled.div`
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex: 1 0 0;
+  border-radius: 20px;
+  background: #3b3b3b;
+  position: relative;
+
+  .number_id {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 20px;
+    top: 18px;
+    border-radius: 50px;
+    background: #2b2b2b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .number_id span {
+    color: #858584;
+    text-align: center;
+    font-size: 16px;
+    font-family: "Space Mono";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .header_cart {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .header_cart img {
+    width: 95%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .body_cart h5 {
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    text-transform: capitalize;
+  }
+
+  .body_cart .total_sales {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .body_cart .total_sales p {
+    color: #858584;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .body_cart .total_sales span {
+    color: #fff;
+    font-size: 16px;
+    font-family: "Space Mono";
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  @media (max-width: 991.98px) {
+    flex-direction: unset;
+    .header_cart {
+      width: 30%;
+    }
+
+    .body_cart h5 {
+      text-align: unset;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+  }
+`;
+
+const CardCategoriesHomePage = styled.div`
+  
+`
+
 const Card = ({
   type,
   title,
@@ -153,6 +251,8 @@ const Card = ({
   name_artist,
   type2,
   box_img,
+  total_sales,
+  number_id,
 }) => {
   if (type === "large") {
     return <CardLargeStyled></CardLargeStyled>;
@@ -163,10 +263,7 @@ const Card = ({
     type2 = "";
     if (img_product.length > 1 && img_product.length <= 4) {
       type2 = img_product.map((element, index) => (
-        <div
-          className="list_image_item"
-          key={index}
-        >
+        <div className="list_image_item" key={index}>
           <img src={element} alt="" />
         </div>
       ));
@@ -196,6 +293,35 @@ const Card = ({
         </div>
       </CardTrendingCollectionStyled>,
     ];
+  } else if (type === "TopCreatorHomePage") {
+    return (
+      <CardTopCreatorHomePage
+        type={type}
+        title={title}
+        bgColor={bgColor}
+        borderRadius={borderRadius}
+        img_artist={img_artist}
+        name_artist={name_artist}
+        total_sales={total_sales}
+        number_id={number_id}
+      >
+        <div className="number_id">
+          <span>{number_id + 1}</span>
+        </div>
+        <div className="header_cart">
+          <img src={img_artist} alt="" />
+        </div>
+        <div className="body_cart">
+          <h5>{name_artist}</h5>
+          <div className="total_sales">
+            <p>Total Sales:</p>
+            <span>{total_sales} ETH</span>
+          </div>
+        </div>
+      </CardTopCreatorHomePage>
+    );
+  } else if (type === "CategoriesHomePage") {
+    return;
   } else {
     return (
       <CardStyled
