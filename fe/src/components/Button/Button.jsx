@@ -37,6 +37,7 @@ const Button = ({
   type,
   padding,
   onSubmit,
+  onClick,
 }) => {
   if (type === "large") {
     return <ButtonLargeStyled></ButtonLargeStyled>;
@@ -56,8 +57,9 @@ const Button = ({
         fontWeight={fontWeight}
         padding={padding}
         onsubmit={onSubmit}
+        onClick={onClick}
       >
-        <button onsubmit={onSubmit}>
+        <button onsubmit={onSubmit} onClick={onClick}>
           <img src={img} alt="" />
           <span>{content}</span>
         </button>

@@ -11,18 +11,29 @@ const StyledInput = styled.div`
     font-weight: ${(props) => props.fontWeight};
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    padding-left: 52px;
+    /* padding-left: 52px;
+    padding-bottom: 12px;
+    padding-top: 12px; */
+    padding-left: ${(props) => props.paddingLeft};
+    padding-top: ${(props) => props.paddingTop};
+    padding-bottom: ${(props) => props.paddingBottom};
+    padding-right: ${(props) => props.paddingRight};
     display: flex;
-    position: absolute;
+    position: relative;
+    /* align-items: center; */
   }
   /* label{
     display: flex;
 
   } */
   img {
-    position: relative;
-    left: 20px;
-    top: 12px;
+    position: absolute;
+    left: 14px;
+    bottom: 52%;
+    align-items: center;
+  }
+  div {
+    position: absolute;
   }
 `;
 const Input = ({
@@ -38,6 +49,11 @@ const Input = ({
   height,
   type,
   id,
+  onChange,
+  paddingTop,
+  paddingRight,
+  paddingBottom,
+  paddingLeft,
 }) => {
   return (
     <StyledInput
@@ -52,11 +68,19 @@ const Input = ({
       height={height}
       type={type}
       id={id}
+      onChange={onChange}
+      paddingTop={paddingTop}
+      paddingRight={paddingRight}
+      paddingBottom={paddingBottom}
+      paddingLeft={paddingLeft}
     >
-      <label>
-        <input type={type} placeholder={placeHolder} id={id} />
+        <input
+          type={type}
+          placeholder={placeHolder}
+          id={id}
+          onChange={onChange}
+        />
         <img src={img} alt="" />
-      </label>
     </StyledInput>
   );
 };

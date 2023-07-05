@@ -7,7 +7,7 @@ import password_icon from "../../assets/SignIn_Up_Img/password_icon.svg";
 import { Button } from "components/Button";
 // import ValidateSignUp from "./SignUpValidate";
 import { useState } from "react";
-const StyledSignUpPage = styled.div`
+const StyledSignInPage = styled.div`
   /* * {
     margin: 0;
     padding: 0;
@@ -150,7 +150,8 @@ const StyledSignUpPage = styled.div`
 
   .login-title {
     margin-top: 80px;
-    font-size: 56px;
+    font-size: 51px;
+    font-style: normal;
     font-weight: 600;
   }
 
@@ -398,7 +399,7 @@ const StyledSignUpPage = styled.div`
   }
 `;
 
-export const SignUpPage = () => {
+export const SignInPage = () => {
   const [username, setUsername] = useState("");
   const [email_address, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -440,13 +441,13 @@ export const SignUpPage = () => {
     console.log("confirm_password: " + confirm_password);
   };
   return (
-    <StyledSignUpPage>
+    <StyledSignInPage>
       <div class="main">
         <div class="login-container">
           <div class="login-form-wrap">
             <div class="login__left">
               <div class="login-content">
-                <h2 class="login-title">Create Account</h2>
+                <h2 class="login-title">Log In</h2>
 
                 <form action="#" class="form-control">
                   <div class="form-group">
@@ -525,6 +526,6 @@ export const SignUpPage = () => {
           </div>
         </div>
       </div>
-    </StyledSignUpPage>
+    </StyledSignInPage>
   );
 };
