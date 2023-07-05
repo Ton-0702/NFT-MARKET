@@ -13,12 +13,13 @@ const Header = () => {
       <header className="header">
         <div className="header-wrapper">
           <div className="header-left">
-            <div className="icon">
+            {/* <div className="icon">
               <MarketIcon></MarketIcon>
             </div>
             <div className="header-logo">
               <Logo></Logo>
-            </div>
+            </div> */}
+            <LogoItem></LogoItem>
           </div>
           <div className="header-right">
             <nav className="header-right-nav">
@@ -55,6 +56,34 @@ const Header = () => {
 
 export default Header;
 
+// logo
+export const LogoItem = () => {
+  return (
+    <LogoItemStyled className="logo">
+      <div className="logo-icon">
+        <MarketIcon></MarketIcon>
+      </div>
+      <div className="header-logo-text">
+        <Logo></Logo>
+      </div>
+    </LogoItemStyled>
+  );
+};
+
+// LogoItem Style
+const LogoItemStyled = styled.div`
+  display: flex;
+  align-items: center;
+  .logo-icon {
+    margin-right: 16px;
+  }
+  .header-logo-text {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+// Header Style
 const HeaderStyled = styled.div`
   width: 100%;
   .header {
@@ -70,17 +99,7 @@ const HeaderStyled = styled.div`
     height: 100px;
   }
   // header left
-  .header-left {
-    display: flex;
-    align-items: center;
-  }
-  .icon {
-    margin-right: 16px;
-  }
-  .header-logo {
-    display: flex;
-    align-items: center;
-  }
+
   // header right
   .header-right-nav {
     display: flex;
@@ -117,6 +136,9 @@ const HeaderStyled = styled.div`
 
   // Responsive
 
+  // Large devices (desktops, less than 1200px)
+  @media (max-width: 1199.98px) {
+  }
   // Medium devices (tablets, less than 992px)
   @media (max-width: 991.98px) {
     .header-wrapper {
@@ -131,13 +153,6 @@ const HeaderStyled = styled.div`
     }
   }
 
-  // Responsive
-  @media (max-width: 575.98px) {
-    .header-wrapper {
-      max-width: 375px;
-    }
-  }
-
   // Small devices (landscape phones, less than 768px)
   @media (max-width: 767.98px) {
     .header-wrapper {
@@ -145,7 +160,10 @@ const HeaderStyled = styled.div`
     }
   }
 
-  // Large devices (desktops, less than 1200px)
-  @media (max-width: 1199.98px) {
+  //
+  @media (max-width: 575.98px) {
+    .header-wrapper {
+      max-width: 375px;
+    }
   }
 `;
