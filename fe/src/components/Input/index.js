@@ -1,2 +1,5 @@
-import Input from "./Input";
-export { Input };
+import {InputFooter} from './InputFooter';
+import {Input} from "./Input";
+export {InputFooter, Input};
+
+
