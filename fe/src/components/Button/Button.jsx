@@ -8,8 +8,7 @@ const ButtonStyled = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
-    max-width: fit-content;
-    border: ${(props) => (props.boderColor ? props.border : "none")};
+    border: ${(props) => (props.border ? props.border : "none")};
     border-radius: ${(props) => props.borderRadius};
     background: ${(props) => props.bgColor};
     font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
