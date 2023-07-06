@@ -85,7 +85,6 @@ const LogoItemStyled = styled.div`
 
 // Header Style
 const HeaderStyled = styled.div`
-  width: 100%;
   .header {
     background-color: ${colors.background};
     align-items: center;

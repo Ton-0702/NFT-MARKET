@@ -1,14 +1,13 @@
 import './App.css';
-// import {colors} from '../src/Global'
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+
+// import Ranking from './components/Ranking/Ranking';
+import PrimaryLayout from './components/Layout/PrimaryLayout';
 
 function App() {
   return (
     <div className="App">
       {/* <h1 style={{color: colors.blackColor}} >This is NFT page</h1> */}
-      <Header></Header>
-      <Footer></Footer>
+      <PrimaryLayout>{/* <Ranking></Ranking> */}</PrimaryLayout>
     </div>
   );
 }
