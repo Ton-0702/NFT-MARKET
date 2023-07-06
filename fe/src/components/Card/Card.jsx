@@ -10,23 +10,23 @@ const CardStyled = styled.div`
   background: ${(props) => props.bgColor};
   border-radius: ${(props) => props.borderRadius};
 
-  .header_cart {
+  .header_card {
     height: 80%;
   }
 
-  .header_cart img {
+  .header_card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 20px 20px 0 0;
   }
 
-  .body_cart {
+  .body_card {
     height: 20%;
     padding: 20px;
   }
 
-  .body_cart .title_cart h5 {
+  .body_card .title_card h5 {
     color: #fff;
     font-size: 22px;
     font-style: normal;
@@ -36,13 +36,13 @@ const CardStyled = styled.div`
     margin-bottom: 10px;
   }
 
-  .body_cart .title_cart .info_artist {
+  .body_card .title_card .info_artist {
     display: flex;
     column-gap: 10px;
     align-items: center;
   }
 
-  .body_cart .title_cart .info_artist span {
+  .body_card .title_card .info_artist span {
     color: #fff;
     font-size: 16px;
     font-style: normal;
@@ -63,11 +63,11 @@ const CardTrendingCollectionStyled = styled.div`
   background: ${(props) => props.bgColor};
   border-radius: ${(props) => props.borderRadius};
 
-  .header_cart {
+  .header_card {
     height: auto;
   }
 
-  .header_cart .list_image {
+  .header_card .list_image {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto auto auto auto;
@@ -75,7 +75,7 @@ const CardTrendingCollectionStyled = styled.div`
     gap: 15px;
   }
 
-  .header_cart .list_image .list_image_item:first-child {
+  .header_card .list_image .list_image_item:first-child {
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 1;
@@ -84,14 +84,14 @@ const CardTrendingCollectionStyled = styled.div`
     height: unset;
   }
 
-  .header_cart .list_image .list_image_item img {
+  .header_card .list_image .list_image_item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 20px;
   }
 
-  .header_cart .list_image .box_img {
+  .header_card .list_image .box_img {
     border-radius: 20px;
     background: rgb(162, 89, 255);
     height: 100%;
@@ -101,7 +101,7 @@ const CardTrendingCollectionStyled = styled.div`
     width: 100px;
   }
 
-  .header_cart .list_image .box_img span {
+  .header_card .list_image .box_img span {
     color: #fff;
     font-size: 22px;
     font-family: Space Mono;
@@ -110,11 +110,11 @@ const CardTrendingCollectionStyled = styled.div`
     line-height: 160%;
   }
 
-  .body_cart {
+  .body_card {
     height: 20%;
   }
 
-  .body_cart .title_cart h5 {
+  .body_card .title_card h5 {
     color: #fff;
     font-size: 22px;
     font-style: normal;
@@ -124,13 +124,13 @@ const CardTrendingCollectionStyled = styled.div`
     margin-bottom: 10px;
   }
 
-  .body_cart .title_cart .info_artist {
+  .body_card .title_card .info_artist {
     display: flex;
     column-gap: 10px;
     align-items: center;
   }
 
-  .body_cart .title_cart .info_artist span {
+  .body_card .title_card .info_artist span {
     color: #fff;
     font-size: 16px;
     font-style: normal;
@@ -180,19 +180,19 @@ const CardTopCreatorHomePage = styled.div`
     line-height: 140%;
   }
 
-  .header_cart {
+  .header_card {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
 
-  .header_cart img {
+  .header_card img {
     width: 95%;
     height: 100%;
     border-radius: 50%;
   }
 
-  .body_cart h5 {
+  .body_card h5 {
     color: #fff;
     text-align: center;
     font-size: 22px;
@@ -202,13 +202,13 @@ const CardTopCreatorHomePage = styled.div`
     text-transform: capitalize;
   }
 
-  .body_cart .total_sales {
+  .body_card .total_sales {
     display: flex;
     gap: 5px;
     align-items: center;
   }
 
-  .body_cart .total_sales p {
+  .body_card .total_sales p {
     color: #858584;
     font-size: 16px;
     font-style: normal;
@@ -216,7 +216,7 @@ const CardTopCreatorHomePage = styled.div`
     line-height: 140%;
   }
 
-  .body_cart .total_sales span {
+  .body_card .total_sales span {
     color: #fff;
     font-size: 16px;
     font-family: "Space Mono";
@@ -227,11 +227,11 @@ const CardTopCreatorHomePage = styled.div`
 
   @media (max-width: 991.98px) {
     flex-direction: unset;
-    .header_cart {
+    .header_card {
       width: 30%;
     }
 
-    .body_cart h5 {
+    .body_card h5 {
       text-align: unset;
     }
   }
@@ -240,7 +240,14 @@ const CardTopCreatorHomePage = styled.div`
   }
 `;
 
-const CardCategoriesHomePage = styled.div``;
+const CardCategoriesHomePage = styled.div`
+  border-radius: 20px;
+  background: #3b3b3b;
+  
+  .header_card{
+    background-image: ${(props) => props.background_img};
+  }
+`;
 
 const Card = ({
   type,
@@ -254,13 +261,13 @@ const Card = ({
   box_img,
   total_sales,
   number_id,
+  background_img,
 }) => {
   if (type === "large") {
     return <CardLargeStyled></CardLargeStyled>;
   } else if (type === "small") {
     return <CardSmallStyled></CardSmallStyled>;
   } else if (type === "TrendingCollection") {
-    console.log(img_product.length);
     type2 = "";
     if (img_product.length > 1 && img_product.length <= 4) {
       type2 = img_product.map((element, index) => (
@@ -277,20 +284,20 @@ const Card = ({
     }
     return [
       <CardTrendingCollectionStyled>
-        <div className="header_cart">
+        <div className="header_card">
           <div className="list_image">
             {img_product.length > 4 ? ReactHtmlParser(type2) : type2}
           </div>
         </div>
-        <div className="body_cart">
-          <div className="title_cart">
+        <div className="body_card">
+          <div className="title_card">
             <h5>{title}</h5>
             <div className="info_artist">
               <img src={img_artist} alt="" />
               <span>{name_artist}</span>
             </div>
           </div>
-          <div className="info_cart"></div>
+          <div className="info_card"></div>
         </div>
       </CardTrendingCollectionStyled>,
     ];
@@ -309,10 +316,10 @@ const Card = ({
         <div className="number_id">
           <span>{number_id + 1}</span>
         </div>
-        <div className="header_cart">
+        <div className="header_card">
           <img src={img_artist} alt="" />
         </div>
-        <div className="body_cart">
+        <div className="body_card">
           <h5>{name_artist}</h5>
           <div className="total_sales">
             <p>Total Sales:</p>
@@ -322,7 +329,24 @@ const Card = ({
       </CardTopCreatorHomePage>
     );
   } else if (type === "CategoriesHomePage") {
-    return;
+    console.log(background_img);
+    return (
+      <CardCategoriesHomePage
+        background_img={background_img}
+        img_product={img_product}
+        title={title}
+        type={type}
+      >
+        <div className="header_card">
+          <img src={img_product} alt="" />
+        </div>
+        <div className="body_card">
+          <div className="title_card">
+            <h5>{title}</h5>
+          </div>
+        </div>
+      </CardCategoriesHomePage>
+    );
   } else {
     return (
       <CardStyled
@@ -334,18 +358,18 @@ const Card = ({
         img_artist={img_artist}
         name_artist={name_artist}
       >
-        <div className="header_cart">
+        <div className="header_card">
           <img src={img_product} alt="" />
         </div>
-        <div className="body_cart">
-          <div className="title_cart">
+        <div className="body_card">
+          <div className="title_card">
             <h5>{title}</h5>
             <div className="info_artist">
               <img src={img_artist} alt="" />
               <span>{name_artist}</span>
             </div>
           </div>
-          <div className="info_cart"></div>
+          <div className="info_card"></div>
         </div>
       </CardStyled>
     );

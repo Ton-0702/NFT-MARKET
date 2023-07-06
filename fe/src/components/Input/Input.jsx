@@ -84,4 +84,4 @@ const Input = ({
     </StyledInput>
   );
 };
-export default Input;
+export {Input};
