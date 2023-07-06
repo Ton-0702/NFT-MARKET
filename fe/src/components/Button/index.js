@@ -1,2 +1,4 @@
 import {SignUpButton} from './SignUpButton';
-export {SignUpButton};
+import {Button} from "./Button";
+export {SignUpButton, Button};
+

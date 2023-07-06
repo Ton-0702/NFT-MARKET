@@ -1,14 +1,17 @@
+import { Routes, Route } from "react-router-dom";
 import './App.css';
-
-// import Ranking from './components/Ranking/Ranking';
-import PrimaryLayout from './components/Layout/PrimaryLayout';
+import { HomePage } from "./container/HomePage";
+import { SignUpPage } from "container/SignUpPage";
+import { SignInPage } from "container/SignInPage";
 
 function App() {
   return (
-    <div className="App">
-      {/* <h1 style={{color: colors.blackColor}} >This is NFT page</h1> */}
-      <PrimaryLayout>{/* <Ranking></Ranking> */}</PrimaryLayout>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/sign-up" element={<SignUpPage />} />
+      <Route path="/sign-in" element={<SignInPage />} />
+    </Routes>
+
   );
 }
 
