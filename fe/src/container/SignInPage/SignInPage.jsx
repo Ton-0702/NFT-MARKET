@@ -6,7 +6,8 @@ import mail_icon from "../../assets/SignIn_Up_Img/mail_icon.svg";
 import password_icon from "../../assets/SignIn_Up_Img/password_icon.svg";
 import { Button } from "components/Button";
 // import ValidateSignUp from "./SignUpValidate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 const StyledSignInPage = styled.div`
   /* * {
     margin: 0;
@@ -74,12 +75,12 @@ const StyledSignInPage = styled.div`
     text-align: center;
     height: 60px;
     position: relative;
-  }
+  }*/
   .err-msg {
     position: absolute;
     top: 39px;
     left: 420px;
-  } */
+  }
   * {
     margin: 0;
     padding: 0;
@@ -202,7 +203,7 @@ const StyledSignInPage = styled.div`
   }
 
   .eyes-open {
-    display: none;
+    display: block;
   }
 
   .eyes-close,
@@ -212,7 +213,7 @@ const StyledSignInPage = styled.div`
     right: 20px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #d885a3;
+    color: #171648;
   }
 
   .d-none {
@@ -236,7 +237,7 @@ const StyledSignInPage = styled.div`
     border: none;
     border-radius: 20px;
     color: #fff;
-    background-color: #d885a3;
+    background-color: #171648;
     cursor: pointer;
   }
 
@@ -293,7 +294,7 @@ const StyledSignInPage = styled.div`
     right: 0;
     bottom: 0;
     width: 450px;
-    /* background-color: #c0dbea; */
+
     background-image: url(${background});
     background-size: cover;
     z-index: -1;
@@ -400,99 +401,89 @@ const StyledSignInPage = styled.div`
 `;
 
 export const SignInPage = () => {
+  const [passwordShown, setPasswordShown] = useState(false);
   const [username, setUsername] = useState("");
-  const [email_address, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const eyesClose = document.querySelector(".eyes-close");
-  const eyesOpen = document.querySelector(".eyes-open");
-  const inputPassword = document.querySelector("#password");
-  const showPassword = () => {
-    inputPassword.type = "text";
-    eyesClose.classList.add("d-none");
-    eyesOpen.classList.add("d-block");
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+    const eyesClose = document.querySelector(".eyes-close");
+    const eyesOpen = document.querySelector(".eyes-open");
+    if (passwordShown == false) {
+      eyesClose.classList.add("d-none");
+      eyesOpen.classList.add("d-block");
+    } else {
+      eyesClose.classList.remove("d-none");
+      eyesOpen.classList.remove("d-block");
+    }
   };
-
-  const hidePassword = () => {
-    inputPassword.type = "password";
-    eyesClose.classList.remove("d-none");
-    eyesOpen.classList.remove("d-block");
-  };
-  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const ValidateSignUp = (e) => {
+  const ValidateSignIn = (e) => {
     e.preventDefault();
-    if (
-      username.length == 0 ||
-      email_address ||
-      password.length == 0 ||
-      confirm_password.length == 0 ||
-      password != confirm_password ||
-      !emailPattern.test(email_address)
-    ) {
+    if (username.length == 0 || password.length == 0) {
       setError(true);
     }
-    // if (password.value != confirm_password.value) {
-    //   setError(true);
-    // }
     console.log("username: " + username);
     console.log("password: " + password);
-    console.log("confirm_password: " + confirm_password);
   };
   return (
     <StyledSignInPage>
-      <div class="main">
-        <div class="login-container">
-          <div class="login-form-wrap">
-            <div class="login__left">
-              <div class="login-content">
-                <h2 class="login-title">Log In</h2>
+      <div className="main">
+        <div className="login-container">
+          <div className="login-form-wrap">
+            <div className="login__left">
+              <div className="login-content">
+                <h2 className="login-title">Log In</h2>
 
-                <form action="#" class="form-control">
-                  <div class="form-group">
-                    <label for="">Username</label>
-                    {/* <input
-                      type="text"
-                      name=""
-                      id="username"
-                      placeholder="Username"
-                    /> */}
+                <form action="#" className="form-control">
+                  <div className="form-group">
+                    <label>Username</label>
                     <Input
                       placeHolder="Username"
                       type="text"
                       id="username"
+                      onChange={(e) => setUsername(e.target.value)}
                     ></Input>
-                    <span class="form-message"></span>
+                    <span className="form-message"></span>
                   </div>
-
-                  <div class="form-group form-password">
-                    <div class="form-label">
-                      <label class="form-label-password" for="">
-                        Password
-                      </label>
-                      <label class="form-label-forgot-password" for="">
+                  <div className="err-msg">
+                    {error && username <= 0 ? (
+                      <span className="input_error">Enter Username</span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="form-group form-password">
+                    <div className="form-label">
+                      <label className="form-label-password">Password</label>
+                      <label className="form-label-forgot-password">
                         Forgot Password?
                       </label>
                     </div>
-                    {/* <input
-                      type="password"
-                      name=""
-                      id="password"
-                      placeholder="Enter password"
-                    /> */}
+
                     <Input
-                      type="password"
                       placeHolder="Enter password"
                       id="password"
+                      type={passwordShown ? "text" : "password"}
+                      onChange={(e) => setPassword(e.target.value)}
                     ></Input>
+                    {/* <i
+                      className="fa-solid fa-eye eyes-open"
+                      onClick={togglePassword}
+                    ></i> */}
+                    <div className="err-msg">
+                      {error && password <= 0 ? (
+                        <span className="input_error">Enter Username</span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                     <i
-                      className="fa-solid fa-eye-slash eyes-close"
-                      onClick={showPassword}
+                      class="fa-solid fa-eye-slash eyes-close"
+                      onClick={togglePassword}
                     ></i>
                     <i
-                      className="fa-solid fa-eye eyes-open"
-                      onClick={hidePassword}
+                      class="fa-solid fa-eye eyes-open"
+                      onClick={togglePassword}
                     ></i>
                     <span className="form-password-message"></span>
                   </div>
@@ -501,7 +492,7 @@ export const SignInPage = () => {
                     <button
                       type="button"
                       className="btn-login"
-                      // onclick="logIn()"
+                      onClick={ValidateSignIn}
                     >
                       LOGIN
                       <i className="fas fa-arrow-right"></i>
@@ -510,7 +501,7 @@ export const SignInPage = () => {
                     <div className="dont-have-account">
                       <p className="dont-have-account-text">
                         Don't have an account yet?
-                        <a href="#">Sign up for free</a>
+                        <NavLink to="/sign-up">Sign up for free</NavLink>
                       </p>
                     </div>
                   </div>

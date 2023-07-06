@@ -424,7 +424,7 @@ export const SignUpPage = () => {
     e.preventDefault();
     if (
       username.length == 0 ||
-      email_address ||
+      email_address == 0 ||
       password.length == 0 ||
       confirm_password.length == 0 ||
       password != confirm_password ||
@@ -432,9 +432,6 @@ export const SignUpPage = () => {
     ) {
       setError(true);
     }
-    // if (password.value != confirm_password.value) {
-    //   setError(true);
-    // }
     console.log("username: " + username);
     console.log("password: " + password);
     console.log("confirm_password: " + confirm_password);
@@ -451,12 +448,6 @@ export const SignUpPage = () => {
                 <form action="#" class="form-control">
                   <div class="form-group">
                     <label for="">Username</label>
-                    {/* <input
-                      type="text"
-                      name=""
-                      id="username"
-                      placeholder="Username"
-                    /> */}
                     <Input
                       placeHolder="Username"
                       type="text"
@@ -474,12 +465,6 @@ export const SignUpPage = () => {
                         Forgot Password?
                       </label>
                     </div>
-                    {/* <input
-                      type="password"
-                      name=""
-                      id="password"
-                      placeholder="Enter password"
-                    /> */}
                     <Input
                       type="password"
                       placeHolder="Enter password"
