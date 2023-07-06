@@ -316,7 +316,7 @@ const TrendingCollectionStyled = styled.div`
     }
 
     .body_trending_collection {
-      grid-template-columns: auto auto;
+      grid-template-columns: 50% 50%;
       gap: 30px;
     }
 
@@ -441,6 +441,7 @@ const HomePage = () => {
               textColor={"#FFF"}
               fontSize={"16px"}
               fontWeight={"600"}
+              padding={"22.5px 50px"}
             ></Button>
             <div className="statistical">
               <div className="statistical_left">
@@ -507,6 +508,7 @@ const HomePage = () => {
                 borderRadius={"20px"}
                 textColor={"#fff"}
                 img={rocketIcon2}
+                padding={"22.5px 50px"}
               ></Button>
             </div>
           </div>
