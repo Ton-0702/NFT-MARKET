@@ -245,8 +245,17 @@ const CardCategoriesHomePage = styled.div`
   background: #3b3b3b;
   
   .header_card{
-    background-image: ${(props) => props.background_img};
+    background-image: url(${(props) => props.background_img}) ;
   }
+
+  .header_card img{
+    width: 80%;
+    height: 80%;
+    padding: 10%;
+    object-fit: cover;
+  }
+
+
 `;
 
 const Card = ({
