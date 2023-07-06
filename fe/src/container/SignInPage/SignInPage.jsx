@@ -60,14 +60,7 @@ const StyledSignInPage = styled.div`
 
     padding-bottom: 60px;
   }
-  .input_error {
-    color: red;
-  
-    text-align: left;
-    font-size: 14px;
-    font-weight: 300;
-    align-items: c;
-  }
+
   .input-and-error {
     display: flex;
     align-items: center;
@@ -76,11 +69,11 @@ const StyledSignInPage = styled.div`
     height: 60px;
     position: relative;
   }*/
-  .err-msg {
+  /* .err-msg-username {
     position: absolute;
     top: 39px;
     left: 420px;
-  }
+  } */
   * {
     margin: 0;
     padding: 0;
@@ -316,6 +309,15 @@ const StyledSignInPage = styled.div`
     width: 100%;
   }
 
+  .input_error {
+    color: red;
+  
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    align-items: c;
+  }
+
   /* Responsive */
   /* extra large */
   @media (max-width: 1200px) {
@@ -445,11 +447,11 @@ export const SignInPage = () => {
                     ></Input>
                     <span className="form-message"></span>
                   </div>
-                  <div className="err-msg">
+                  <div className="err-msg-username">
                     {error && username <= 0 ? (
                       <span className="input_error">Enter Username</span>
                     ) : (
-                      ""
+                      <span style={{height:10}}> </span>
                     )}
                   </div>
                   <div className="form-group form-password">
@@ -472,7 +474,7 @@ export const SignInPage = () => {
                     ></i> */}
                     <div className="err-msg">
                       {error && password <= 0 ? (
-                        <span className="input_error">Enter Username</span>
+                        <span className="input_error">Enter Password</span>
                       ) : (
                         ""
                       )}
