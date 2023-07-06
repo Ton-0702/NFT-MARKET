@@ -138,7 +138,10 @@ const CardTrendingCollectionStyled = styled.div`
     line-height: 140%;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 991.98px) {
+  }
+
+  @media (max-width: 767.98px) {
     width: 100%;
   }
 `;
@@ -237,9 +240,7 @@ const CardTopCreatorHomePage = styled.div`
   }
 `;
 
-const CardCategoriesHomePage = styled.div`
-  
-`
+const CardCategoriesHomePage = styled.div``;
 
 const Card = ({
   type,
