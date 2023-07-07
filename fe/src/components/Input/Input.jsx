@@ -112,4 +112,5 @@ const Input = ({
     </StyledInput>
   );
 };
-export  {Input};
+
+export {Input};
