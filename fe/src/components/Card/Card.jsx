@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import React from "react";
-import ReactHtmlParser from "react-html-parser";
+import styled from 'styled-components';
+import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 
 const CardStyled = styled.div`
   width: 100%;
@@ -171,7 +171,7 @@ const CardTopCreatorHomePage = styled.div`
     color: #858584;
     text-align: center;
     font-size: 16px;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -216,7 +216,7 @@ const CardTopCreatorHomePage = styled.div`
   .body_cart .total_sales span {
     color: #fff;
     font-size: 16px;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -237,9 +237,9 @@ const CardTopCreatorHomePage = styled.div`
   }
 `;
 
-const CardCategoriesHomePage = styled.div`
-  
-`
+// const CardCategoriesHomePage = styled.div`
+
+// `
 
 const Card = ({
   type,
@@ -254,13 +254,13 @@ const Card = ({
   total_sales,
   number_id,
 }) => {
-  if (type === "large") {
+  if (type === 'large') {
     return <CardLargeStyled></CardLargeStyled>;
-  } else if (type === "small") {
+  } else if (type === 'small') {
     return <CardSmallStyled></CardSmallStyled>;
-  } else if (type === "TrendingCollection") {
+  } else if (type === 'TrendingCollection') {
     console.log(img_product.length);
-    type2 = "";
+    type2 = '';
     if (img_product.length > 1 && img_product.length <= 4) {
       type2 = img_product.map((element, index) => (
         <div className="list_image_item" key={index}>
@@ -293,7 +293,7 @@ const Card = ({
         </div>
       </CardTrendingCollectionStyled>,
     ];
-  } else if (type === "TopCreatorHomePage") {
+  } else if (type === 'TopCreatorHomePage') {
     return (
       <CardTopCreatorHomePage
         type={type}
@@ -320,7 +320,7 @@ const Card = ({
         </div>
       </CardTopCreatorHomePage>
     );
-  } else if (type === "CategoriesHomePage") {
+  } else if (type === 'CategoriesHomePage') {
     return;
   } else {
     return (
@@ -351,4 +351,4 @@ const Card = ({
   }
 };
 
-export { Card };
+export {Card};

@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 // const { default: styled } = require("styled-components");
 
 const StyledInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.boderColor ? props.border : "none")};
+    border: ${(props) => (props.boderColor ? props.border : 'none')};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -74,14 +74,14 @@ const Input = ({
       paddingBottom={paddingBottom}
       paddingLeft={paddingLeft}
     >
-        <input
-          type={type}
-          placeholder={placeHolder}
-          id={id}
-          onChange={onChange}
-        />
-        <img src={img} alt="" />
+      <input
+        type={type}
+        placeholder={placeHolder}
+        id={id}
+        onChange={onChange}
+      />
+      <img src={img} alt="" />
     </StyledInput>
   );
 };
-export default Input;
+export {Input};

@@ -1,114 +1,114 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import {PrimaryLayout} from 'components/Layout';
+import {Card} from 'components/Card';
+import {Button} from 'components/Button';
 
-import { Card } from "components/Card";
-import { Button } from "components/Button";
-
-import rocketIcon from "../../assets/HomePage/RocketIcon.svg";
-import rocketIcon2 from "../../assets/HomePage/RocketIcon2.svg";
-import banner1 from "../../assets/HomePage/Banner1.svg";
-import avatar1 from "../../assets/HomePage/Avatar1.svg";
-import trending1 from "../../assets/HomePage/Trending1.svg";
-import trending2 from "../../assets/HomePage/Trending2.svg";
-import trending3 from "../../assets/HomePage/Trending3.svg";
-import trending4 from "../../assets/HomePage/Trending4.svg";
-import trending5 from "../../assets/HomePage/Trending5.svg";
-import topCreator1 from "../../assets/HomePage/TopCreator/TopCreator1.png";
+import rocketIcon from '../../assets/HomePage/RocketIcon.svg';
+import rocketIcon2 from '../../assets/HomePage/RocketIcon2.svg';
+import banner1 from '../../assets/HomePage/Banner1.svg';
+import avatar1 from '../../assets/HomePage/Avatar1.svg';
+import trending1 from '../../assets/HomePage/Trending1.svg';
+import trending2 from '../../assets/HomePage/Trending2.svg';
+import trending3 from '../../assets/HomePage/Trending3.svg';
+import trending4 from '../../assets/HomePage/Trending4.svg';
+import trending5 from '../../assets/HomePage/Trending5.svg';
+import topCreator1 from '../../assets/HomePage/TopCreator/TopCreator1.png';
 
 const trendingCollectionData = [
   {
     img_product: [trending1, trending2, trending3],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
   {
     img_product: [trending1, trending2, trending3, trending4],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
   {
     img_product: [trending1, trending2, trending3, trending4, trending5],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
 ];
 
 const topCreatorData = [
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
 ];
@@ -418,126 +418,126 @@ const TopCreatorStyled = styled.div`
   }
 `;
 
-const CategoriesStyled = styled.div`
-  
-`
+const CategoriesStyled = styled.div``;
 
 const HomePage = () => {
   return (
-    <HomePageStyled>
-      <BannerStyled>
-        <div className="container">
-          <div className="banner_left">
-            <h1>Discover digital art & Collect NFTs</h1>
-            <p>
-              NFT marketplace UI created with Anima for Figma. Collect, buy and
-              sell art from more than 20k NFT artists.
-            </p>
-            <Button
-              img={rocketIcon}
-              content={"Get Started"}
-              borderRadius={"20px"}
-              bgColor={"#A259FF"}
-              textColor={"#FFF"}
-              fontSize={"16px"}
-              fontWeight={"600"}
-            ></Button>
-            <div className="statistical">
-              <div className="statistical_left">
-                <h4>240k+</h4>
-                <span>Total Sale</span>
-              </div>
-              <div className="statistical_middle">
-                <h4>100k+</h4>
-                <span>Auctions</span>
-              </div>
-              <div className="statistical_right">
-                <h4>240k+</h4>
-                <span>Artists</span>
-              </div>
-            </div>
-          </div>
-          <div className="banner_right">
-            <Card
-              title={"Space Walking"}
-              img_product={banner1}
-              bgColor={"#3B3B3B"}
-              borderRadius={"20px"}
-              img_artist={avatar1}
-              name_artist={"Animakid"}
-            ></Card>
-          </div>
-        </div>
-      </BannerStyled>
-      <TrendingCollectionStyled>
-        <div className="container">
-          <div className="header_trending_collection">
-            <h3>Trending Collection</h3>
-            <p>Checkout our weekly updated trending collection.</p>
-          </div>
-          <div className="body_trending_collection">
-            {trendingCollectionData
-              ? trendingCollectionData.map((e, index) => (
-                  <div className="trending_collection_item">
-                    <Card
-                      img_product={e.img_product}
-                      img_artist={e.img_artist}
-                      type={e.type}
-                      name_artist={e.name_artist}
-                      title={e.title}
-                    ></Card>
-                  </div>
-                ))
-              : null}
-          </div>
-        </div>
-      </TrendingCollectionStyled>
-      <TopCreatorStyled>
-        <div className="container">
-          <div className="header_top_creator">
-            <div className="header_top_creator_left">
-              <h3>Top Creators</h3>
-              <p>Checkout Top Rated Creators on the NFT Marketplace</p>
-            </div>
-            <div className="header_top_creator_right">
+    <PrimaryLayout>
+      <HomePageStyled>
+        <BannerStyled>
+          <div className="container">
+            <div className="banner_left">
+              <h1>Discover digital art & Collect NFTs</h1>
+              <p>
+                NFT marketplace UI created with Anima for Figma. Collect, buy
+                and sell art from more than 20k NFT artists.
+              </p>
               <Button
-                bgColor={"none"}
-                border={"1px solid #A259FF"}
-                content={"View Rankings"}
-                borderRadius={"20px"}
-                textColor={"#fff"}
-                img={rocketIcon2}
+                img={rocketIcon}
+                content={'Get Started'}
+                borderRadius={'20px'}
+                bgColor={'#A259FF'}
+                textColor={'#FFF'}
+                fontSize={'16px'}
+                fontWeight={'600'}
               ></Button>
+              <div className="statistical">
+                <div className="statistical_left">
+                  <h4>240k+</h4>
+                  <span>Total Sale</span>
+                </div>
+                <div className="statistical_middle">
+                  <h4>100k+</h4>
+                  <span>Auctions</span>
+                </div>
+                <div className="statistical_right">
+                  <h4>240k+</h4>
+                  <span>Artists</span>
+                </div>
+              </div>
+            </div>
+            <div className="banner_right">
+              <Card
+                title={'Space Walking'}
+                img_product={banner1}
+                bgColor={'#3B3B3B'}
+                borderRadius={'20px'}
+                img_artist={avatar1}
+                name_artist={'Animakid'}
+              ></Card>
             </div>
           </div>
-          <div className="body_top_creator">
-            {topCreatorData
-              ? topCreatorData.map((e, index) => (
-                  <div className="top_creator_item">
-                    <Card
-                      number_id={index}
-                      type={e.type}
-                      img_artist={e.img_artist}
-                      name_artist={e.name_artist}
-                      total_sales={e.total_sales}
-                    ></Card>
-                  </div>
-                ))
-              : null}
+        </BannerStyled>
+        <TrendingCollectionStyled>
+          <div className="container">
+            <div className="header_trending_collection">
+              <h3>Trending Collection</h3>
+              <p>Checkout our weekly updated trending collection.</p>
+            </div>
+            <div className="body_trending_collection">
+              {trendingCollectionData
+                ? trendingCollectionData.map((e, index) => (
+                    <div className="trending_collection_item">
+                      <Card
+                        img_product={e.img_product}
+                        img_artist={e.img_artist}
+                        type={e.type}
+                        name_artist={e.name_artist}
+                        title={e.title}
+                      ></Card>
+                    </div>
+                  ))
+                : null}
+            </div>
           </div>
-        </div>
-      </TopCreatorStyled>
-      <CategoriesStyled>
-        <div className="header_category">
-          <h3>Browse Categories</h3>
-        </div>
-        <div className="body_category">
-          <div className="categories_item">
-            <Card></Card>
+        </TrendingCollectionStyled>
+        <TopCreatorStyled>
+          <div className="container">
+            <div className="header_top_creator">
+              <div className="header_top_creator_left">
+                <h3>Top Creators</h3>
+                <p>Checkout Top Rated Creators on the NFT Marketplace</p>
+              </div>
+              <div className="header_top_creator_right">
+                <Button
+                  bgColor={'none'}
+                  border={'1px solid #A259FF'}
+                  content={'View Rankings'}
+                  borderRadius={'20px'}
+                  textColor={'#fff'}
+                  img={rocketIcon2}
+                ></Button>
+              </div>
+            </div>
+            <div className="body_top_creator">
+              {topCreatorData
+                ? topCreatorData.map((e, index) => (
+                    <div className="top_creator_item">
+                      <Card
+                        number_id={index}
+                        type={e.type}
+                        img_artist={e.img_artist}
+                        name_artist={e.name_artist}
+                        total_sales={e.total_sales}
+                      ></Card>
+                    </div>
+                  ))
+                : null}
+            </div>
           </div>
-        </div>
-      </CategoriesStyled>
-    </HomePageStyled>
+        </TopCreatorStyled>
+        <CategoriesStyled>
+          <div className="header_category">
+            <h3>Browse Categories</h3>
+          </div>
+          <div className="body_category">
+            <div className="categories_item">
+              <Card></Card>
+            </div>
+          </div>
+        </CategoriesStyled>
+      </HomePageStyled>
+    </PrimaryLayout>
   );
 };
 
