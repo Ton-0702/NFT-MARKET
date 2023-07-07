@@ -26,6 +26,10 @@ const CardStyled = styled.div`
     padding: 20px;
   }
 
+  .body_card .title_card {
+    margin-bottom: 27px;
+  }
+
   .body_card .title_card h5 {
     color: #fff;
     font-size: 22px;
@@ -48,6 +52,42 @@ const CardStyled = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+  }
+
+  .body_card .info_card {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .body_card .info_card h6 {
+    color: #858584;
+    font-family: "Space Mono";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    margin-bottom: 5px;
+  }
+
+  .body_card .info_card span {
+    color: #fff;
+    font-family: "Space Mono";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  .body_card .info_card .price{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  
+  .body_card .info_card .highest_bid{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
   }
 `;
 
@@ -243,19 +283,50 @@ const CardTopCreatorHomePage = styled.div`
 const CardCategoriesHomePage = styled.div`
   border-radius: 20px;
   background: #3b3b3b;
-  
-  .header_card{
-    background-image: url(${(props) => props.background_img}) ;
+
+  .header_card {
+    background-image: url(${(props) => props.background_img});
+    background-repeat: round;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    backdrop-filter: blur(7.5px);
+    background-size: cover;
   }
 
-  .header_card img{
-    width: 80%;
-    height: 80%;
-    padding: 10%;
+  .header_card img {
+    width: 50%;
+    height: 50%;
     object-fit: cover;
   }
 
+  .body_card {
+    padding: 10%;
+  }
 
+  .body_card .title_card h5 {
+    color: #fff;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    text-transform: capitalize;
+    width: fit-content;
+  }
+
+  @media (max-width: 991.98px) {
+    .header_card img {
+      object-fit: contain;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .header_card img {
+      object-fit: contain;
+    }
+  }
 `;
 
 const Card = ({
@@ -338,7 +409,6 @@ const Card = ({
       </CardTopCreatorHomePage>
     );
   } else if (type === "CategoriesHomePage") {
-    console.log(background_img);
     return (
       <CardCategoriesHomePage
         background_img={background_img}
@@ -378,7 +448,16 @@ const Card = ({
               <span>{name_artist}</span>
             </div>
           </div>
-          <div className="info_card"></div>
+          <div className="info_card">
+            <div className="price">
+              <h6>Price</h6>
+              <span>1.63 ETH</span>
+            </div>
+            <div className="highest_bid">
+              <h6>Highest Bid</h6>
+              <span>0.33 wETH</span>
+            </div>
+          </div>
         </div>
       </CardStyled>
     );
