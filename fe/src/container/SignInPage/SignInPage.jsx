@@ -1,79 +1,9 @@
 import styled from "styled-components";
 import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
 import { Input } from "components/Input";
-import user_icon from "../../assets/SignIn_Up_Img/user_icon.svg";
-import mail_icon from "../../assets/SignIn_Up_Img/mail_icon.svg";
-import password_icon from "../../assets/SignIn_Up_Img/password_icon.svg";
-import { Button } from "components/Button";
-// import ValidateSignUp from "./SignUpValidate";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 const StyledSignInPage = styled.div`
-  /* * {
-    margin: 0;
-    padding: 0;
-  }
-  .wrapper {
-  }
-  .left-sign-up {
-    float: left;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .left-sign-up img {
-    width: 100%;
-    height: 100%;
-  }
-  .right-sign-up {
-    float: right;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .right-sign-up h2 {
-    color: white;
-    font-size: 51px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 110%;
-    text-transform: capitalize;
-  }
-  .right-sign-up p {
-    font-size: 22px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%;
-    text-transform: capitalize;
-    color: white;
-    padding-top: 20px;
-  }
-  .form-sign-up {
-    padding: 100px 300px 100px 60px;
-  }
-  form {
-   
-    display: flex;
-    flex-direction: column;
-
-    padding-bottom: 60px;
-  }
-
-  .input-and-error {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    height: 60px;
-    position: relative;
-  }*/
-  /* .err-msg-username {
-    position: absolute;
-    top: 39px;
-    left: 420px;
-  } */
   * {
     margin: 0;
     padding: 0;
@@ -157,7 +87,7 @@ const StyledSignInPage = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
 
   .form-group label {
@@ -311,11 +241,20 @@ const StyledSignInPage = styled.div`
 
   .input_error {
     color: red;
-  
+
     text-align: left;
     font-size: 14px;
     font-weight: 600;
     align-items: c;
+  }
+  #password {
+    position: relative;
+  }
+  .err-msg span {
+    position: absolute;
+  }
+  .input-form {
+    padding-bottom: 20px;
   }
 
   /* Responsive */
@@ -411,7 +350,7 @@ export const SignInPage = () => {
     setPasswordShown(!passwordShown);
     const eyesClose = document.querySelector(".eyes-close");
     const eyesOpen = document.querySelector(".eyes-open");
-    if (passwordShown == false) {
+    if (passwordShown === false) {
       eyesClose.classList.add("d-none");
       eyesOpen.classList.add("d-block");
     } else {
@@ -421,7 +360,7 @@ export const SignInPage = () => {
   };
   const ValidateSignIn = (e) => {
     e.preventDefault();
-    if (username.length == 0 || password.length == 0) {
+    if (username.length === 0 || password.length === 0) {
       setError(true);
     }
     console.log("username: " + username);
@@ -437,59 +376,61 @@ export const SignInPage = () => {
                 <h2 className="login-title">Log In</h2>
 
                 <form action="#" className="form-control">
-                  <div className="form-group">
-                    <label>Username</label>
-                    <Input
-                      placeHolder="Username"
-                      type="text"
-                      id="username"
-                      onChange={(e) => setUsername(e.target.value)}
-                    ></Input>
-                    <span className="form-message"></span>
-                  </div>
-                  <div className="err-msg-username">
-                    {error && username <= 0 ? (
-                      <span className="input_error">Enter Username</span>
-                    ) : (
-                      <span style={{height:10}}> </span>
-                    )}
-                  </div>
-                  <div className="form-group form-password">
-                    <div className="form-label">
-                      <label className="form-label-password">Password</label>
-                      <label className="form-label-forgot-password">
-                        Forgot Password?
-                      </label>
+                  <div className="input-form">
+                    <div className="form-group">
+                      <label>Username</label>
+                      <Input
+                        placeHolder="Username"
+                        type="text"
+                        id="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                      ></Input>
+                      <span className="form-message"></span>
                     </div>
+                    <div className="err-msg-username">
+                      {error && username <= 0 ? (
+                        <span className="input_error">Enter Username</span>
+                      ) : (
+                        <span style={{ height: 10 }}> </span>
+                      )}
+                    </div>
+                    <div className="form-group form-password">
+                      <div className="form-label">
+                        <label className="form-label-password">Password</label>
+                        <label className="form-label-forgot-password">
+                          Forgot Password?
+                        </label>
+                      </div>
 
-                    <Input
-                      placeHolder="Enter password"
-                      id="password"
-                      type={passwordShown ? "text" : "password"}
-                      onChange={(e) => setPassword(e.target.value)}
-                    ></Input>
-                    {/* <i
+                      <Input
+                        placeHolder="Enter password"
+                        id="password"
+                        type={passwordShown ? "text" : "password"}
+                        onChange={(e) => setPassword(e.target.value)}
+                      ></Input>
+                      {/* <i
                       className="fa-solid fa-eye eyes-open"
                       onClick={togglePassword}
                     ></i> */}
-                    <div className="err-msg">
-                      {error && password <= 0 ? (
-                        <span className="input_error">Enter Password</span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    <i
-                      class="fa-solid fa-eye-slash eyes-close"
-                      onClick={togglePassword}
-                    ></i>
-                    <i
-                      class="fa-solid fa-eye eyes-open"
-                      onClick={togglePassword}
-                    ></i>
-                    <span className="form-password-message"></span>
-                  </div>
+                      <div className="err-msg">
+                        {error && password <= 0 ? (
+                          <span className="input_error">Enter Password</span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
 
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close"
+                        onClick={togglePassword}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open"
+                        onClick={togglePassword}
+                      ></i>
+                      <span className="form-password-message"></span>
+                    </div>
+                  </div>
                   <div className="btn">
                     <button
                       type="button"
