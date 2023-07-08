@@ -141,7 +141,7 @@ const HeaderStyled = styled.div`
   // Medium devices (tablets, less than 992px)
   @media (max-width: 991.98px) {
     .header-wrapper {
-      max-width: 834px;
+      max-width: 736px;
     }
     .tablet-mobile-nav {
       display: block;
@@ -155,14 +155,15 @@ const HeaderStyled = styled.div`
   // Small devices (landscape phones, less than 768px)
   @media (max-width: 767.98px) {
     .header-wrapper {
-      max-width: 436px;
+      padding: 0 20px;
     }
   }
 
   //
   @media (max-width: 575.98px) {
     .header-wrapper {
-      max-width: 375px;
+      max-width: 315px;
+      padding: 0;
     }
   }
 `;

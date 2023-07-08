@@ -382,12 +382,16 @@ const RankingStyled = styled.div`
 
   // Small devices (landscape phones, less than 768px)
   @media (max-width: 767.98px) {
+    .ranking-container {
+      padding: 0 20px;
+    }
   }
 
   //
   @media (max-width: 575.98px) {
     .ranking-container {
       max-width: 315px;
+      padding: 0;
     }
     .ranking-title {
       margin: 30px 0 22px 0;
