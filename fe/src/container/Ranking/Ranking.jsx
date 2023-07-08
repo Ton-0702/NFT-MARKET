@@ -1,85 +1,145 @@
-import React from 'react';
+import React, {Fragment, useEffect} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {PrimaryLayout} from 'components/Layout';
 
 // import { ReactComponent as Avatar } from '../../assets/ranking-imgs/avatar.svg';
-import avatarImg from '../../assets/ranking-imgs/avatar.svg';
+// import avatarImg from '../../assets/ranking-imgs/avatar.svg';
+import {data} from './DataRanking';
 
-const Ranking = ({title, index, username, change, sold, volume}) => {
+const Ranking = ({title}) => {
+  // console.log(document.body.clientWidth);
+  useEffect(() => {
+    const width = document.body.clientWidth;
+    console.log(width);
+  }, []);
   return (
     <PrimaryLayout>
       <RankingStyled className="ranking">
         <div className="ranking-container container">
-          <div className="ranking-title">
-            <h2>{title || 'Top Creators'}</h2>
-            <p className="title-desc">
-              Check out top ranking NFT artists on the NFT Marketplace.
-            </p>
-          </div>
-          <div className="ranking-body">
-            <div className="ranking-filter">
-              <ul className="ranking-filter-list">
-                <li className="ranking-filter-item active">Today</li>
-                <li className="ranking-filter-item">This Week</li>
-                <li className="ranking-filter-item">This Month</li>
-                <li className="ranking-filter-item">All Time</li>
-              </ul>
-              <div className="ranking-table">
-                <div className="ranking-table-wrap">
-                  <table className="table">
-                    <tr className="ranking-row-header">
-                      <th className="table-header-item">
-                        <span className="header-item-stt">#</span>
-                      </th>
-                      <th className="table-header-item header-item-artist">
-                        Artist
-                      </th>
-                      <th className="table-header-item table-header-change">
-                        Change
-                      </th>
-                      <th className="table-header-item table-header-sold">
-                        NFTs Sold
-                      </th>
-                      <th className="table-header-item table-header-volume">
-                        Volume
-                      </th>
-                    </tr>
-                    <tbody className="table-body">
-                      <tr className="table-row-body">
-                        <td className="table-body-data">
-                          <span className="body-data-stt">{index || 1}</span>
-                        </td>
-                        <td className="table-body-data">
-                          <img
-                            className="table-body-data-img"
-                            src={avatarImg}
-                            alt="avatar"
-                          />
-                          <span className="body-data-username">
-                            {username || 'Jaydon Ekstrom Bothman'}{' '}
-                          </span>
-                        </td>
-                        <td className="table-body-data">
-                          <span className="body-data-change">
-                            {change || '+1.41%'}
-                          </span>
-                        </td>
-                        <td className="table-body-data">
-                          <span className="body-data-sold">{sold || 602}</span>
-                        </td>
-                        <td className="table-body-data">
-                          <span className="body-data-volume">
-                            {volume || 12.4} ETH
-                          </span>
-                        </td>
+          <div className="ranking-content">
+            <div className="ranking-title">
+              <h2>{title || 'Top Creators'}</h2>
+              <p className="title-desc">
+                Check out top ranking NFT artists on the NFT Marketplace.
+              </p>
+            </div>
+            <div className="ranking-body">
+              <div className="ranking-filter">
+                <ul className="ranking-filter-list">
+                  <li className="ranking-filter-item active">
+                    <span className="ranking-filter-item__desktop">Today</span>
+                    <span className="ranking-filter-item__mobile">1d</span>
+                  </li>
+                  <li className="ranking-filter-item">
+                    <span className="ranking-filter-item__desktop">
+                      This Week
+                    </span>
+                    <span className="ranking-filter-item__mobile">7d</span>
+                  </li>
+                  <li className="ranking-filter-item">
+                    <span className="ranking-filter-item__desktop">
+                      This Month
+                    </span>
+                    <span className="ranking-filter-item__mobile">30d</span>
+                  </li>
+                  <li className="ranking-filter-item">All Time</li>
+                </ul>
+                <div className="ranking-table">
+                  <div className="ranking-table-wrap">
+                    <table className="table">
+                      <tr className="ranking-row-header">
+                        <th className="table-header-item">
+                          <span className="header-item-stt">#</span>
+                        </th>
+                        <th className="table-header-item header-item-artist">
+                          Artist
+                        </th>
+                        <th className="table-header-item table-header-change">
+                          Change
+                        </th>
+                        <th className="table-header-item table-header-sold">
+                          NFTs Sold
+                        </th>
+                        <th className="table-header-item table-header-volume">
+                          Volume
+                        </th>
                       </tr>
-                    </tbody>
-                  </table>
-                </div>
+                      {/* Body */}
+                      <tbody className="table-body">
+                        {data &&
+                          data.map((item, index) => {
+                            return (
+                              <Fragment key={item.id}>
+                                <DataTableRanking
+                                  index={index + 1}
+                                  src={item.img}
+                                  username={item.username}
+                                  change={item.change}
+                                  sold={item.sold}
+                                  volume={item.volume}
+                                ></DataTableRanking>
+                              </Fragment>
+                            );
+                          })}
+                      </tbody>
 
-                <div className="ranking-table-body">
-                  {/* <RankingCard></RankingCard> */}
+                      {/* {data &&
+                        data.map((item, index) => {
+                          return (
+                            <DataTableRanking
+                              key={item.id}
+                              index={index + 1}
+                              src={item.img}
+                              username={item.username}
+                              change={item.change}
+                              sold={item.sold}
+                              volume={item.volume}
+                            ></DataTableRanking>
+                          );
+                        })} */}
+
+                      {/* <tbody className="table-body">
+                      {data &&
+                        data.map((item, index) => {
+                          return (
+                            <tr key={item.id} className="table-row-body">
+                              <td className="table-body-data">
+                                <span className="body-data-stt">
+                                  {index || 1}
+                                </span>
+                              </td>
+                              <td className="table-body-data">
+                                <img
+                                  className="table-body-data-img"
+                                  src={item.img}
+                                  alt="avatar"
+                                />
+                                <span className="body-data-username">
+                                  {item.username || 'Jaydon Ekstrom Bothman'}{' '}
+                                </span>
+                              </td>
+                              <td className="table-body-data">
+                                <span className="body-data-change">
+                                  {item.change || '+1.41%'}
+                                </span>
+                              </td>
+                              <td className="table-body-data">
+                                <span className="body-data-sold">
+                                  {item.sold || 602}
+                                </span>
+                              </td>
+                              <td className="table-body-data">
+                                <span className="body-data-volume">
+                                  {item.volume || 12.4} ETH
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody> */}
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,17 +153,21 @@ const Ranking = ({title, index, username, change, sold, volume}) => {
 export default Ranking;
 
 const RankingStyled = styled.div`
-  margin-top: 50px;
   background-color: ${colors.background};
+  .ranking-title {
+    margin: 80px 0;
+  }
   .ranking-title h2 {
     font-size: 51px;
     font-weight: 600;
-    line-height: 56.1px;
+    /* line-height: 56.1px; */
     color: ${colors.whiteColor};
-    margin: 0;
+    /* margin: 0;
+    padding: 0; */
     cursor: default;
   }
   .title-desc {
+    margin-top: 20px;
     font-size: 22px;
     font-weight: 400;
     line-height: 35.2px;
@@ -117,6 +181,7 @@ const RankingStyled = styled.div`
     list-style: none;
     padding: 0;
     margin: 0;
+    cursor: pointer;
   }
   .ranking-filter-item {
     /* display: inline-block; */
@@ -193,6 +258,9 @@ const RankingStyled = styled.div`
   .table-header-volume {
     cursor: pointer;
   }
+  .ranking-filter-item__mobile {
+    display: none;
+  }
 
   .header-item-artist {
     width: 442px;
@@ -242,7 +310,14 @@ const RankingStyled = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
+    cursor: pointer;
   }
+  .table-body-data-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
   .body-data-username {
     font-size: 22px;
     font-weight: 600;
@@ -260,32 +335,144 @@ const RankingStyled = styled.div`
     font-weight: 400;
     color: ${colors.whiteColor};
   }
+
+  /* Responsive */
+
+  // Large devices (desktops, less than 1200px)
+  @media (max-width: 1199.98px) {
+  }
+  // Medium devices (tablets, less than 992px)
+  @media (max-width: 991.98px) {
+    .ranking-container {
+      max-width: 690px;
+    }
+    .ranking-title {
+      margin: 40px 0;
+    }
+    .ranking-title h2 {
+      font-size: 38px;
+    }
+    .title-desc {
+      font-size: 16px;
+    }
+    .ranking-filter-item {
+      font-size: 16px;
+    }
+    .table-header-sold {
+      display: none;
+    }
+    /* tbody */
+    .table-row-body {
+      height: 60px;
+    }
+    .body-data-stt {
+      background-color: transparent;
+    }
+    .table-body-data-img {
+      width: 24px;
+      height: 24px;
+    }
+    .body-data-username {
+      font-size: 18px;
+    }
+    .table-body-data:nth-child(4) {
+      display: none;
+    }
+  }
+
+  // Small devices (landscape phones, less than 768px)
+  @media (max-width: 767.98px) {
+  }
+
+  //
+  @media (max-width: 575.98px) {
+    .ranking-container {
+      max-width: 315px;
+    }
+    .ranking-title {
+      margin: 30px 0 22px 0;
+    }
+    .ranking-title h2 {
+      font-size: 28px;
+    }
+    .title-desc {
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 22.4px;
+    }
+    .ranking-filter-item {
+      font-size: 16px;
+    }
+    .ranking-filter-item__desktop {
+      display: none;
+    }
+    .ranking-filter-item__mobile {
+      display: block;
+    }
+
+    // table
+    .ranking-table {
+      margin-top: 18px;
+    }
+    .header-item-stt {
+      width: 24px;
+      height: 22px;
+      line-height: 22px;
+    }
+    .header-item-artist,
+    .table-header-volume {
+      font-size: 12px;
+    }
+    .table-header-change {
+      display: none;
+    }
+
+    .table-header-sold {
+      display: none;
+    }
+    .table-body-data:nth-child(3) {
+      display: none;
+    }
+    .body-data-stt {
+      font-size: 12px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+    .body-data-username {
+      font-size: 16px;
+      margin-left: 12px;
+      line-height: 20px;
+    }
+    .body-data-volume {
+      font-size: 12px;
+    }
+  }
 `;
 
-// const RankingCard = ({
-//   amount,
-//   src,
-//   username,
-//   changePercent,
-//   soldAmount,
-//   volume,
-// }) => {
-//   return (
-//     <RankingCardStyled>
-//       <div className="ranking-card-container">
-//         <div className="ranking-card-stt">{amount || 1}</div>
-//         <div className="ranking-card-avatar">
-//           <img src={src} alt="" />
-//         </div>
-//         <div className="ranking-username">
-//           {username || 'Jaydon Ekstrom Bothman'}
-//         </div>
-//         <div className="ranking-change">{changePercent || '+1.4%'}</div>
-//         <div className="ranking-sold">{soldAmount || 602}</div>
-//         <div className="ranking-volume">{volume || 12.4 + 'ETH'}</div>
-//       </div>
-//     </RankingCardStyled>
-//   );
-// };
-
-// const RankingCardStyled = styled.div``;
+const DataTableRanking = ({index, src, username, change, sold, volume}) => {
+  return (
+    <>
+      <tr className="table-row-body">
+        <td className="table-body-data">
+          <span className="body-data-stt">{index || 1}</span>
+        </td>
+        <td className="table-body-data">
+          <img className="table-body-data-img" src={src} alt="avatar" />
+          <span className="body-data-username">
+            {username || 'Jaydon Ekstrom Bothman'}
+          </span>
+        </td>
+        <td className="table-body-data">
+          <span className="body-data-change">+{change || '+1.41%'}%</span>
+        </td>
+        <td className="table-body-data">
+          <span className="body-data-sold">{sold || 602}</span>
+        </td>
+        <td className="table-body-data">
+          <span className="body-data-volume">{volume || 12.4} ETH</span>
+        </td>
+      </tr>
+    </>
+  );
+};
