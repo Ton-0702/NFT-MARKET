@@ -21,22 +21,22 @@ public class NFT {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
-    @Column(columnDefinition = "DOUBLE NOT NULL")
+    @Column(name = "price", columnDefinition = "DOUBLE NOT NULL")
     private Double price;
 
-    @Column(columnDefinition = "LONGTEXT DEFAULT NULL")
+    @Column(name = "description", columnDefinition = "LONGTEXT DEFAULT NULL")
     private String description;
 
-    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
+    @Column(name = "date_create", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_create;
 
-    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
+    @Column(name = "date_start_bid", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_start_bid;
 
-    @Column(columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
+    @Column(name = "date_end_bid", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_end_bid;
 
 //    @OneToOne
@@ -44,9 +44,9 @@ public class NFT {
 //    @JoinColumn(name = "nft_id")
 //    private NFTOwened nftOwened;
 
-    @OneToOne(mappedBy = "nft", cascade = CascadeType.ALL )
-    @PrimaryKeyJoinColumn
-    private NFTOwened nftOwened;
+//    @OneToOne
+//    @PrimaryKeyJoinColumn
+//    private NFTOwened nftOwened;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,11 +54,11 @@ public class NFT {
     private Account account;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "nft", cascade = CascadeType.ALL)
     private List<ClassifyCategory> classifyCategory;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "NFT_like_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "nft", cascade = CascadeType.ALL)
     private List<NFTLike> nftLikes;
 
     @JsonIgnore

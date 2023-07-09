@@ -11,13 +11,14 @@ import java.util.List;
 @Table(name = "collection")
 public class Collection {
     @Id
+    @Column(name = "collection_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "varchar(200)")
+    @Column(name = "collection_name", columnDefinition = "varchar(200)")
     private String collection_name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private List<NFTOwened> nftOweneds;
+    @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
+    private List<NFTOwened> nftOwens;
 }

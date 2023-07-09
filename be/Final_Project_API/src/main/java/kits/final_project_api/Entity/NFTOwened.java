@@ -17,17 +17,17 @@ public class NFTOwened {
     private Long id;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "nft_id")
+    @PrimaryKeyJoinColumn
+//    @JoinColumn(name = "nft_id")
     private NFT nft;
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "collection_id")
     private Collection collection;
 }
