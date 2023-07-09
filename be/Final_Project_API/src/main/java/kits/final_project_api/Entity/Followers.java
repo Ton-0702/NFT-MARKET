@@ -11,12 +11,12 @@ public class Followers {
     @Id
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "accountId") // Thông qua khóa ngoại account_id của bảng Account
+    @JoinColumn(name = "account_id") // Thông qua khóa ngoại account_id của bảng Account
     private Account account;
 
     @Id
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "accountId") // Thông qua khóa ngoại account_id của bảng Account
+    @JoinColumn(name = "account_id") // Thông qua khóa ngoại account_id của bảng Account
     private Account account_follower;
 }

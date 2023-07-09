@@ -38,16 +38,16 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @Column(columnDefinition = "varchar(150) not null")
+    @Column(name = "username", columnDefinition = "varchar(150) not null")
     private String username;
 
-    @Column(columnDefinition = "varchar(200) not null")
+    @Column(name = "email", columnDefinition = "varchar(200) not null")
     private String email;
 
-    @Column(columnDefinition = "varchar(200) not null")
+    @Column(name = "password", columnDefinition = "varchar(200) not null")
     private String password;
 
-    @Column(columnDefinition = "TEXT DEFAULT NULL")
+    @Column(name = "biography", columnDefinition = "TEXT DEFAULT NULL")
     private String biography;
 
     @JsonIgnore
@@ -68,7 +68,7 @@ public class Account implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // MappedBy trỏ tới tên biến product ở trong ProductOwend.
-    private List<NFTOwened> nftOweneds;
+    private List<NFTOwened> nftOwens;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)

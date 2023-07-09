@@ -14,12 +14,12 @@ public class NFTLike {
     @Id
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "id") // thông qua khóa ngoại của nft_id
+    @JoinColumn(name = "nft_id") // thông qua khóa ngoại của nft_id
     private NFT nft;
 
     @Id
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "accountId")// thông qua khóa ngoại của account_id
+    @JoinColumn(name = "account_id")// thông qua khóa ngoại của account_id
     private Account account;
 }
