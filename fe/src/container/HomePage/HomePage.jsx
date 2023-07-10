@@ -848,7 +848,7 @@ const HomePage = () => {
                 fontSize={"16px"}
                 fontWeight={"600"}
                 padding={"22.5px 50px"}
-
+                jutifyContent={"center"}
               ></Button>
               <div className="statistical">
                 <div className="statistical_left">
@@ -919,6 +919,7 @@ const HomePage = () => {
                   textColor={"#fff"}
                   img={rocketIcon2}
                   padding={"22.5px 50px"}
+                  jutifyContent={"center"}
                 ></Button>
               </div>
             </div>
@@ -976,6 +977,7 @@ const HomePage = () => {
                   textColor={"#fff"}
                   img={discoverButton}
                   padding={"22.5px 50px"}
+                  jutifyContent={"center"}
                 ></Button>
               </div>
             </div>
