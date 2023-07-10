@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Table(name = "transaction_bid")
@@ -27,5 +29,6 @@ public class Transaction {
     private Double highest_bid;
 
     @Column(name = "date_transaction", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
-    private String date_transaction;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date_transaction;
 }
