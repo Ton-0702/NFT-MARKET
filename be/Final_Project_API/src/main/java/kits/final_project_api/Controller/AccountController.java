@@ -1,7 +1,6 @@
 package kits.final_project_api.Controller;
 
 import kits.final_project_api.Entity.Account;
-import kits.final_project_api.Entity.NFT;
 //import kits.final_project_api.Service.CategoryService;
 //import kits.final_project_api.Service.ProductService;
 import kits.final_project_api.Service.AccountService;
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("user") // /users
-public class UserController {
+public class AccountController {
 //    @Autowired
 //    UserService userService;
 //
