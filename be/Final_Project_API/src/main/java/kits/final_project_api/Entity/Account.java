@@ -44,6 +44,9 @@ public class Account implements Serializable {
     @Column(name = "email", columnDefinition = "varchar(200) not null")
     private String email;
 
+    @Column(name = "avatar", columnDefinition = "varchar(200) not null")
+    private String avatar;
+
     @Column(name = "password", columnDefinition = "varchar(200) not null")
     private String password;
 
