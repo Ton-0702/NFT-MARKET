@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import React from "react";
-import ReactHtmlParser from "react-html-parser";
+import styled from 'styled-components';
+import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 
 const CardStyled = styled.div`
   width: 100%;
@@ -214,7 +214,7 @@ const CardTopCreatorHomePage = styled.div`
     color: #858584;
     text-align: center;
     font-size: 16px;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -259,7 +259,7 @@ const CardTopCreatorHomePage = styled.div`
   .body_card .total_sales span {
     color: #fff;
     font-size: 16px;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -279,6 +279,7 @@ const CardTopCreatorHomePage = styled.div`
   @media (max-width: 767.98px) {
   }
 `;
+
 
 const CardCategoriesHomePage = styled.div`
   border-radius: 20px;
@@ -329,6 +330,7 @@ const CardCategoriesHomePage = styled.div`
   }
 `;
 
+
 const Card = ({
   type,
   title,
@@ -343,10 +345,11 @@ const Card = ({
   number_id,
   background_img,
 }) => {
-  if (type === "large") {
+  if (type === 'large') {
     return <CardLargeStyled></CardLargeStyled>;
-  } else if (type === "small") {
+  } else if (type === 'small') {
     return <CardSmallStyled></CardSmallStyled>;
+
   } else if (type === "TrendingCollection") {
     type2 = "";
     if (img_product.length > 1 && img_product.length <= 4) {
@@ -381,7 +384,7 @@ const Card = ({
         </div>
       </CardTrendingCollectionStyled>,
     ];
-  } else if (type === "TopCreatorHomePage") {
+  } else if (type === 'TopCreatorHomePage') {
     return (
       <CardTopCreatorHomePage
         type={type}
@@ -426,6 +429,7 @@ const Card = ({
         </div>
       </CardCategoriesHomePage>
     );
+
   } else {
     return (
       <CardStyled
@@ -464,4 +468,4 @@ const Card = ({
   }
 };
 
-export { Card };
+export {Card};
