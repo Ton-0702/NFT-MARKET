@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-public class TransactionDTO {
+public class TransactionDTO implements Serializable {
     private Long id;
     private Long nft_id;
     private Long account_id;

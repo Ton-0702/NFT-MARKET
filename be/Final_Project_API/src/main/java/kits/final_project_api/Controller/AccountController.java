@@ -14,34 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("user") // /users
+@RequestMapping("users") // /users
 public class AccountController {
-//    @Autowired
-//    UserService userService;
-//
-//    // Top Creator
-//    @GetMapping
-////    @RequestBody
-//    public List<UserDTO> getAllUser(Model model){
-//        // Get All user
-//        List<UserDTO> users =userService.getAllUsers();
-//        // 2. Pass users to model
-//        model.addAttribute("users", users);
-//        System.out.println("Get All user: "+users);
-//        return users;
-//    }
-
-
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-
-//    @Autowired
-//    private ProductService productService;
-//
-//    @Autowired
-//    private CategoryService categoryService;
-
     @Autowired
     private AccountService accountService;
 
@@ -50,7 +24,7 @@ public class AccountController {
     public List<Account> getAllUsers(Model model){
 //        System.out.println("TESST: "+userService.findAll());
         List<Account> users = accountService.findAll();
-        model.addAttribute("users", users);
+//        model.addAttribute("users", users);
         return users;
 //
 //        for(Account u : users) {
