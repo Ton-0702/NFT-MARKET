@@ -1,9 +1,8 @@
-
-import styled from "styled-components";
-import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
-import { Input } from "components/Input";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
+import {Input} from 'components/Input';
+import {useState} from 'react';
+import {NavLink} from 'react-router-dom';
 // import { type } from "@testing-library/user-event/dist/type";
 const StyledSignUpPage = styled.div`
   * {
@@ -20,7 +19,7 @@ const StyledSignUpPage = styled.div`
   }
 
   body {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
   }
 
@@ -409,36 +408,67 @@ const StyledSignUpPage = styled.div`
     }
   }
   @media (max-width: 575.98px) {
-    .login-title{
+    .login-title {
       font-size: 30px;
     }
   }
 `;
 
 export const SignUpPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [email, setEmail] = useState('');
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+  const [error, setError] = useState('');
   var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const ValidateSignIn = (e) => {
+  const ValidateSignUp = (e) => {
     e.preventDefault();
     if (
       username.length === 0 ||
       password.length === 0 ||
       email.length === 0 ||
-      confirmPassword === 0 ||
-      password !== confirmPassword ||
+      confirmPasswordValue === '' ||
+      // password !== confirmPasswordValue ||
       !emailPattern.test(email)
     ) {
       setError(true);
     }
-    console.log("username: " + username);
-    console.log("email:" + email);
-    console.log("password: " + password);
-    console.log("confirm password: " + confirmPassword);
+    console.log('username: ' + username);
+    console.log('email:' + email);
+    console.log('password: ' + password);
+    console.log('confirm password: ' + confirmPasswordValue);
   };
+  function togglePassword() {
+    console.log('click');
+    setPasswordShown(!passwordShown);
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
+    if (passwordShown === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
+
+  function togglePasswordConfirm() {
+    console.log('click psw confirm');
+    setPasswordConfirm(!passwordConfirm);
+    const eyesOpen = document.querySelector('.eyes-confirm-open');
+    const eyesClose = document.querySelector('.eyes-confirm-close');
+    console.log('eyesClose', eyesClose);
+    console.log('eyesOpen', eyesOpen);
+    if (passwordConfirm === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
   return (
     <StyledSignUpPage>
       <div className="main">
@@ -464,7 +494,7 @@ export const SignUpPage = () => {
                       {error && username <= 0 ? (
                         <span className="input_error">Enter Username</span>
                       ) : (
-                        <span style={{ height: 10 }}> </span>
+                        <span style={{height: 10}}> </span>
                       )}
                     </div>
 
@@ -472,7 +502,7 @@ export const SignUpPage = () => {
                       <label>Email Address</label>
                       <Input
                         placeHolder="Email Address"
-                        type="text"
+                        type="email"
                         id="email"
                         onChange={(e) => setEmail(e.target.value)}
                       ></Input>
@@ -482,14 +512,14 @@ export const SignUpPage = () => {
                       {error && email <= 0 ? (
                         <span className="input_error">Enter Email</span>
                       ) : (
-                        <span style={{ height: 10 }}> </span>
+                        <span style={{height: 10}}> </span>
                       )}
                       {error &&
                       email.length > 0 &&
                       !emailPattern.test(email) ? (
                         <span className="input_error">Invalid Email</span>
                       ) : (
-                        <span style={{ height: 10 }}> </span>
+                        <span style={{height: 10}}> </span>
                       )}
                     </div>
 
@@ -498,23 +528,29 @@ export const SignUpPage = () => {
                       <div>
                         <Input
                           placeHolder="Password"
-                          type="password"
+                          type={passwordShown ? 'password' : 'text'}
                           id="password"
-                          // onClick={e=>  }
                           onChange={(e) => setPassword(e.target.value)}
-                          password={true}
                         ></Input>
+                        <i
+                          className="fa-solid fa-eye-slash eyes-close"
+                          onClick={togglePassword}
+                        ></i>
+                        <i
+                          className="fa-solid fa-eye eyes-open"
+                          onClick={togglePassword}
+                        ></i>
 
                         <div className="err-msg">
                           {error && password <= 0 ? (
                             <span
                               className="input_error"
-                              style={{ paddingBottom: 30 }}
+                              style={{paddingBottom: 30}}
                             >
                               Enter Password
                             </span>
                           ) : (
-                            ""
+                            ''
                           )}
                         </div>
                       </div>
@@ -527,35 +563,45 @@ export const SignUpPage = () => {
                       <div>
                         <Input
                           placeHolder="Password"
-                          type="password"
-                          id="password"
+                          type={passwordConfirm ? 'password' : 'text'}
+                          id="password-confirm"
                           // onClick={e=>  }
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          password={true}
+                          onChange={(e) =>
+                            setConfirmPasswordValue(e.target.value)
+                          }
                         ></Input>
 
+                        <i
+                          className="fa-solid fa-eye-slash eyes-close  eyes-confirm-close"
+                          onClick={togglePasswordConfirm}
+                        ></i>
+                        <i
+                          className="fa-solid fa-eye eyes-open  eyes-confirm-open"
+                          onClick={togglePasswordConfirm}
+                        ></i>
+
                         <div className="err-msg">
-                          {error && confirmPassword <= 0 ? (
+                          {error && confirmPasswordValue <= 0 ? (
                             <span
                               className="input_error"
-                              style={{ paddingBottom: 30 }}
+                              style={{paddingBottom: 30}}
                             >
                               Enter Password
                             </span>
                           ) : (
-                            ""
+                            ''
                           )}
                           {error &&
-                          confirmPassword > 0 &&
-                          confirmPassword !== password ? (
+                          confirmPasswordValue > 0 &&
+                          confirmPasswordValue !== password ? (
                             <span
                               className="input_error"
-                              style={{ paddingBottom: 30 }}
+                              style={{paddingBottom: 30}}
                             >
                               Password and Confirm Password don't match
                             </span>
                           ) : (
-                            ""
+                            ''
                           )}
                         </div>
                       </div>
@@ -567,7 +613,7 @@ export const SignUpPage = () => {
                     <button
                       type="button"
                       className="btn-login"
-                      onClick={ValidateSignIn}
+                      onClick={ValidateSignUp}
                     >
                       Sign Up
                       <i className="fas fa-arrow-right"></i>
@@ -595,4 +641,3 @@ export const SignUpPage = () => {
     </StyledSignUpPage>
   );
 };
-

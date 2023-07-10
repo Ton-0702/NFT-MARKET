@@ -1,9 +1,8 @@
-
-import styled from "styled-components";
-import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
-import { Input } from "components/Input";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
+import {Input} from 'components/Input';
+import {useState} from 'react';
+import {NavLink} from 'react-router-dom';
 const StyledSignInPage = styled.div`
   * {
     margin: 0;
@@ -19,7 +18,7 @@ const StyledSignInPage = styled.div`
   }
 
   body {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
   }
 
@@ -344,19 +343,19 @@ const StyledSignInPage = styled.div`
 
 export const SignInPage = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
-    const eyesClose = document.querySelector(".eyes-close");
-    const eyesOpen = document.querySelector(".eyes-open");
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
     if (passwordShown === false) {
-      eyesClose.classList.add("d-none");
-      eyesOpen.classList.add("d-block");
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
     } else {
-      eyesClose.classList.remove("d-none");
-      eyesOpen.classList.remove("d-block");
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
     }
   };
   const ValidateSignIn = (e) => {
@@ -364,8 +363,8 @@ export const SignInPage = () => {
     if (username.length === 0 || password.length === 0) {
       setError(true);
     }
-    console.log("username: " + username);
-    console.log("password: " + password);
+    console.log('username: ' + username);
+    console.log('password: ' + password);
   };
   return (
     <StyledSignInPage>
@@ -392,7 +391,7 @@ export const SignInPage = () => {
                       {error && username <= 0 ? (
                         <span className="input_error">Enter Username</span>
                       ) : (
-                        <span style={{ height: 10 }}> </span>
+                        <span style={{height: 10}}> </span>
                       )}
                     </div>
                     <div className="form-group form-password">
@@ -406,7 +405,7 @@ export const SignInPage = () => {
                       <Input
                         placeHolder="Enter password"
                         id="password"
-                        type={passwordShown ? "text" : "password"}
+                        type={passwordShown ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
                       ></Input>
                       {/* <i
@@ -417,7 +416,7 @@ export const SignInPage = () => {
                         {error && password <= 0 ? (
                           <span className="input_error">Enter Password</span>
                         ) : (
-                          ""
+                          ''
                         )}
                       </div>
 
@@ -464,4 +463,3 @@ export const SignInPage = () => {
     </StyledSignInPage>
   );
 };
-

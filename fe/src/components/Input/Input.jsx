@@ -1,6 +1,5 @@
-
-import styled from "styled-components";
-import { useState } from "react";
+import styled from 'styled-components';
+import {useState} from 'react';
 
 // const { default: styled } = require("styled-components");
 
@@ -58,22 +57,23 @@ const Input = ({
   paddingBottom,
   paddingLeft,
   password,
-  onClick
+  onClick,
 }) => {
+  // console.log('password:', password);
   const [passwordShown, setPasswordShown] = useState(false);
-  function togglePassword() {
-    console.log('click');
-    setPasswordShown(!passwordShown);
-    const eyesClose = document.querySelector(".eyes-close");
-    const eyesOpen = document.querySelector(".eyes-open");
-    if (passwordShown === false) {
-      eyesClose.classList.add("d-none");
-      eyesOpen.classList.add("d-block");
-    } else {
-      eyesClose.classList.remove("d-none");
-      eyesOpen.classList.remove("d-block");
-    }
-  };
+  // function togglePassword() {
+  //   console.log('click');
+  //   setPasswordShown(!passwordShown);
+  //   const eyesClose = document.querySelector('.eyes-close');
+  //   const eyesOpen = document.querySelector('.eyes-open');
+  //   if (passwordShown === false) {
+  //     eyesClose.classList.add('d-none');
+  //     eyesOpen.classList.add('d-block');
+  //   } else {
+  //     eyesClose.classList.remove('d-none');
+  //     eyesOpen.classList.remove('d-block');
+  //   }
+  // }
   return (
     <StyledInput
       textColor={textColor}
@@ -85,8 +85,8 @@ const Input = ({
       fontWeight={fontWeight}
       width={width}
       height={height}
-      // type={passwordShown ? "text" : "password"}
-      type={type}
+      type={passwordShown ? 'text' : 'password'}
+      // type={type}
       onClick={onClick}
       id={id}
       onChange={onChange}
@@ -94,27 +94,30 @@ const Input = ({
       paddingRight={paddingRight}
       paddingBottom={paddingBottom}
       paddingLeft={paddingLeft}
-      password = {password}
-      passwordShown={passwordShown}
+      password={password}
+      // passwordShown={passwordShown}
     >
+      <input
+        type={type}
+        placeholder={placeHolder}
+        id={id}
+        onChange={onChange}
+      />
 
-        <input
-          type={passwordShown ? "text" : "password"}
-          placeholder={placeHolder}
-          id={id}
-          onChange={onChange}
-        />
-
-        {password && <><i
-        className="fa-solid fa-eye-slash eyes-close"
-        onClick={togglePassword}
-      ></i><i
-        className="fa-solid fa-eye eyes-open"
-        onClick={togglePassword}
-      ></i></>}
+      {/* {password && (
+        <>
+          {passwordShown ? (
+            <i
+              className="fa-solid fa-eye-slash eyes-close"
+              onClick={onClick}
+            ></i>
+          ) : (
+            <i className="fa-solid fa-eye eyes-open" onClick={onClick}></i>
+          )}
+        </>
+      )} */}
     </StyledInput>
   );
 };
 
 export {Input};
-
