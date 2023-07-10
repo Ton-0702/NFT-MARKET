@@ -68,7 +68,7 @@ export default Footer;
 const FooterStyled = styled.div`
   margin-top: 100px;
   padding: 40px 0;
-  background-color: ${colors.background};
+  background-color: ${colors.backgroundColor2};
 
   .footer-wrap {
     max-width: 1050px;
