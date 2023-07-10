@@ -1,2 +1,5 @@
-import {PrimaryLayout} from './PrimaryLayout';
-export {PrimaryLayout};
+
+import { PrimaryLayout } from "./PrimaryLayout";
+
+export { PrimaryLayout };
+
