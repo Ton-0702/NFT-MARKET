@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    @Query(value = "SELECT n.nft_name, a.username, t.highest_bid, t.date_transaction " +
+    @Query(value = "SELECT n.nft_name, a.username, t.highest_bid, REPLACE(t.date_transaction, 'T', '') AS date_transaction " +
             "FROM transaction_bid AS t " +
             "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
             "INNER JOIN account AS a ON t.account_id = a.account_id " +
