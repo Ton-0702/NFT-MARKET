@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const ButtonStyled = styled.div`
   button {
@@ -8,14 +8,14 @@ const ButtonStyled = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
-    border: ${(props) => (props.border ? props.border : "none")};
+    border: ${(props) => (props.border ? props.border : 'none')};
     border-radius: ${(props) => props.borderRadius};
     background: ${(props) => props.bgColor};
-    font-weight: ${(props) => (props.fontWeight ? props.fontWeight : "500")};
+    font-weight: ${(props) => (props.fontWeight ? props.fontWeight : '500')};
     line-height: 21px;
     color: ${(props) => props.textColor};
     font-size: ${(props) => props.fontSize};
-    margin-right: ${(props) => (props.mr ? `${props.mr}` : "unset")};
+    margin-right: ${(props) => (props.mr ? `${props.mr}` : 'unset')};
   }
 `;
 
@@ -38,9 +38,9 @@ const Button = ({
   onSubmit,
   onClick,
 }) => {
-  if (type === "large") {
+  if (type === 'large') {
     return <ButtonLargeStyled></ButtonLargeStyled>;
-  } else if (type === "small") {
+  } else if (type === 'small') {
     return <ButtonSmallStyled></ButtonSmallStyled>;
   } else {
     return (
@@ -67,4 +67,6 @@ const Button = ({
   }
 };
 
+
 export { Button };
+

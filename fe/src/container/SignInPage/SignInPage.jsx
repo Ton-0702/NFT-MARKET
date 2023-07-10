@@ -1,3 +1,4 @@
+
 import styled from "styled-components";
 import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
 import { Input } from "components/Input";
@@ -463,3 +464,4 @@ export const SignInPage = () => {
     </StyledSignInPage>
   );
 };
+

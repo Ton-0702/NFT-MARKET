@@ -1,3 +1,4 @@
+
 import styled from "styled-components";
 
 import { Card } from "components/Card";
@@ -34,101 +35,102 @@ import how_it_work2 from "../../assets/HomePage/HowItWorks/HowItWork2.svg";
 import how_it_work3 from "../../assets/HomePage/HowItWorks/HowItWork3.svg";
 import getNoti from "../../assets/HomePage/GetNoti/Photo.png";
 
+
 const trendingCollectionData = [
   {
     img_product: [trending1, trending2, trending3],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
   {
     img_product: [trending1, trending2, trending3, trending4],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
   {
     img_product: [trending1, trending2, trending3, trending4, trending5],
     img_artist: avatar1,
-    name_artist: "MrFox",
-    title: "DSGN Animals",
-    type: "TrendingCollection",
+    name_artist: 'MrFox',
+    title: 'DSGN Animals',
+    type: 'TrendingCollection',
   },
 ];
 
 const topCreatorData = [
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
   {
-    type: "TopCreatorHomePage",
+    type: 'TopCreatorHomePage',
     img_artist: topCreator1,
-    name_artist: "Keepitreal",
+    name_artist: 'Keepitreal',
     total_sales: 34.53,
   },
 ];
@@ -508,6 +510,7 @@ const TopCreatorStyled = styled.div`
   }
 `;
 
+
 const CategoriesStyled = styled.div`
   margin-bottom: 160px;
 
@@ -822,6 +825,7 @@ const GetNotiStyled = styled.div`
   }
 `;
 
+
 const HomePage = () => {
   return (
     <PrimaryLayout>
@@ -836,6 +840,7 @@ const HomePage = () => {
               </p>
               <Button
                 img={rocketIcon}
+
                 content={"Get Started"}
                 borderRadius={"20px"}
                 bgColor={"#A259FF"}
@@ -843,6 +848,7 @@ const HomePage = () => {
                 fontSize={"16px"}
                 fontWeight={"600"}
                 padding={"22.5px 50px"}
+
               ></Button>
               <div className="statistical">
                 <div className="statistical_left">
@@ -861,12 +867,14 @@ const HomePage = () => {
             </div>
             <div className="banner_right">
               <Card
+
                 title={"Space Walking"}
                 img_product={banner1}
                 bgColor={"#3B3B3B"}
                 borderRadius={"20px"}
                 img_artist={avatar1}
                 name_artist={"Animakid"}
+
               ></Card>
             </div>
           </div>
@@ -892,6 +900,7 @@ const HomePage = () => {
                   ))
                 : null}
             </div>
+
           </div>
         </TrendingCollectionStyled>
         <TopCreatorStyled>
@@ -984,12 +993,14 @@ const HomePage = () => {
                         total_sales={e.total_sales}
                         bgColor={"#3B3B3B"}
                         borderRadius={"20px"}
+
                       ></Card>
                     </div>
                   ))
                 : null}
             </div>
           </div>
+
         </DiscoverMoreStyled>
       </HomePageStyled>
       <ImgBackgroundStyled>
@@ -1051,6 +1062,7 @@ const HomePage = () => {
             </div>
           </div>
         </GetNotiStyled>
+
       </HomePageStyled>
     </PrimaryLayout>
   );

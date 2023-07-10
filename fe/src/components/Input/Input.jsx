@@ -1,12 +1,14 @@
+
 import styled from "styled-components";
 import { useState } from "react";
+
 // const { default: styled } = require("styled-components");
 
 const StyledInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.boderColor ? props.border : "none")};
+    border: ${(props) => (props.boderColor ? props.border : 'none')};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -95,6 +97,7 @@ const Input = ({
       password = {password}
       passwordShown={passwordShown}
     >
+
         <input
           type={passwordShown ? "text" : "password"}
           placeholder={placeHolder}
@@ -114,3 +117,4 @@ const Input = ({
 };
 
 export {Input};
+
