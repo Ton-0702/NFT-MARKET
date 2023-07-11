@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import {LogoItem} from '../Header';
-import {colors} from '../../Global';
-import {InputFooter} from '../Input/InputFooter';
+import React from "react";
+import styled from "styled-components";
+import { LogoItem } from "../Header";
+import { colors } from "../../Global";
+import { InputFooter } from "../Input/InputFooter";
 
-import {ReactComponent as DiscordIcon} from '../../assets/footer-imgs/Discord-icon.svg';
-import {ReactComponent as YoutubeIcon} from '../../assets/footer-imgs/Youtube-icon.svg';
-import {ReactComponent as TwitterIcon} from '../../assets/footer-imgs/Twitter-icon.svg';
-import {ReactComponent as InstagramIcon} from '../../assets/footer-imgs/Instagram-icon.svg';
+import { ReactComponent as DiscordIcon } from "../../assets/footer-imgs/Discord-icon.svg";
+import { ReactComponent as YoutubeIcon } from "../../assets/footer-imgs/Youtube-icon.svg";
+import { ReactComponent as TwitterIcon } from "../../assets/footer-imgs/Twitter-icon.svg";
+import { ReactComponent as InstagramIcon } from "../../assets/footer-imgs/Instagram-icon.svg";
 // import {ReactComponent as EmailIcon} from '../../assets/footer-imgs/email-icon.svg';
 
 const Footer = () => {
@@ -66,7 +66,7 @@ const Footer = () => {
 export default Footer;
 
 const FooterStyled = styled.div`
-  margin-top: 100px;
+  border-top: 2px solid #2b2b2b;
   padding: 40px 0;
   background-color: ${colors.backgroundColor2};
 

@@ -8,6 +8,7 @@ import { SignInPage } from "container/SignInPage";
 import { MarketPlace } from "container/MarketPlace";
 import { NftPage } from "container/NftPage";
 import { ConnectWalletPage } from "container/ConnectWalletPage";
+import { ArtistPage } from "container/ArtistPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/sign-in" element={<SignInPage />} />
       <Route path="/nft-page" element={<NftPage />} />
       <Route path="/connect-wallet" element={<ConnectWalletPage />} />
+      <Route path="/artist" element={<ArtistPage />} />
     </Routes>
   );
 }

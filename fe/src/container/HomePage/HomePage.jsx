@@ -852,7 +852,6 @@ const HomePage = () => {
               </p>
               <Button
                 img={rocketIcon}
-
                 content={"Get Started"}
                 borderRadius={"20px"}
                 bgColor={"#A259FF"}
