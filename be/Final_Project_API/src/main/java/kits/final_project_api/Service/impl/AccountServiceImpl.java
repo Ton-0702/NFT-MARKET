@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Map<String, Object>> getTopCreatorToday(LocalDate date) {
+    public List<Map<String, Object>> getTopCreatorToday(String date) {
 //        LocalDate date_current = LocalDate.now();
 
         return accountRepository.getTopCreatorToday(date);

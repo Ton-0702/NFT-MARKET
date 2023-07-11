@@ -13,7 +13,7 @@ import lombok.Setter;
 public class TopCreatorDTO {
     private String avatar;
     private String username;
-    private Double highest_bid;
-//    private Long nft_sold;
-//    private Double Volume;// Volume khối lượng giao dịch. Có nghĩa la là tổng số tiền mua hoặc bán NFT cộng lại của người đó
+//    private Double highest_bid;
+    private Long nft_sold;
+    private Double Volume;// Volume khối lượng giao dịch. Có nghĩa la là tổng số tiền mua hoặc bán NFT cộng lại của người đó
 }
