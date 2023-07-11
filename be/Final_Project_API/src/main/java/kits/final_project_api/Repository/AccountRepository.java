@@ -16,21 +16,25 @@ import java.util.Objects;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 //    void flush();
 //    @Query(value = "SELECT a.avatar, a.username, t.highest_bid FROM account AS a INNER JOIN transaction_bid AS t ON t.account_id = a.account_id INNER JOIN nft AS n ON n.nft_id = t.nft_id WHERE DATEDIFF(DATE(t.date_transaction), DATE(n.date_end_bid)) <= 0 AND TIMESTAMPDIFF(SECOND, t.date_transaction, n.date_end_bid) >=0", nativeQuery = true)
-    @Query(value = "SELECT a.avatar, a.username, COUNT(t.nft_id) AS nfts_sold " +
+    @Query(value = "SELECT a2.username, COUNT(cte.account_own) AS nfts_sold, SUM(cte.volume) AS volume FROM " +
+            "( " +
+            "SELECT a.username, t.nft_id, n.account_id AS account_own, ROUND(SUM(t.highest_bid),2) AS volume " +
             "FROM account AS a " +
             "INNER JOIN transaction_bid AS t ON t.account_id = a.account_id " +
             "INNER JOIN nft AS n ON n.nft_id = t.nft_id " +
-            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
-            "GROUP BY a.username " +
-            "HAVING MAX(t.highest_bid)", nativeQuery = true)
+            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE('2023-11-07 11:01:22')) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, '2023-11-07 11:01:22') >=0 " +
+            "GROUP BY a.username, t.nft_id " +
+            "HAVING MAX(t.highest_bid) " +
+            ") cte " +
+            "LEFT JOIN account AS a2 ON cte.account_own = a2.account_id " +
+            "GROUP BY a2.username", nativeQuery = true)
     List<Map<String, Object>> getTopCreatorToday(String date);
 }
-//AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0
 
-//"SELECT a.avatar, a.username, t.highest_bid " +
+//@Query(value = "SELECT a.avatar, a.account_name, a.username, t.nft_id, n.account_id AS account_own, t.account_id AS account_buy, ROUND(SUM(t.highest_bid),2) AS volume " +
 //        "FROM account AS a " +
 //        "INNER JOIN transaction_bid AS t ON t.account_id = a.account_id " +
 //        "INNER JOIN nft AS n ON n.nft_id = t.nft_id " +
-//        "WHERE (DATEDIFF(DATE(t.date_transaction), DATE(n.date_end_bid)) <= 0 AND " +
-//        "TIMESTAMPDIFF(SECOND, t.date_transaction, n.date_end_bid) >=0) " +
-//        "AND (DATEDIFF(DATE(n.date_end_bid), :date) = 0 AND TIMESTAMPDIFF(SECOND, t.date_transaction, n.date_end_bid) >=0) "
+//        "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
+//        "GROUP BY a.username, t.nft_id " +
+//        "HAVING MAX(t.highest_bid)", nativeQuery = true)
