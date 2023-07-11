@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "account")
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 //@Data // lombok giúp generate các hàm constructor, get, set v.v.
 @Getter
 @Setter
@@ -23,18 +23,21 @@ public class Account implements Serializable {
 //    private Integer account_id;\
 
 
-    public Account(Long accountId, String username, String email, String password, String biography) {
-        this.accountId = accountId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.biography = biography;
-    }
+//    public Account(Long accountId, String username, String email, String password, String biography) {
+//        this.accountId = accountId;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.biography = biography;
+//    }
 
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
+
+    @Column(name = "account_name", columnDefinition = "varchar(150) not null unique")
+    private String account_name;
 
     @Column(name = "username", columnDefinition = "varchar(150) not null")
     private String username;
@@ -45,7 +48,10 @@ public class Account implements Serializable {
     @Column(name = "avatar", columnDefinition = "varchar(200) not null")
     private String avatar;
 
-    @Column(name = "password", columnDefinition = "varchar(200) not null")
+    @Column(name = "background", columnDefinition = "TEXT")
+    private String background;
+
+    @Column(name = "password", columnDefinition = "varchar(100) not null")
     private String password;
 
     @Column(name = "biography", columnDefinition = "TEXT DEFAULT NULL")

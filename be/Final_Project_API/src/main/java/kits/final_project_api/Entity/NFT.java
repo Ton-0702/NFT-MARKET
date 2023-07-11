@@ -21,6 +21,9 @@ public class NFT {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nft_name", columnDefinition = "TEXT")
+    private String nft_name;
+
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
