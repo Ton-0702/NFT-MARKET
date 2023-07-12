@@ -16,18 +16,27 @@ import java.util.Objects;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 //    void flush();
 //    @Query(value = "SELECT a.avatar, a.username, t.highest_bid FROM account AS a INNER JOIN transaction_bid AS t ON t.account_id = a.account_id INNER JOIN nft AS n ON n.nft_id = t.nft_id WHERE DATEDIFF(DATE(t.date_transaction), DATE(n.date_end_bid)) <= 0 AND TIMESTAMPDIFF(SECOND, t.date_transaction, n.date_end_bid) >=0", nativeQuery = true)
-    @Query(value = "SELECT a2.username, COUNT(cte.account_own) AS nfts_sold, SUM(cte.volume) AS volume FROM " +
-            "( " +
-            "SELECT a.username, t.nft_id, n.account_id AS account_own, ROUND(SUM(t.highest_bid),2) AS volume " +
-            "FROM account AS a " +
-            "INNER JOIN transaction_bid AS t ON t.account_id = a.account_id " +
-            "INNER JOIN nft AS n ON n.nft_id = t.nft_id " +
-            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE('2023-11-07 11:01:22')) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, '2023-11-07 11:01:22') >=0 " +
-            "GROUP BY a.username, t.nft_id " +
-            "HAVING MAX(t.highest_bid) " +
-            ") cte " +
-            "LEFT JOIN account AS a2 ON cte.account_own = a2.account_id " +
-            "GROUP BY a2.username", nativeQuery = true)
+    @Query(value = "SELECT a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume FROM ( " +
+                "SELECT account_own AS creator, nfts_sold, volume FROM ( " +
+                    "SELECT n.account_id AS account_own, t.account_id AS account_buy,  COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
+                    "FROM transaction_bid AS t " +
+                    "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
+                    "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
+                    "GROUP BY t.nft_id, t.account_id " +
+                    "HAVING MAX(t.highest_bid) " +
+                ") cte " +
+                "UNION " +
+                "SELECT account_buy, nfts_sold, volume FROM ( " +
+                    "SELECT n.account_id AS account_own, t.account_id AS account_buy, COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
+                    "FROM transaction_bid AS t "+
+                    "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
+                    "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
+                    "GROUP BY t.nft_id, t.account_id " +
+                    "HAVING MAX(t.highest_bid) " +
+                    ") cte " +
+            ") cte2 " +
+            "LEFT JOIN account AS a ON cte2.creator = a.account_id " +
+            "GROUP BY cte2.creator", nativeQuery = true)
     List<Map<String, Object>> getTopCreatorToday(String date);
 }
 
