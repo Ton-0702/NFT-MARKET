@@ -243,6 +243,7 @@ const ArtistStyled = styled.div`
     padding: 0;
     margin: 0;
     cursor: pointer;
+    overflow: auto;
   }
   .artist-filter-item {
     position: relative;
@@ -253,6 +254,7 @@ const ArtistStyled = styled.div`
     text-align: center;
     height: 60px;
     color: ${colors.borderColor};
+    padding: 0 10px;
   }
 
   .artist-filter-item::after {
@@ -335,7 +337,8 @@ const ArtistStyled = styled.div`
     }
 
     .header_artist .infor_artist .body_infor_artist .statistical {
-      justify-content: space-around;
+      justify-content: space-between;
+      gap: unset;
     }
 
     .header_artist
@@ -353,6 +356,14 @@ const ArtistStyled = styled.div`
       .body_infor_artist_button
       button {
       width: 100%;
+    }
+
+    .header_artist .infor_artist .body_infor_artist .statistical h4 {
+      font-size: 22px;
+    }
+
+    .header_artist .infor_artist .body_infor_artist .statistical span {
+      font-size: 16px;
     }
   }
 `;
@@ -377,6 +388,7 @@ const ArtistPage = () => {
                       bgColor={"#A259FF"}
                       borderRadius={"20px"}
                       padding={"15px 30px"}
+                      jutifyContent={"center"}
                       textColor={colors.whiteColor}
                       content={"0xc0E3...B79C"}
                       fontSize={"16px"}
@@ -387,6 +399,7 @@ const ArtistPage = () => {
                       bgColor={"unset"}
                       border={"2px solid #A259FF"}
                       borderRadius={"20px"}
+                      jutifyContent={"center"}
                       padding={"15px 30px"}
                       textColor={colors.whiteColor}
                       content={"Follow"}

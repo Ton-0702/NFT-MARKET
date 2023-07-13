@@ -63,7 +63,7 @@ const SearchInput = styled.div`
 
   i{
     position: absolute;
-    top: 14px;
+    top: 12px;
     right: 20px;
     color: #ffffff;
   }
