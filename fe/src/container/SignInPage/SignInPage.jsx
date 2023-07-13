@@ -3,25 +3,8 @@ import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
 import {Input} from 'components/Input';
 import {useState} from 'react';
 import {NavLink} from 'react-router-dom';
+
 const StyledSignInPage = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    /* --color-1: #c0dbea; */
-    --color-2: #6096b4;
-    --black-color: #000;
-    /* --btn-color: #d885a3; */
-  }
-
-  body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-  }
-
   a {
     text-decoration: none;
   }
@@ -29,7 +12,7 @@ const StyledSignInPage = styled.div`
   .main {
     height: 100vh;
     position: relative;
-    /* z-index: -1; */
+
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,

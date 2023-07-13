@@ -61,19 +61,7 @@ const Input = ({
 }) => {
   // console.log('password:', password);
   const [passwordShown, setPasswordShown] = useState(false);
-  // function togglePassword() {
-  //   console.log('click');
-  //   setPasswordShown(!passwordShown);
-  //   const eyesClose = document.querySelector('.eyes-close');
-  //   const eyesOpen = document.querySelector('.eyes-open');
-  //   if (passwordShown === false) {
-  //     eyesClose.classList.add('d-none');
-  //     eyesOpen.classList.add('d-block');
-  //   } else {
-  //     eyesClose.classList.remove('d-none');
-  //     eyesOpen.classList.remove('d-block');
-  //   }
-  // }
+
   return (
     <StyledInput
       textColor={textColor}
@@ -85,8 +73,7 @@ const Input = ({
       fontWeight={fontWeight}
       width={width}
       height={height}
-      type={passwordShown ? 'text' : 'password'}
-      // type={type}
+      // type={passwordShown ? 'text' : 'password'}
       onClick={onClick}
       id={id}
       onChange={onChange}
@@ -95,7 +82,6 @@ const Input = ({
       paddingBottom={paddingBottom}
       paddingLeft={paddingLeft}
       password={password}
-      // passwordShown={passwordShown}
     >
       <input
         type={type}
@@ -103,19 +89,6 @@ const Input = ({
         id={id}
         onChange={onChange}
       />
-
-      {/* {password && (
-        <>
-          {passwordShown ? (
-            <i
-              className="fa-solid fa-eye-slash eyes-close"
-              onClick={onClick}
-            ></i>
-          ) : (
-            <i className="fa-solid fa-eye eyes-open" onClick={onClick}></i>
-          )}
-        </>
-      )} */}
     </StyledInput>
   );
 };
