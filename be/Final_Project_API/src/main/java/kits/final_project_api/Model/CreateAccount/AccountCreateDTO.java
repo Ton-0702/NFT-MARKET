@@ -21,4 +21,5 @@ public class AccountCreateDTO implements Serializable {
     private String username;
     private String email;
     private String password;
+
 }

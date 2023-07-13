@@ -15,6 +15,7 @@ public class PostAccountController {
     @Autowired
     private PostAccountServiceImpl postAccountServiceImpl;
 
+
 //    @PostMapping("/account-metamask")
 //    @ResponseBody
     // Cách 1
@@ -33,12 +34,14 @@ public class PostAccountController {
     public ResponseEntity postMetaMask(@Valid @RequestBody AccountMetaMaskDto accountMetaMaskDto) {
         postAccountServiceImpl.postMetaMask(accountMetaMaskDto);
         return ResponseEntity.ok("Request Completed");
+
     }
 
     @PostMapping("/create-account")
     public ResponseEntity postCreateAccount(@Valid @RequestBody AccountCreateDTO accountCreateDTO){
         postAccountServiceImpl.postCreateAccount(accountCreateDTO);
         return ResponseEntity.ok("Request Completed");
+
     }
 
 }

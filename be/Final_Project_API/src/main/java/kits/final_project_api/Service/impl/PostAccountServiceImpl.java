@@ -23,6 +23,7 @@ public class PostAccountServiceImpl {
         account.setPassword(accountMetaMaskDto.getPassword());
         account.setToken(accountMetaMaskDto.getToken());
         postAccountRepository.save(account);
+
     }
 
     public void postCreateAccount(AccountCreateDTO accountCreateDTO){
@@ -31,5 +32,6 @@ public class PostAccountServiceImpl {
         accountCreateAccount.setEmail(accountCreateDTO.getEmail());
         accountCreateAccount.setPassword(accountCreateDTO.getPassword());
         postAccountRepository.save(accountCreateAccount);
+
     }
 }

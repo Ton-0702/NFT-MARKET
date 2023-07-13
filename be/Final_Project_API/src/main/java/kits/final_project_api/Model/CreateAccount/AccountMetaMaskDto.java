@@ -19,16 +19,7 @@ public class AccountMetaMaskDto implements Serializable {
     @NotBlank
     @NotEmpty
     private String address_wallet;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String username;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String password;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String token;
 }
