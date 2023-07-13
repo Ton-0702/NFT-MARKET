@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -26,7 +24,25 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Map<String, Object>> getTopCreatorToday(String date) {
-//        LocalDate date_current = LocalDate.now();
+
+//        List<Map<String, Object>> getSQL = accountRepository.getTopCreatorToday(date);
+//        HashMap<String, Object> newObject = new HashMap<>();
+//        List<Map<String, Object>> newData;
+//
+//        for (int i=0; i< getSQL.size(); i++){
+//            if (!newObject.containsKey(getSQL.get(i).get("nft_id"))) {
+//                newObject.put("nft_id", getSQL.get(i).get("nft_id"));
+//                newObject.put("username", getSQL.get(i).get("username"));
+//                newObject.put("nfts_sold", 1);
+//                newObject.put("volume", getSQL.get(i).get("volume"));
+//            }else{
+//                Object freq = newObject.get("nfts_sold");
+//                newObject.put("nfts_sold", (int) freq +1);
+//                Object newVolume = newObject.get("volume");
+//                newObject.put("volume", (double) newVolume + (double) getSQL.get(i).get("volume"));
+//            }
+//
+//        }
 
         return accountRepository.getTopCreatorToday(date);
     }

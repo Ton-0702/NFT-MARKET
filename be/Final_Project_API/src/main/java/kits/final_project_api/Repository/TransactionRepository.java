@@ -1,8 +1,6 @@
 package kits.final_project_api.Repository;
 
-import kits.final_project_api.Entity.Account;
 import kits.final_project_api.Entity.Transaction;
-import kits.final_project_api.Model.TransactionDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
