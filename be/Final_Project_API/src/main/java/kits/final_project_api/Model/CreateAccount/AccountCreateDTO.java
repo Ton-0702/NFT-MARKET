@@ -1,4 +1,4 @@
-package kits.final_project_api.Model;
+package kits.final_project_api.Model.CreateAccount;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
