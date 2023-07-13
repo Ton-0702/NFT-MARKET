@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
-import {Input} from 'components/Input';
-import {useState} from 'react';
-import {NavLink} from 'react-router-dom';
 
+import styled from "styled-components";
+import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
+import { Input } from "components/Input";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const StyledSignInPage = styled.div`
   a {
     text-decoration: none;
@@ -242,84 +242,75 @@ const StyledSignInPage = styled.div`
 
   /* Responsive */
   /* extra large */
-  @media (max-width: 1200px) {
-    .login-form-wrap {
-      width: 994px;
-    }
 
+  @media (max-width: 991.98px) {
+    .login-form-wrap {
+      width: 90%;
+      height: 60%;
+    }
+    .login-content {
+      width: 80%;
+    }
+    .input-form {
+      width: 80%;
+    }
+    .input-form div {
+      height: 80%;
+    }
+    .login__right {
+      width: 50%;
+    }
+    .background {
+      width: 75%;
+      height: 101%;
+    }
     .login-title {
-      margin-top: 30px;
-      font-size: 52px;
-      text-align: center;
+      margin-top: 0px;
     }
-
-    .form-control {
-      min-width: 416px;
+    .dont-have-account-text {
+      width: 96%;
     }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 400px;
-      height: 500px;
+    .form-control .form-group .form-password input {
+      width: 90%;
     }
-
-    .login-right-wrap .images {
-      top: 58%;
-    }
-
-    .girl-laptop img {
-      width: 500px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 200px;
-      height: 400px;
-    }
-  }
-
-  /* Large */
-  @media (max-width: 992px) {
-    .login-form-wrap {
-      width: 854px;
-    }
-
-    .form-control {
-      min-width: 370px;
-    }
-
     .btn {
-      row-gap: 24px;
-    }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 324px;
-      height: 486px;
-    }
-
-    .girl-laptop img {
-      width: 392px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 166px;
-      height: 400px;
+      width: 80%;
     }
   }
-
-  @media (max-width: 576px) {
-    .login-form-wrap {
-      width: 450px;
+  @media (max-width: 767.98px) {
+    .login__right {
+      display: none;
+    }
+    .login-title {
+      padding-top: 80px;
+      /* height: 100%; */
+    }
+    .login-content {
+      width: 70%;
     }
 
     .login__left {
       width: 100%;
+      justify-content: center;
     }
-
-    .login__right {
-      display: none;
+    .form-control {
+      min-width: 0;
+    }
+    .input-form {
+      width: 100%;
+    }
+    .background {
+      background-size: cover;
+      width: 79%;
+    }
+    .btn {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .login-title {
+      font-size: 30px;
     }
   }
 `;

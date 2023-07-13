@@ -2,10 +2,7 @@ package kits.final_project_api.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "account")
 @NoArgsConstructor
+@AllArgsConstructor
 //@Data // lombok giúp generate các hàm constructor, get, set v.v.
 @Getter
 @Setter
@@ -25,18 +23,21 @@ public class Account implements Serializable {
 //    private Integer account_id;\
 
 
-    public Account(Long accountId, String username, String email, String password, String biography) {
-        this.accountId = accountId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.biography = biography;
-    }
+//    public Account(Long accountId, String username, String email, String password, String biography) {
+//        this.accountId = accountId;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.biography = biography;
+//    }
 
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
+
+    @Column(name = "account_name", columnDefinition = "varchar(150) not null unique")
+    private String account_name;
 
     @Column(name = "username", columnDefinition = "varchar(150) not null")
     private String username;
@@ -47,19 +48,22 @@ public class Account implements Serializable {
     @Column(name = "avatar", columnDefinition = "varchar(200) not null")
     private String avatar;
 
-    @Column(name = "password", columnDefinition = "varchar(200) not null")
+    @Column(name = "background", columnDefinition = "TEXT")
+    private String background;
+
+    @Column(name = "password", columnDefinition = "varchar(100) not null")
     private String password;
 
     @Column(name = "biography", columnDefinition = "TEXT DEFAULT NULL")
     private String biography;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<NFT> ntfs;
 
-    public Account less() {
-        return new Account(this.accountId, this.username, this.email, this.password, this.biography);
-    }
+//    public Account less() {
+//        return new Account(this.accountId, this.username, this.email, this.password, this.biography);
+//    }
 
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
