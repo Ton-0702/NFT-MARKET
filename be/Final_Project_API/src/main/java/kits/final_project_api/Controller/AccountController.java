@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @RequestMapping("users") // /users
 public class AccountController {
@@ -27,6 +28,7 @@ public class AccountController {
     @GetMapping
     @ResponseBody
     public List<Account> getAllUsers(){
+
 //        System.out.println("TESST: "+userService.findAll());
         List<Account> users = accountService.findAll();
 //        model.addAttribute("users", users);
@@ -45,6 +47,7 @@ public class AccountController {
 
     @GetMapping("/ranking/today")
     @ResponseBody
+
     public List<Map<String, Object>> getTopCreatorToday(LocalDate date){
         LocalDateTime date_current = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
