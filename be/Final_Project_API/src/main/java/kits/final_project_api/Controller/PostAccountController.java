@@ -1,6 +1,7 @@
 package kits.final_project_api.Controller;
 
 import jakarta.validation.Valid;
+import kits.final_project_api.Model.CreateAccount.AccountCreateConnectWalletDTO;
 import kits.final_project_api.Model.CreateAccount.AccountCreateDTO;
 import kits.final_project_api.Model.CreateAccount.AccountMetaMaskDto;
 import kits.final_project_api.Service.impl.PostAccountServiceImpl;
@@ -44,4 +45,9 @@ public class PostAccountController {
 
     }
 
+    @PostMapping("/create-account/connect-wallet")
+    public ResponseEntity postCreateAccountConnectWallet(@Valid @RequestBody AccountCreateConnectWalletDTO accountCreateConnectWalletDTO){
+        postAccountServiceImpl.postCreateAccountConnectWallet(accountCreateConnectWalletDTO);
+        return ResponseEntity.ok("Request Completed");
+    }
 }
