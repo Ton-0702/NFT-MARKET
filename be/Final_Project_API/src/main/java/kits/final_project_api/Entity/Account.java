@@ -36,10 +36,10 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @Column(name = "account_name", columnDefinition = "varchar(150) not null unique")
-    private String account_name;
+    @Column(name = "address_wallet", columnDefinition = "varchar(150) not null unique")
+    private String address_wallet;
 
-    @Column(name = "username", columnDefinition = "varchar(150) not null")
+    @Column(name = "username", columnDefinition = "varchar(150) not null default 'Unnamed'")
     private String username;
 
     @Column(name = "email", columnDefinition = "varchar(200) not null")
@@ -48,8 +48,11 @@ public class Account implements Serializable {
     @Column(name = "avatar", columnDefinition = "varchar(200) not null")
     private String avatar;
 
-    @Column(name = "background", columnDefinition = "TEXT")
+    @Column(name = "background", columnDefinition = "TEXT default null")
     private String background;
+
+    @Column(name = "token", columnDefinition = "TEXTvarchar(200) default NULL unique")
+    private String token;
 
     @Column(name = "password", columnDefinition = "varchar(100) not null")
     private String password;

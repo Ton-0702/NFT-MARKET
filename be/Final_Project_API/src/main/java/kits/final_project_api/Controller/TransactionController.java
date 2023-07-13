@@ -1,11 +1,8 @@
 package kits.final_project_api.Controller;
 
-import kits.final_project_api.Entity.Transaction;
-import kits.final_project_api.Model.TransactionDTO;
 import kits.final_project_api.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

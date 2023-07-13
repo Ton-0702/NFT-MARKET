@@ -1,13 +1,15 @@
 package kits.final_project_api.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.io.Serializable;
+
+//@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDTO {
+@Getter
+@Setter
+public class ResponseDTO implements Serializable {
     private String message;
     private String data;
     private String error;
