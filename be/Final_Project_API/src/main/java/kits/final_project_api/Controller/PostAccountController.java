@@ -1,12 +1,11 @@
 package kits.final_project_api.Controller;
 
 import jakarta.validation.Valid;
-import kits.final_project_api.Model.AccountCreateDTO;
-import kits.final_project_api.Model.AccountMetaMaskDto;
-import kits.final_project_api.Model.ResponseDTO;
+import kits.final_project_api.Model.CreateAccount.AccountCreateConnectWalletDTO;
+import kits.final_project_api.Model.CreateAccount.AccountCreateDTO;
+import kits.final_project_api.Model.CreateAccount.AccountMetaMaskDto;
 import kits.final_project_api.Service.impl.PostAccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostAccountController {
     @Autowired
     private PostAccountServiceImpl postAccountServiceImpl;
+
 
 //    @PostMapping("/account-metamask")
 //    @ResponseBody
@@ -35,12 +35,19 @@ public class PostAccountController {
     public ResponseEntity postMetaMask(@Valid @RequestBody AccountMetaMaskDto accountMetaMaskDto) {
         postAccountServiceImpl.postMetaMask(accountMetaMaskDto);
         return ResponseEntity.ok("Request Completed");
+
     }
 
     @PostMapping("/create-account")
     public ResponseEntity postCreateAccount(@Valid @RequestBody AccountCreateDTO accountCreateDTO){
         postAccountServiceImpl.postCreateAccount(accountCreateDTO);
         return ResponseEntity.ok("Request Completed");
+
     }
 
+    @PostMapping("/create-account/connect-wallet")
+    public ResponseEntity postCreateAccountConnectWallet(@Valid @RequestBody AccountCreateConnectWalletDTO accountCreateConnectWalletDTO){
+        postAccountServiceImpl.postCreateAccountConnectWallet(accountCreateConnectWalletDTO);
+        return ResponseEntity.ok("Request Completed");
+    }
 }

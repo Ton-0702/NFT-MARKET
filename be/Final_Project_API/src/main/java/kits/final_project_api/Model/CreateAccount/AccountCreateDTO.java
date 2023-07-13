@@ -1,4 +1,4 @@
-package kits.final_project_api.Model;
+package kits.final_project_api.Model.CreateAccount;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,4 +21,5 @@ public class AccountCreateDTO implements Serializable {
     private String username;
     private String email;
     private String password;
+
 }

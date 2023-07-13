@@ -18,19 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Account implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer account_id;\
-
-
-//    public Account(Long accountId, String username, String email, String password, String biography) {
-//        this.accountId = accountId;
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//        this.biography = biography;
-//    }
-
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,30 +74,4 @@ public class Account implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<NFTLike> nftLikes;
-
-
-
-
-//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-//    private List<NFT> ntfs;
-//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
-//    private List<NFT> account_nft_ps;
-
-
-
-//    @OneToMany(mappedBy = "account_user_follow_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Followers> account_user_follow_ids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_followers_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Followers> account_followers_ids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_nft_owned", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // MappedBy trỏ tới tên biến product ở trong ProductOwend.
-//    private List<NFTOwened> account_nft_owned_s = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_transaction_bid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Transaction> account_transaction_bids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_NFT_like_id", fetch = FetchType.LAZY)
-//    private List<NFTLike> account_NFT_like_ids = new ArrayList<>();
-
 }

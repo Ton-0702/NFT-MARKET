@@ -1,4 +1,4 @@
-package kits.final_project_api.Model;
+package kits.final_project_api.Model.CreateAccount;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +19,7 @@ public class AccountMetaMaskDto implements Serializable {
     @NotBlank
     @NotEmpty
     private String address_wallet;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String username;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String password;
-    @NotNull
-    @NotBlank
-    @NotEmpty
     private String token;
 }
