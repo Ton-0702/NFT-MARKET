@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { colors } from "Global";
 import { PrimaryLayout } from "components/Layout";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 
 const ProfileDetailStyled = styled.div`
   display: flex;
@@ -97,43 +93,9 @@ const ProfileDetail = () => {
             </ul>
             <h2>Profile Details</h2>
             <div className="profile_detail_form">
-              <Form>
-                <Form.Group className="mb-3" controlId="formGridAddress1">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control placeholder="Enter Username" value={"Do Tu"}/>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGridAddress2">
-                  <Form.Label>Bio</Form.Label>
-                  <Form.Control placeholder="Tell the world your story!" as="textarea" rows={2} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGridAddress1">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control placeholder="Email Address"/>
-                </Form.Group>
-                <Row className="mb-3">
-                  <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control />
-                  </Form.Group>
-                  <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Select defaultValue="Choose...">
-                      <option>Choose...</option>
-                      <option>...</option>
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control />
-                  </Form.Group>
-                </Row>
-                <Form.Group className="mb-3" id="formGridCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form>
+              <form action="">
+                
+              </form>
             </div>
           </div>
         </div>
