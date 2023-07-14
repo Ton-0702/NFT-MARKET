@@ -42,7 +42,6 @@ public class PostAccountController {
     public ResponseEntity postCreateAccount(@Valid @RequestBody AccountCreateDTO accountCreateDTO){
         postAccountServiceImpl.postCreateAccount(accountCreateDTO);
         return ResponseEntity.ok("Request Completed");
-
     }
 
     @PostMapping("/create-account/connect-wallet")
