@@ -6,4 +6,5 @@ export const colors = {
   textColor1: '#CCCCCC',
   borderColor: '#858584',
   greenColor: '#00AC4F',
+  blackColor: '#000',
 };

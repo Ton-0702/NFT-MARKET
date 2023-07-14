@@ -1,29 +1,15 @@
+import styled from 'styled-components';
+import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
+import {useEffect, useState} from 'react';
+import {NavLink} from 'react-router-dom';
+import {colors} from 'Global';
+import {LogoItem} from 'components/Header';
 
-import styled from "styled-components";
-import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
-import { Input } from "components/Input";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-// import { type } from "@testing-library/user-event/dist/type";
+// import {ReactComponent as UserInputIcon} from '../../assets/SignIn_Up_Img/user_icon.svg';
+// import {ReactComponent as MailInputIcon} from '../../assets/SignIn_Up_Img/mail_icon.svg';
+// import {ReactComponent as PasswordInputIcon} from '../../assets/SignIn_Up_Img/password_icon.svg';
+
 const StyledSignUpPage = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    /* --color-1: #c0dbea; */
-    --color-2: #6096b4;
-    --black-color: #000;
-    /* --btn-color: #d885a3; */
-  }
-
-  body {
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-  }
-
   a {
     text-decoration: none;
   }
@@ -31,7 +17,6 @@ const StyledSignUpPage = styled.div`
   .main {
     height: 100vh;
     position: relative;
-    /* z-index: -1; */
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,
@@ -39,11 +24,11 @@ const StyledSignUpPage = styled.div`
     );
   }
 
-  .login-container {
+  .signup-container {
     max-width: 1920px;
   }
 
-  .login-form-wrap {
+  .signup-form-wrap {
     width: 1050px;
     display: flex;
     border-radius: 2rem;
@@ -52,32 +37,33 @@ const StyledSignUpPage = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* padding-bottom: 40px; */
-    /* margin: auto; */
     background-color: #fff;
   }
 
-  .login__left,
-  .login__right {
+  .signup__left,
+  .signup__right {
     width: 50%;
   }
-
-  /* Login Left */
-  .login__left {
+  .signup__left {
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 30px;
   }
 
-  .login-content {
-    margin: 0 auto;
+  .signup-content {
+    margin: 40px auto;
+    /* margin-bottom: 40px; */
   }
 
-  .login-title {
-    margin-top: 80px;
-    font-size: 51px;
-    font-style: normal;
+  .header-logo-text svg path {
+    fill: #a259ff;
+  }
+
+  .signup-title {
+    margin: 22px 0;
+    text-align: center;
+    font-size: 38px;
     font-weight: 600;
   }
 
@@ -89,16 +75,60 @@ const StyledSignUpPage = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* margin-bottom: 20px; */
+    margin-bottom: 26px;
+    position: relative;
+    height: 48px;
+  }
+
+  /* .form-label {
+    display: flex;
+    justify-content: space-between;
+  } */
+
+  .form-group input {
+    text-indent: 12px;
+    font-size: 100%;
+    /* padding: 12px; */
+    outline: none;
+    border: 2px solid rgb(200, 200, 200);
+    /* background-color: transparent; */
+    border-radius: 20px;
+    height: 46px;
+    text-indent: 12px;
+    outline: none;
+  }
+  .form-group input:-webkit-autofill {
+    transition: background-color 5000s;
+    -webkit-fill-color: #fff;
   }
 
   .form-group label {
-    font-weight: 300;
+    position: absolute;
+    left: 0;
+    font-weight: 400px;
+    font-size: 16px;
+    padding: 12px;
+    margin-left: 8px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgb(100, 100, 100);
+    border-radius: 12px;
   }
 
-  .form-label {
-    display: flex;
-    justify-content: space-between;
+  .form-group :is(input:focus, input:valid) ~ label {
+    transform: translateY(-50%) scale(0.9);
+    /* margin: 0 */
+    margin-left: 20px;
+    /* padding: 8px; */
+    background-color: ${colors.whiteColor};
+    font-weight: 500;
+    color: ${colors.blackColor};
+    border-radius: 12px;
+    padding: 0;
+  }
+
+  .form-group :is(input:focus, input:valid) {
+    border-color: rgb(150, 150, 200);
   }
 
   .form-group .form-label-forgot-password {
@@ -106,14 +136,14 @@ const StyledSignUpPage = styled.div`
     cursor: pointer;
   }
 
-  .form-group input {
+  /* .form-group input {
     width: 100%;
     height: 46px;
     border-radius: 6px;
     border: none;
     background-color: #c0dbea;
     padding-left: 10px;
-  }
+  } */
 
   .form-password {
     position: relative;
@@ -168,7 +198,7 @@ const StyledSignUpPage = styled.div`
     row-gap: 40px;
   }
 
-  .btn-login {
+  .btn-signup {
     width: 150px;
     height: 46px;
     border: none;
@@ -220,8 +250,8 @@ const StyledSignUpPage = styled.div`
     color: var(#d885a3);
   }
 
-  /*  Login right */
-  .login__right {
+  /*  signup right */
+  .signup__right {
     position: relative;
   }
 
@@ -239,7 +269,7 @@ const StyledSignUpPage = styled.div`
     background-repeat: no-repeat;
   }
 
-  .login-right-wrap .images {
+  .signup-right-wrap .images {
     position: absolute;
     top: 50%;
     right: 4px;
@@ -249,18 +279,21 @@ const StyledSignUpPage = styled.div`
     height: 500px;
     z-index: 20;
   }
-
+  /* 
   .girl-laptop {
     width: 100%;
-  }
+  } */
 
   .input_error {
     color: red;
-
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: left;
     font-size: 14px;
     font-weight: 600;
-    align-items: c;
+    align-items: center;
   }
   #password {
     position: relative;
@@ -279,94 +312,56 @@ const StyledSignUpPage = styled.div`
     left: 480px;
   }
 
-  /* Responsive */
-  /* extra large */
-  /*   
-  @media (max-width: 1200px) {
-    .login-form-wrap {
-      width: 994px;
-    }
+  // Loading
+  .dashed-loading {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+  }
 
-    .login-title {
-      margin-top: 30px;
-      font-size: 52px;
-      text-align: center;
-    }
+  .dashed-loading:after,
+  .dashed-loading:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
 
-    .form-control {
-      min-width: 416px;
-    }
+  .dashed-loading:before {
+    z-index: 5;
+    border: 3px dashed #ff6bcb;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    -webkit-animation: dashed 1s linear infinite;
+    animation: dashed 1s linear infinite;
+  }
 
-    .login-right-wrap .images {
-      width: 400px;
-      height: 500px;
-    }
+  .dashed-loading:after {
+    z-index: 10;
+    border: 3px solid #ffb86c;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    -webkit-animation: dashed 1s ease infinite;
+    animation: dashed 1s ease infinite;
+  }
 
-    .login-right-wrap .images {
-      top: 58%;
+  @keyframes dashed {
+    to {
+      transform: rotate(360deg);
     }
-
-    .girl-laptop img {
-      width: 500px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 200px;
-      height: 400px;
-    }
-  } */
-
-  /* Large */
-  /* @media (max-width: 992px) {
-    .login-form-wrap {
-      width: 854px;
-    }
-
-    .form-control {
-      min-width: 370px;
-    }
-
-    .btn {
-      row-gap: 24px;
-    }
-
-    .login-right-wrap .images {
-      width: 324px;
-      height: 486px;
-    }
-
-    .girl-laptop img {
-      width: 392px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 166px;
-      height: 400px;
-    }
-  } */
-
-  /* @media (max-width: 576px) {
-    .login-form-wrap {
-      width: 450px;
-    }
-
-    .login__left {
-      width: 100%;
-    }
-
-    .login__right {
-      display: none;
-    }
-  } */
+  }
+  // Responsive
 
   @media (max-width: 991.98px) {
-    .login-form-wrap {
+    .signup-form-wrap {
       width: 90%;
       height: 95%;
     }
-    .login-content {
+    .signup-content {
       width: 80%;
     }
     .input-form {
@@ -375,30 +370,30 @@ const StyledSignUpPage = styled.div`
     .input-form div {
       height: 80%;
     }
-    .login__right {
+    .signup__right {
       width: 50%;
     }
     .background {
       width: 75%;
     }
-    .login-title {
+    .signup-title {
       margin-top: 0px;
     }
     .dont-have-account-text {
     }
   }
   @media (max-width: 767.98px) {
-    .login__right {
+    .signup__right {
       display: none;
     }
-    .login-title {
+    .signup-title {
       /* justify-content: center; */
     }
-    .login-content {
+    .signup-content {
       width: 70%;
     }
 
-    .login__left {
+    .signup__left {
       width: 100%;
     }
     .form-control {
@@ -409,183 +404,241 @@ const StyledSignUpPage = styled.div`
     }
   }
   @media (max-width: 575.98px) {
-    .login-title{
+    .signup-title {
       font-size: 30px;
     }
   }
 `;
 
 export const SignUpPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const ValidateSignIn = (e) => {
-    e.preventDefault();
-    if (
-      username.length === 0 ||
-      password.length === 0 ||
-      email.length === 0 ||
-      confirmPassword === 0 ||
-      password !== confirmPassword ||
-      !emailPattern.test(email)
-    ) {
-      setError(true);
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formValue, setFormValue] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [formErrors, setFormErrors] = useState({});
+
+  // useEffect(() => {
+  //   console.log(formErrors);
+  //   if (Object.keys(formErrors).length === 0 && isSubmitting) {
+  //     console.log(formErrors);
+  //   }
+  // }, [formErrors]);
+
+  const validateValues = (values) => {
+    const errors = {};
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!values.username) {
+      errors.username = 'Username is required!';
     }
-    console.log("username: " + username);
-    console.log("email:" + email);
-    console.log("password: " + password);
-    console.log("confirm password: " + confirmPassword);
+    if (!values.email) {
+      errors.email = 'Email is required!';
+    } else if (!regex.test(values.email)) {
+      errors.email = 'Not Valid email!';
+    }
+    if (!values.password) {
+      errors.password = 'Password is required!';
+    } else if (values.password.length < 8) {
+      errors.password = 'Must be more than 8 characters!';
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'ConfirmPassword is required!';
+    } else if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = 'Password is not match';
+    }
+    console.log('Err:', errors);
+
+    return errors;
   };
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    // console.log(name, value);
+    setFormValue((prevState) => ({...prevState, [name]: value}));
+  };
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log('submit');
+    setFormErrors(validateValues(formValue));
+    // setIsSubmitting(true);
+    const isFormValid = Object.keys(formErrors).length === 0;
+    console.log('isVAlid:', isFormValid);
+    if (isFormValid) {
+      handleLoading();
+    }
+  };
+
+  const handleLoading = () => {
+    setTimeout(() => {
+      setIsSubmitting(true);
+    }, 2000);
+    setIsSubmitting(false);
+  };
+
+  function togglePassword() {
+    setPasswordShown(!passwordShown);
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
+    if (passwordShown === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
+
+  function togglePasswordConfirm() {
+    setPasswordConfirm(!passwordConfirm);
+    const eyesOpen = document.querySelector('.eyes-confirm-open');
+    const eyesClose = document.querySelector('.eyes-confirm-close');
+    if (passwordConfirm === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
   return (
     <StyledSignUpPage>
       <div className="main">
-        <div className="login-container">
-          <div className="login-form-wrap">
-            <div className="login__left">
-              <div className="login-content">
-                <h2 className="login-title">Create Account</h2>
+        <div className="signup-container">
+          <div className="signup-form-wrap">
+            <div className="signup__left">
+              <div className="signup-content">
+                <LogoItem></LogoItem>
+                <h2 className="signup-title">Create Account</h2>
 
                 <form action="#" className="form-control">
                   <div className="input-form">
+                    {/* Username */}
                     <div className="form-group">
-                      <label>Username</label>
-                      <Input
-                        placeHolder="Username"
+                      {/* <Input></Input> */}
+                      <input
+                        name="username"
                         type="text"
-                        id="username"
-                        onChange={(e) => setUsername(e.target.value)}
-                      ></Input>
-                      <span className="form-message"></span>
-                    </div>
-                    <div className="err-msg-username">
-                      {error && username <= 0 ? (
-                        <span className="input_error">Enter Username</span>
-                      ) : (
-                        <span style={{ height: 10 }}> </span>
+                        value={formValue.username}
+                        required
+                        onChange={handleChange}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <label htmlFor="username">Username</label>
+                      {formErrors.username && (
+                        <span className="input_error">
+                          {formErrors.username}
+                        </span>
                       )}
                     </div>
 
+                    {/* Email */}
                     <div className="form-group">
-                      <label>Email Address</label>
-                      <Input
-                        placeHolder="Email Address"
+                      <input
+                        name="email"
                         type="text"
-                        id="email"
-                        onChange={(e) => setEmail(e.target.value)}
-                      ></Input>
-                      <span className="form-message"></span>
-                    </div>
-                    <div className="err-msg-email">
-                      {error && email <= 0 ? (
-                        <span className="input_error">Enter Email</span>
-                      ) : (
-                        <span style={{ height: 10 }}> </span>
-                      )}
-                      {error &&
-                      email.length > 0 &&
-                      !emailPattern.test(email) ? (
-                        <span className="input_error">Invalid Email</span>
-                      ) : (
-                        <span style={{ height: 10 }}> </span>
+                        value={formValue.email}
+                        required
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="email">Email</label>
+                      {formErrors.email && (
+                        <span className="input_error">{formErrors.email}</span>
                       )}
                     </div>
 
-                    <div className="form-group form-password">
-                      <label> Password</label>
-                      <div>
-                        <Input
-                          placeHolder="Password"
-                          type="password"
-                          id="password"
-                          // onClick={e=>  }
-                          onChange={(e) => setPassword(e.target.value)}
-                          password={true}
-                        ></Input>
+                    {/* Password */}
+                    <div className="form-group">
+                      {/* <Input></Input> */}
+                      <input
+                        name="password"
+                        value={formValue.password}
+                        // onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleChange}
+                        className="password"
+                        type={passwordShown ? 'text' : 'password'}
+                        required
+                      />
+                      <label htmlFor="password">Password</label>
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close"
+                        onClick={togglePassword}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open"
+                        onClick={togglePassword}
+                      ></i>
 
-                        <div className="err-msg">
-                          {error && password <= 0 ? (
-                            <span
-                              className="input_error"
-                              style={{ paddingBottom: 30 }}
-                            >
-                              Enter Password
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-
-                      <span className="form-password-message"></span>
+                      {formErrors.password && (
+                        <span className="input_error">
+                          {formErrors.password}
+                        </span>
+                      )}
                     </div>
 
-                    <div className="form-group form-password">
-                      <label> Confirm Password</label>
-                      <div>
-                        <Input
-                          placeHolder="Password"
-                          type="password"
-                          id="password"
-                          // onClick={e=>  }
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          password={true}
-                        ></Input>
+                    {/* ConfirmPassword */}
+                    <div className="form-group">
+                      {/* <Input></Input> */}
 
-                        <div className="err-msg">
-                          {error && confirmPassword <= 0 ? (
-                            <span
-                              className="input_error"
-                              style={{ paddingBottom: 30 }}
-                            >
-                              Enter Password
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                          {error &&
-                          confirmPassword > 0 &&
-                          confirmPassword !== password ? (
-                            <span
-                              className="input_error"
-                              style={{ paddingBottom: 30 }}
-                            >
-                              Password and Confirm Password don't match
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
+                      <input
+                        name="confirmPassword"
+                        value={formValue.confirmPassword}
+                        className="confirm-password"
+                        onChange={handleChange}
+                        type={passwordConfirm ? 'text' : 'password'}
+                        required
+                      />
+                      <label htmlFor="confirm-password">Confirm Password</label>
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close  eyes-confirm-close"
+                        onClick={togglePasswordConfirm}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open  eyes-confirm-open"
+                        onClick={togglePasswordConfirm}
+                      ></i>
 
-                      <span className="form-password-message"></span>
+                      {formErrors.confirmPassword && (
+                        <span className="input_error">
+                          {formErrors.confirmPassword}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="btn">
                     <button
                       type="button"
-                      className="btn-login"
-                      onClick={ValidateSignIn}
+                      className="btn-signup"
+                      onClick={handleSubmitForm}
                     >
-                      Sign Up
-                      <i className="fas fa-arrow-right"></i>
+                      {isSubmitting ? (
+                        <div class="dashed-loading"></div>
+                      ) : (
+                        <span>
+                          Sign Up
+                          <i className="fas fa-arrow-right"></i>
+                        </span>
+                      )}
                     </button>
 
-                    <div className="dont-have-account">
+                    {/* <div className="dont-have-account">
                       <p className="dont-have-account-text">
                         You have an account?
                         <NavLink to="/sign-in">Sign in now</NavLink>
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </form>
               </div>
             </div>
 
-            <div className="login__right">
-              <div className="login-right-wrap">
+            <div className="signup__right">
+              <div className="signup-right-wrap">
                 <div className="background"></div>
               </div>
             </div>
@@ -595,4 +648,3 @@ export const SignUpPage = () => {
     </StyledSignUpPage>
   );
 };
-

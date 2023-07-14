@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 
+
 // const { default: styled } = require("styled-components");
 
 const StyledInput = styled.div`
@@ -90,6 +91,7 @@ const Input = ({
   password,
   onClick,
 }) => {
+  // console.log('password:', password);
   const [passwordShown, setPasswordShown] = useState(false);
   function togglePassword() {
     console.log("click");
