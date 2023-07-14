@@ -92,8 +92,12 @@ const CreatedMarketPlaceData = [
 ];
 
 const MarketPlaceStyled = styled.div`
+  .container{
+    padding: 0 20px;
+  }
+
   .header-market-place {
-    padding: 40px 40px;
+    padding: 40px 0px;
   }
 
   .header-market-place form {

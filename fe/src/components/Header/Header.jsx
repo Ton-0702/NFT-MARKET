@@ -35,7 +35,7 @@ const Header = () => {
               </div>
 
               <div className="nav-item">
-                <a href="wallet" className="nav-item-link">
+                <a href="connect-wallet" className="nav-item-link">
                   <span>Connect a wallet</span>
                 </a>
               </div>
