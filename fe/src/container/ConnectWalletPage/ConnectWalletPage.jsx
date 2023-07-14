@@ -4,13 +4,8 @@ import { Button } from "components/Button";
 import mask from "../../assets/ConnectWalletPage/Metamask.svg";
 import coin from "../../assets/ConnectWalletPage/Coinbase.svg";
 import wallet from "../../assets/ConnectWalletPage/WalletConnect.svg";
+import { colors } from "Global";
 const StyledConnectWalletPage = styled.div`
-  /* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } */
-
   :root {
     /* --color-1: #c0dbea; */
     --color-2: #6096b4;
@@ -29,28 +24,29 @@ const StyledConnectWalletPage = styled.div`
 
   .main {
     height: 100vh;
-    position: relative;
-    /* z-index: -1; */
+    width: 100%;
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,
       rgb(71, 30, 84) 119.9%
     );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .wallet-container {
-    max-width: 1920px;
+    width: 1050px;
+    top: 50%;
+    left: 50%;
+    padding: 30px;
   }
 
   .wallet-form-wrap {
-    width: 1050px;
     display: flex;
     border-radius: 2rem;
     box-shadow: 0px 0px 24px 1px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     /* padding-bottom: 40px; */
     /* margin: auto; */
     background-color: #fff;
@@ -70,19 +66,69 @@ const StyledConnectWalletPage = styled.div`
     padding: 20px;
   }
 
+  .progressbar {
+    counter-reset: step;
+    width: 100%;
+  }
+
+  .progressbar li {
+    position: relative;
+    list-style: none;
+    float: left;
+    width: 33.33%;
+    text-align: center;
+    font-size: 16px;
+    z-index: 1;
+  }
+
+  /* Circles */
+  .progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 40px;
+    height: 40px;
+    border: 1px solid ${colors.backgroundColor2};
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background-color: ${colors.backgroundColor2};
+    color: #ffffff;
+    /* Center # in circle */
+    line-height: 39px;
+  }
+
+  .progressbar li:after {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    background: ${colors.borderColor};
+    top: 20px; /*half of height Parent (li) */
+    left: -25%;
+  }
+
+  .progressbar li:first-child:after {
+    content: none;
+  }
+
+  .progressbar li.active:before {
+    background: rgb(71, 30, 84);
+    content: "✔";
+    color: #ffffff;
+  }
+
   .wallet-content {
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .wallet-title {
-    margin-top: 80px;
     font-size: 51px;
     font-style: normal;
     font-weight: 600;
-  }
-
-  .form-control {
-    min-width: 478px;
   }
 
   .form-control .form-group {
@@ -94,19 +140,14 @@ const StyledConnectWalletPage = styled.div`
 
   /*  Login right */
   .wallet__right {
-    position: relative;
+    display: flex;
+    justify-content: flex-end;
   }
 
-  .background {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 450px;
-
-    background-image: url(${background});
-    background-size: cover;
-    z-index: -1;
+  .wallet__right img {
+    width: 90%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 2rem;
   }
 
@@ -118,17 +159,16 @@ const StyledConnectWalletPage = styled.div`
     display: flex;
     width: 500px;
     height: 500px;
-    z-index: 20;
   }
 
   .input-form {
-    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
   }
   .input-form button {
-    width: 84%;
+    width: 100%;
     justify-content: none;
   }
   .wallet-content p {
@@ -137,29 +177,21 @@ const StyledConnectWalletPage = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 160%;
-    width: 408px;
     padding-top: 20px;
     padding-bottom: 40px;
+    text-align: center;
   }
 
   /* Responsive */
   /* extra large */
   @media (max-width: 1200px) {
-    .input-form button {
-      width: 78%;
-    }
-    .wallet-form-wrap {
-      width: 994px;
+    .wallet-container{
+      width: auto;
     }
 
     .wallet-title {
-      margin-top: 30px;
       font-size: 52px;
       text-align: center;
-    }
-
-    .form-control {
-      min-width: 416px;
     }
 
     /* right */
@@ -175,16 +207,12 @@ const StyledConnectWalletPage = styled.div`
 
   /* Large */
   @media (max-width: 992px) {
-    .wallet-form-wrap {
-      /* width: 854px; */
-      width: 90%;
-    }
-    .main {
-      padding: 20px;
+    .wallet__left {
+      width: 100%;
     }
 
-    .form-control {
-      min-width: 370px;
+    .wallet__right {
+      display: none;
     }
 
     /* right */
@@ -196,11 +224,8 @@ const StyledConnectWalletPage = styled.div`
       width: 90%;
       background-size: cover;
     }
-    .input-form button {
-      width: 78%;
-    }
+
     .wallet-title {
-      text-align: unset;
       font-size: 40px;
     }
     .wallet-content p {
@@ -214,9 +239,6 @@ const StyledConnectWalletPage = styled.div`
     .wallet-title {
       /* justify-content: center; */
     }
-    .wallet-content {
-      width: 70%;
-    }
 
     .wallet__left {
       width: 100%;
@@ -224,12 +246,7 @@ const StyledConnectWalletPage = styled.div`
     .form-control {
       min-width: 0;
     }
-    .input-form {
-      width: 100%;
-    }
-    .input-form button {
-      width: 100%;
-    }
+
     .background {
       background-size: cover;
       width: 79%;
@@ -237,9 +254,6 @@ const StyledConnectWalletPage = styled.div`
   }
 
   @media (max-width: 576px) {
-    .wallet-form-wrap {
-      width: 450px;
-    }
     .main {
       padding: 20px;
       /* width: 80%; */
@@ -254,6 +268,10 @@ const StyledConnectWalletPage = styled.div`
     .wallet-title {
       font-size: 34px;
     }
+
+    .input-form button{
+      padding: 10px 20px;
+    }
   }
 `;
 
@@ -265,6 +283,11 @@ export const ConnectWalletPage = () => {
           <div className="wallet-form-wrap">
             <div className="wallet__left">
               <div className="wallet-content">
+                <ul class="progressbar">
+                  <li class="active">Step 1</li>
+                  <li>Step 2</li>
+                  <li>Step 3</li>
+                </ul>
                 <h2 className="wallet-title">Connect Wallet</h2>
                 <p>
                   Choose a wallet you want to connect. There are several wallet
@@ -306,11 +329,8 @@ export const ConnectWalletPage = () => {
                 </form>
               </div>
             </div>
-
             <div className="wallet__right">
-              <div className="wallet-right-wrap">
-                <div className="background"></div>
-              </div>
+              <img src={background} alt="" />
             </div>
           </div>
         </div>
