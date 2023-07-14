@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {PrimaryLayout} from 'components/Layout';
 import banner from '../../assets/Nft-page-imgs/Banner.jpeg';
@@ -6,15 +6,120 @@ import avatar from '../../assets/HomePage/Avatar1.svg';
 import globe from '../../assets/Nft-page-imgs/Globe.png';
 import {colors} from 'Global';
 
+import avatar1 from '../../assets/ranking-imgs/avatar.svg';
+import avatar2 from '../../assets/ranking-imgs/avatar2.svg';
+import avatar3 from '../../assets/ranking-imgs/avatar3.svg';
+import avatar4 from '../../assets/ranking-imgs/avatar4.svg';
+import avatar5 from '../../assets/ranking-imgs/avatar5.svg';
+import avatar6 from '../../assets/ranking-imgs/avatar6.svg';
+import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
+
+const auctionData = [
+  {
+    id: 1,
+    img: avatar1,
+    username: 'Jaydon Ekstrom Bothman',
+    change: 1.4,
+    sold: 602,
+    volume: 12.4,
+  },
+  {
+    id: 2,
+    img: avatar2,
+    username: 'Ruben Carder',
+    change: 1.3,
+    sold: 480,
+    volume: 10.2,
+  },
+  {
+    id: 3,
+    img: avatar3,
+    username: 'Alfredo Septimus',
+    change: 1.2,
+    sold: 600,
+    volume: 12.2,
+  },
+  {
+    id: 4,
+    img: avatar4,
+    username: 'Davis Franci',
+    change: 1.2,
+    sold: 400,
+    volume: 11.2,
+  },
+  {
+    id: 5,
+    img: avatar5,
+    username: 'Livia Rosser',
+    change: 1.3,
+    sold: 480,
+    volume: 10.2,
+  },
+  {
+    id: 6,
+    img: avatar6,
+    username: 'Kianna Donin',
+    change: 1.3,
+    sold: 480,
+    volume: 10.2,
+  },
+  {
+    id: 7,
+    img: avatar7,
+    username: 'Phillip Lipshutz',
+    change: 1.3,
+    sold: 489,
+    volume: 9.2,
+  },
+];
+
 const NftPage = () => {
+  let TIME = 600;
+  const [count, setCount] = useState(TIME); // seconds
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
+
+  useEffect(() => {
+    if (count >= 0) {
+      const secondsLeft = setInterval(() => {
+        setCount((prevCount) => prevCount - 1);
+        let timeLeftVar = secondsToTime(count);
+        setHour(timeLeftVar.h);
+        setMinute(timeLeftVar.m);
+        setSecond(timeLeftVar.s);
+      }, 1000);
+
+      //   console.log(count);
+      console.log('Hour: ', hour);
+      console.log('Minutes: ', minute);
+      console.log('Seconds: ', second);
+
+      return () => clearInterval(secondsLeft);
+    } else {
+      console.log('TimeOut');
+    }
+  }, [count, hour, minute, second]);
+
+  const secondsToTime = (secs) => {
+    var hours = Math.floor(secs / (60 * 60));
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    return {
+      h: hours,
+      m: minutes,
+      s: seconds,
+    };
+  };
+
   return (
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
-          <div className="banner">
-            {/* <Banner></Banner> */}
-            {/* <img src={banner} alt="" /> */}
-          </div>
+          <div className="banner"></div>
           <div className="nft-page-content container">
             <div className="content-left">
               <div className="content-left-wrap">
@@ -71,22 +176,33 @@ const NftPage = () => {
               </div>
             </div>
             <div className="content-right">
+              <div className="content-top content-top__small-devices">
+                <div className="artist-name">The Orbitians</div>
+                <span className="date-creating">Minted on Sep 30, 2022</span>
+              </div>
               <div className="auction-card">
                 <div className="card-content">
                   <div className="auction-text">Auction ends in: </div>
                   <div className="card-time">
                     <div className="hour">
-                      <div className="hour-counting">59</div>
+                      <div className="hour-counting">
+                        {hour < 10 ? '0' + hour : hour}
+                      </div>
                       <div className="card-time-detail">Hours</div>
                     </div>
                     <div className="colon">:</div>
                     <div className="minute">
-                      <div className="minute-counting">59</div>
+                      <div className="minute-counting">
+                        {' '}
+                        {minute < 10 ? '0' + minute : minute}
+                      </div>
                       <div className="card-time-detail">Minutes</div>
                     </div>
                     <div className="colon">:</div>
                     <div className="seconds">
-                      <div className="seconds-counting">59</div>
+                      <div className="seconds-counting">
+                        {second < 10 ? '0' + second : second}
+                      </div>
 
                       <div className="card-time-detail">Seconds</div>
                     </div>
@@ -105,26 +221,32 @@ const NftPage = () => {
                     <td className="auction__table-header-data">Amount</td>
                   </thead>
                   <tbody className="auction__table-body">
-                    <tr>
-                      <td className="auction__table-body-data">1</td>
-                      <td className="auction__table-body-data">John</td>
-                      <td className="auction__table-body-data">0.5 ETH</td>
-                    </tr>
-                    <tr>
-                      <td className="auction__table-body-data">1</td>
-                      <td className="auction__table-body-data">John</td>
-                      <td className="auction__table-body-data">0.5 ETH</td>
-                    </tr>
-                    <tr>
-                      <td className="auction__table-body-data">1</td>
-                      <td className="auction__table-body-data">John</td>
-                      <td className="auction__table-body-data">0.5 ETH</td>
-                    </tr>
-                    <tr>
-                      <td className="auction__table-body-data">1</td>
-                      <td className="auction__table-body-data">John</td>
-                      <td className="auction__table-body-data">0.5 ETH</td>
-                    </tr>
+                    {auctionData &&
+                      auctionData.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="auction__table-body-data">
+                              {index + 1}
+                            </td>
+                            <td className="auction__table-body-data">
+                              <img
+                                className="body-data-img"
+                                src={item.img}
+                                alt=""
+                              />
+                              <span className="body-data-username">
+                                {item.username}
+                              </span>
+                            </td>
+                            <td className="auction__table-body-data">
+                              <span className="body-data-amount">
+                                {item.volume}
+                              </span>{' '}
+                              ETH
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -257,6 +379,10 @@ const NftPageStyled = styled.div`
     background-color: ${colors.backgroundColor2};
     cursor: pointer;
   }
+  /* content right */
+  .content-top__small-devices {
+    display: none;
+  }
 
   /* auction card */
   .content-right {
@@ -357,5 +483,159 @@ const NftPageStyled = styled.div`
   }
   .auction__table-body tr:nth-child(2n) {
     background-color: rgb(235 220 214 / 10%);
+  }
+
+  .auction__table-body-data:nth-child(2) {
+    display: flex;
+    align-items: center;
+  }
+
+  .body-data-img {
+    width: 24px;
+    height: 24px;
+  }
+  .body-data-username {
+    margin-left: 8px;
+  }
+
+  .body-data-amount {
+    color: ${colors.greenColor};
+  }
+
+  /* Responsive */
+  // Large devices (desktops, less than 1200px)
+  @media (max-width: 1199.98px) {
+    .banner {
+      height: 420px;
+    }
+  }
+  // Medium devices (tablets, less than 992px)
+  @media (max-width: 991.98px) {
+    .container {
+      max-width: 690px;
+    }
+    /* left */
+    .content-left {
+      width: 50%;
+    }
+    .content-left-wrap {
+      max-width: 343px;
+    }
+    .artist-name {
+      font-size: 38px;
+    }
+    .date-creating {
+      font-size: 16px;
+    }
+    .create-by-title,
+    .desc-title,
+    .detail-title,
+    .tags-tittle .tags-list {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .create-by {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .desc {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .detail-item img {
+      width: 24px;
+      height: 24px;
+    }
+    .detail-item-text {
+      font-size: 16px;
+    }
+    .tags-list {
+      flex-direction: column;
+      row-gap: 10px;
+    }
+    .tags-item {
+      width: fit-content;
+    }
+    /* Content right */
+    .content-right {
+      width: 50%;
+    }
+    .table-content {
+      width: 88%;
+    }
+    .auction__table-body-data:nth-child(2) {
+      height: 46px;
+    }
+  }
+
+  // Small devices (landscape phones, less than 768px)
+  @media (max-width: 767.98px) {
+    .banner {
+      height: 320px;
+      background-position: center;
+    }
+    .container {
+      width: 412px;
+    }
+    .content-top {
+      display: none;
+    }
+    .content-right {
+      width: 100%;
+    }
+    .nft-page-content {
+      flex-direction: column-reverse;
+    }
+    .content-top__small-devices {
+      display: block;
+      width: 100%;
+    }
+    .artist-name {
+      font-size: 28px;
+      line-height: 28px;
+      width: 100%;
+    }
+    .date-creating {
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .auction-card {
+      margin-top: 20px;
+    }
+    .table-content {
+      width: 96%;
+    }
+    /* Left content */
+    .content-left {
+      width: 100%;
+    }
+    .content-left-wrap {
+      max-width: 412px;
+    }
+  }
+
+  //
+  @media (max-width: 575.98px) {
+    .container {
+      width: 315px;
+    }
+    .table-content {
+      width: 100%;
+    }
+    .content-left-wrap {
+      max-width: 315px;
+    }
+    .content-desc {
+      margin-top: 20px;
+    }
+    .content-details {
+      margin-top: 20px;
+    }
+    .detail-title {
+      margin-bottom: 10px;
+    }
+    .content-tags {
+      margin-top: 20px;
+    }
   }
 `;
