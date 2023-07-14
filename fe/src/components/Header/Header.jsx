@@ -162,8 +162,7 @@ const HeaderStyled = styled.div`
   //
   @media (max-width: 575.98px) {
     .header-wrapper {
-      max-width: 315px;
-      padding: 0;
+      padding: 0 10px;
     }
   }
 `;
