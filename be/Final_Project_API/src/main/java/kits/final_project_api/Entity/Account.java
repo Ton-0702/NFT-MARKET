@@ -18,28 +18,15 @@ import java.util.List;
 @Getter
 @Setter
 public class Account implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer account_id;\
-
-
-//    public Account(Long accountId, String username, String email, String password, String biography) {
-//        this.accountId = accountId;
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//        this.biography = biography;
-//    }
-
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @Column(name = "account_name", columnDefinition = "varchar(150) not null unique")
-    private String account_name;
+    @Column(name = "address_wallet", columnDefinition = "varchar(150) not null unique")
+    private String address_wallet;
 
-    @Column(name = "username", columnDefinition = "varchar(150) not null")
+    @Column(name = "username", columnDefinition = "varchar(150) not null default 'Unnamed'")
     private String username;
 
     @Column(name = "email", columnDefinition = "varchar(200) not null")
@@ -48,8 +35,11 @@ public class Account implements Serializable {
     @Column(name = "avatar", columnDefinition = "varchar(200) not null")
     private String avatar;
 
-    @Column(name = "background", columnDefinition = "TEXT")
+    @Column(name = "background", columnDefinition = "TEXT default null")
     private String background;
+
+    @Column(name = "token", columnDefinition = "TEXTvarchar(200) default NULL unique")
+    private String token;
 
     @Column(name = "password", columnDefinition = "varchar(100) not null")
     private String password;
@@ -84,30 +74,4 @@ public class Account implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<NFTLike> nftLikes;
-
-
-
-
-//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-//    private List<NFT> ntfs;
-//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
-//    private List<NFT> account_nft_ps;
-
-
-
-//    @OneToMany(mappedBy = "account_user_follow_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Followers> account_user_follow_ids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_followers_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Followers> account_followers_ids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_nft_owned", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // MappedBy trỏ tới tên biến product ở trong ProductOwend.
-//    private List<NFTOwened> account_nft_owned_s = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_transaction_bid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Transaction> account_transaction_bids = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "account_NFT_like_id", fetch = FetchType.LAZY)
-//    private List<NFTLike> account_NFT_like_ids = new ArrayList<>();
-
 }

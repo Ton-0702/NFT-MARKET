@@ -24,7 +24,7 @@ const Header = () => {
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
-                <a href="market" className="nav-item-link">
+                <a href="market-place" className="nav-item-link">
                   <span>Marketplace</span>
                 </a>
               </div>
@@ -35,7 +35,7 @@ const Header = () => {
               </div>
 
               <div className="nav-item">
-                <a href="wallet" className="nav-item-link">
+                <a href="connect-wallet" className="nav-item-link">
                   <span>Connect a wallet</span>
                 </a>
               </div>

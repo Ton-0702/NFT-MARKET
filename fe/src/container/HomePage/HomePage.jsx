@@ -212,6 +212,12 @@ const HomePageStyled = styled.div`
     margin: 0px auto;
   }
 
+  @media (max-width: 1199.98px) {
+    .container {
+      width: auto;
+    }
+  }
+
   @media (max-width: 991.98px) {
     .container {
       width: auto;
@@ -390,6 +396,12 @@ const TrendingCollectionStyled = styled.div`
     display: grid;
     grid-template-columns: auto auto auto;
     justify-content: space-between;
+  }
+  @media (max-width: 1199.98px) {
+    .body_trending_collection .trending_collection_item{
+      display: flex;
+      justify-content: center;
+    }
   }
 
   @media (max-width: 991.98px) {
@@ -811,15 +823,15 @@ const GetNotiStyled = styled.div`
       flex-direction: column;
     }
 
-    .get_noti_left{
+    .get_noti_left {
       width: 100%;
     }
 
-    .get_noti_right{
+    .get_noti_right {
       width: 100%;
     }
 
-    .get_noti_right .header_get_noti_right{
+    .get_noti_right .header_get_noti_right {
       margin-bottom: 40px;
     }
   }
@@ -840,7 +852,6 @@ const HomePage = () => {
               </p>
               <Button
                 img={rocketIcon}
-
                 content={"Get Started"}
                 borderRadius={"20px"}
                 bgColor={"#A259FF"}

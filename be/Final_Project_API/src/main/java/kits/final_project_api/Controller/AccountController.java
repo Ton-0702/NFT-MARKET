@@ -27,10 +27,11 @@ public class AccountController {
 
     @GetMapping
     @ResponseBody
-    public List<Account> getAllUsers(Model model) {
+    public List<Account> getAllUsers(){
+
 //        System.out.println("TESST: "+userService.findAll());
         List<Account> users = accountService.findAll();
-        model.addAttribute("users", users);
+//        model.addAttribute("users", users);
         return users;
 //
 //        for(Account u : users) {
