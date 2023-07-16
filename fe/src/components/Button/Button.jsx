@@ -5,7 +5,8 @@ const ButtonStyled = styled.div`
     display: flex;
     height: 60px;
     padding: ${(props) => props.padding};
-    justify-content: center;
+    justify-content: ${(props) =>
+      props.jutifyContent ? props.jutifyContent : "unset"};
     align-items: center;
     gap: 12px;
     border: ${(props) => (props.border ? props.border : "none")};
@@ -37,6 +38,7 @@ const Button = ({
   padding,
   onSubmit,
   onClick,
+  jutifyContent,
 }) => {
   if (type === "large") {
     return <ButtonLargeStyled></ButtonLargeStyled>;
@@ -57,6 +59,7 @@ const Button = ({
         padding={padding}
         onsubmit={onSubmit}
         onClick={onClick}
+        jutifyContent={jutifyContent}
       >
         <button onsubmit={onSubmit} onClick={onClick}>
           <img src={img} alt="" />

@@ -24,7 +24,7 @@ const Header = () => {
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
-                <a href="market" className="nav-item-link">
+                <a href="market-place" className="nav-item-link">
                   <span>Marketplace</span>
                 </a>
               </div>
@@ -35,7 +35,7 @@ const Header = () => {
               </div>
 
               <div className="nav-item">
-                <a href="wallet" className="nav-item-link">
+                <a href="connect-wallet" className="nav-item-link">
                   <span>Connect a wallet</span>
                 </a>
               </div>
@@ -86,7 +86,7 @@ const LogoItemStyled = styled.div`
 // Header Style
 const HeaderStyled = styled.div`
   .header {
-    background-color: ${colors.background};
+    background-color: ${colors.backgroundColor2};
     align-items: center;
   }
   .header-wrapper {
@@ -141,7 +141,7 @@ const HeaderStyled = styled.div`
   // Medium devices (tablets, less than 992px)
   @media (max-width: 991.98px) {
     .header-wrapper {
-      max-width: 834px;
+      max-width: 736px;
     }
     .tablet-mobile-nav {
       display: block;
@@ -155,14 +155,14 @@ const HeaderStyled = styled.div`
   // Small devices (landscape phones, less than 768px)
   @media (max-width: 767.98px) {
     .header-wrapper {
-      max-width: 436px;
+      padding: 0 20px;
     }
   }
 
   //
   @media (max-width: 575.98px) {
     .header-wrapper {
-      max-width: 375px;
+      padding: 0 10px;
     }
   }
 `;

@@ -1,27 +1,10 @@
+
 import styled from "styled-components";
 import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
 import { Input } from "components/Input";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 const StyledSignInPage = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    /* --color-1: #c0dbea; */
-    --color-2: #6096b4;
-    --black-color: #000;
-    /* --btn-color: #d885a3; */
-  }
-
-  body {
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-  }
-
   a {
     text-decoration: none;
   }
@@ -29,7 +12,7 @@ const StyledSignInPage = styled.div`
   .main {
     height: 100vh;
     position: relative;
-    /* z-index: -1; */
+
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,
@@ -259,103 +242,94 @@ const StyledSignInPage = styled.div`
 
   /* Responsive */
   /* extra large */
-  @media (max-width: 1200px) {
-    .login-form-wrap {
-      width: 994px;
-    }
 
+  @media (max-width: 991.98px) {
+    .login-form-wrap {
+      width: 90%;
+      height: 60%;
+    }
+    .login-content {
+      width: 80%;
+    }
+    .input-form {
+      width: 80%;
+    }
+    .input-form div {
+      height: 80%;
+    }
+    .login__right {
+      width: 50%;
+    }
+    .background {
+      width: 75%;
+      height: 101%;
+    }
     .login-title {
-      margin-top: 30px;
-      font-size: 52px;
-      text-align: center;
+      margin-top: 0px;
     }
-
-    .form-control {
-      min-width: 416px;
+    .dont-have-account-text {
+      width: 96%;
     }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 400px;
-      height: 500px;
+    .form-control .form-group .form-password input {
+      width: 90%;
     }
-
-    .login-right-wrap .images {
-      top: 58%;
-    }
-
-    .girl-laptop img {
-      width: 500px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 200px;
-      height: 400px;
-    }
-  }
-
-  /* Large */
-  @media (max-width: 992px) {
-    .login-form-wrap {
-      width: 854px;
-    }
-
-    .form-control {
-      min-width: 370px;
-    }
-
     .btn {
-      row-gap: 24px;
-    }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 324px;
-      height: 486px;
-    }
-
-    .girl-laptop img {
-      width: 392px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 166px;
-      height: 400px;
+      width: 80%;
     }
   }
-
-  @media (max-width: 576px) {
-    .login-form-wrap {
-      width: 450px;
+  @media (max-width: 767.98px) {
+    .login__right {
+      display: none;
+    }
+    .login-title {
+      padding-top: 80px;
+      /* height: 100%; */
+    }
+    .login-content {
+      width: 70%;
     }
 
     .login__left {
       width: 100%;
+      justify-content: center;
     }
-
-    .login__right {
-      display: none;
+    .form-control {
+      min-width: 0;
+    }
+    .input-form {
+      width: 100%;
+    }
+    .background {
+      background-size: cover;
+      width: 79%;
+    }
+    .btn {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .login-title {
+      font-size: 30px;
     }
   }
 `;
 
 export const SignInPage = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
-    const eyesClose = document.querySelector(".eyes-close");
-    const eyesOpen = document.querySelector(".eyes-open");
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
     if (passwordShown === false) {
-      eyesClose.classList.add("d-none");
-      eyesOpen.classList.add("d-block");
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
     } else {
-      eyesClose.classList.remove("d-none");
-      eyesOpen.classList.remove("d-block");
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
     }
   };
   const ValidateSignIn = (e) => {
@@ -363,8 +337,8 @@ export const SignInPage = () => {
     if (username.length === 0 || password.length === 0) {
       setError(true);
     }
-    console.log("username: " + username);
-    console.log("password: " + password);
+    console.log('username: ' + username);
+    console.log('password: ' + password);
   };
   return (
     <StyledSignInPage>
@@ -391,7 +365,7 @@ export const SignInPage = () => {
                       {error && username <= 0 ? (
                         <span className="input_error">Enter Username</span>
                       ) : (
-                        <span style={{ height: 10 }}> </span>
+                        <span style={{height: 10}}> </span>
                       )}
                     </div>
                     <div className="form-group form-password">
@@ -405,7 +379,7 @@ export const SignInPage = () => {
                       <Input
                         placeHolder="Enter password"
                         id="password"
-                        type={passwordShown ? "text" : "password"}
+                        type={passwordShown ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
                       ></Input>
                       {/* <i
@@ -416,7 +390,7 @@ export const SignInPage = () => {
                         {error && password <= 0 ? (
                           <span className="input_error">Enter Password</span>
                         ) : (
-                          ""
+                          ''
                         )}
                       </div>
 

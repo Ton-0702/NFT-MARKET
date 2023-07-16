@@ -3,9 +3,15 @@ package kits.final_project_api.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Table(name = "transaction_bid")
 public class Transaction {
     @Id
@@ -27,5 +33,6 @@ public class Transaction {
     private Double highest_bid;
 
     @Column(name = "date_transaction", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
+//    @Temporal(TemporalType.TIMESTAMP)
     private String date_transaction;
 }

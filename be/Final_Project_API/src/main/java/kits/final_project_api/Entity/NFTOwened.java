@@ -17,9 +17,8 @@ public class NFTOwened {
     private Long id;
 
     @OneToOne
-    @PrimaryKeyJoinColumn
-//    @JoinColumn(name = "nft_id")
-    private NFT nft;
+    @JoinColumn(name = "nft_id")
+    private NFT nft_owned_id;
 
     @JsonIgnore
     @ManyToOne()

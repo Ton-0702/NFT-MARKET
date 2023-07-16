@@ -46,6 +46,13 @@ const CardStyled = styled.div`
     align-items: center;
   }
 
+  .body_card .title_card .info_artist img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50px;
+  }
+
   .body_card .title_card .info_artist span {
     color: #fff;
     font-size: 16px;
@@ -78,13 +85,13 @@ const CardStyled = styled.div`
     line-height: 140%;
   }
 
-  .body_card .info_card .price{
+  .body_card .info_card .price {
     display: flex;
     flex-direction: column;
     align-items: start;
   }
-  
-  .body_card .info_card .highest_bid{
+
+  .body_card .info_card .highest_bid {
     display: flex;
     flex-direction: column;
     align-items: end;
