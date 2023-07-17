@@ -3,7 +3,6 @@ import styled from "styled-components";
 const ButtonStyled = styled.div`
   button {
     display: flex;
-    height: 60px;
     padding: ${(props) => props.padding};
     justify-content: ${(props) =>
       props.jutifyContent ? props.jutifyContent : "unset"};
@@ -62,7 +61,7 @@ const Button = ({
         jutifyContent={jutifyContent}
       >
         <button onsubmit={onSubmit} onClick={onClick}>
-          <img src={img} alt="" />
+          {img && <img src={img} alt="" />}
           <span>{content}</span>
         </button>
       </ButtonStyled>

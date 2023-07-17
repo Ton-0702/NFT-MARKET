@@ -10,6 +10,7 @@ import { NftPage } from "container/NftPage";
 import { ConnectWalletPage } from "container/ConnectWalletPage";
 import { ArtistPage } from "container/ArtistPage";
 import { ProfileDetail } from "container/ProfileDetail";
+import { LoginSuccessPage } from "container/LoginSuccessPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/connect-wallet" element={<ConnectWalletPage />} />
       <Route path="/artist" element={<ArtistPage />} />
       <Route path="/profile-details" element={<ProfileDetail />} />
+      <Route path="/login-success" element={<LoginSuccessPage />} />
     </Routes>
   );
 }
