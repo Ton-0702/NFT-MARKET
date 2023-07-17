@@ -9,7 +9,7 @@ import java.util.Map;
 //@Service
 public interface AccountService {
     List<Account> findAll();
-    List<Map<String, Object>> getTopCreatorToday(String date);
+
     Account findByUsername(String username);
 
     <S extends Account> S saveAndFlush(S entity);
@@ -17,4 +17,6 @@ public interface AccountService {
     int updateTokenById(String token, Long id);
 
     Account findByToken(String token);
+
+    Account findByEmail(String email);
 }
