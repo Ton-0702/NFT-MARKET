@@ -45,17 +45,17 @@ public class AccountController {
 //        return accounts;
     }
 
-    @GetMapping("/ranking/today")
-    @ResponseBody
-
-    public List<Map<String, Object>> getTopCreatorToday(LocalDate date){
-        LocalDateTime date_current = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
-        String date_current_format = date_current.format(myFormatObj);
-        LocalDateTime dateTime = LocalDateTime.parse(date_current_format, myFormatObj);
-        System.out.println("date_current_format: "+date_current_format);
-        System.out.println("dateTime: "+dateTime);
-        return accountService.getTopCreatorToday(date_current_format);
-    }
+//    @GetMapping("/ranking/today")
+//    @ResponseBody
+//
+//    public List<Map<String, Object>> getTopCreatorToday(LocalDate date){
+//        LocalDateTime date_current = LocalDateTime.now();
+//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+//        String date_current_format = date_current.format(myFormatObj);
+//        LocalDateTime dateTime = LocalDateTime.parse(date_current_format, myFormatObj);
+//        System.out.println("date_current_format: "+date_current_format);
+//        System.out.println("dateTime: "+dateTime);
+//        return accountService.getTopCreatorToday(date_current_format);
+//    }
 }
 
