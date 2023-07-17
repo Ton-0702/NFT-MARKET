@@ -44,6 +44,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "SELECT * FROM account AS a WHERE a.username = :username LIMIT 1", nativeQuery = true)
     Account findByUsername(String username);
 
+    @Query(value = "SELECT * FROM account AS a WHERE a.email = :email LIMIT 1", nativeQuery = true)
+    Account findByEmail(String email);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE account AS a SET a.token = :token WHERE a.account_id = :account_id", nativeQuery = true)
