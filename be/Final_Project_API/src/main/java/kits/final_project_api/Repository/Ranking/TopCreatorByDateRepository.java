@@ -4,6 +4,7 @@ import kits.final_project_api.Entity.Account;
 import kits.final_project_api.Model.TopCreatorDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public interface TopCreatorByDateRepository extends JpaRepository<TopCreatorDTO,
             ") cte2 " +
             "LEFT JOIN account AS a ON cte2.creator = a.account_id " +
             "GROUP BY cte2.creator " +
-            "", nativeQuery = true)
-    List<Map<String, Object>> getTopCreatorToday(String date);
+            "ORDER BY nfts_sold DESC, volume  " +
+            "LIMIT :page, :numberCreator", nativeQuery = true)
+    List<Map<String, Object>> getTopCreatorToday(String date, Integer page, Integer numberCreator);
 }
