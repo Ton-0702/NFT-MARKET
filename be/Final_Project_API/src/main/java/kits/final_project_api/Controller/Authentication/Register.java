@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/register")
+@RequestMapping("api/admin/register")
 public class Register {
     @Autowired
     private UtilsService utilsService;
@@ -45,7 +45,7 @@ public class Register {
                  account_create.setPassword(bCryptPasswordEncoder.encode(accountCreateDTO.getPassword()));
                  //Tạo token ngẫu nhiên qua class UtilsService và hàm getRandomHexString trong class đó, sau đó gắn vào token entity account
                  account_create.setToken(UtilsService.getRandomHexString(100));
-
+                 accountService.saveAndFlush(account_create);
                  // Set cookie
                  Cookie cookie = new Cookie("token", account_create.getToken());
                  cookie.setMaxAge(3600); // Set thời gian cookie lưu trữ token là 1 tiếng sau đó xóa đi
@@ -55,9 +55,10 @@ public class Register {
 
                  return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto());
             }catch (Exception e){
-
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RegisterResponseDto("", "", e.getMessage(),
+                        "UNKNOWN_ERROR"));
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("a", "", "", ""));
+        return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("User already exists", "", "", "USER_EXIST"));
     }
 }
