@@ -21,7 +21,7 @@ public class HomePageServiceImpl implements HomePageService {
 
 
     // Tính thời gian hiện tại trừ đi 1 ngày => Tính ngày trước ngày hiện tại
-    public String dateBeforeNow(){
+    public String dateBeforeNow() {
         LocalDateTime date_current = LocalDateTime.now().minusDays(1);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
@@ -65,16 +65,16 @@ public class HomePageServiceImpl implements HomePageService {
         String date_current_format = dateBeforeNow();
 
         // get account_id, username, avatar
-        List<Map<String, Object>> account =  homePageRepository.getInfoAccount();
+        List<Map<String, Object>> account = homePageRepository.getInfoAccount();
         //get total sale one account ( n.account_id, MAX(t.highest_bid) AS max )
         List<Map<String, Object>> account_transaction = homePageRepository.getMaxTransactionByNftId(date_current_format);
 
         List<Map<String, Object>> newAccount_transaction_sum = new ArrayList<>();
-        for (int l1 =0; l1 < account_transaction.size()-1; l1++){
+        for (int l1 = 0; l1 < account_transaction.size() - 1; l1++) {
             Map<String, Object> newMap = new HashMap<>();
             newMap.putAll(account_transaction.get(l1));
-            for(int l2= l1+1; l2 < account_transaction.size(); l2++){
-                if(account_transaction.get(l1).get("account_id").equals(account_transaction.get(l2).get("account_id"))){
+            for (int l2 = l1 + 1; l2 < account_transaction.size(); l2++) {
+                if (account_transaction.get(l1).get("account_id").equals(account_transaction.get(l2).get("account_id"))) {
                     double freq = (double) newMap.get("total_sale");
                     double test = (double) account_transaction.get(l2).get("total_sale");
 
@@ -83,16 +83,16 @@ public class HomePageServiceImpl implements HomePageService {
                     newMap.put("total_sale", freq);
                 }
             }
-            if(newAccount_transaction_sum == null){
+            if (newAccount_transaction_sum == null) {
                 newAccount_transaction_sum.add(newMap);
-            }else{
+            } else {
                 boolean check = false;
-                for(Map<String, Object> m1 : newAccount_transaction_sum){
-                    if(m1.get("account_id").equals(newMap.get("account_id"))){
+                for (Map<String, Object> m1 : newAccount_transaction_sum) {
+                    if (m1.get("account_id").equals(newMap.get("account_id"))) {
                         check = true;
                     }
                 }
-                if (check == false){
+                if (check == false) {
                     newAccount_transaction_sum.add(newMap);
                 }
             }
@@ -100,11 +100,11 @@ public class HomePageServiceImpl implements HomePageService {
 //        account_transaction.forEach(m1 -> account_transaction.stream().filter(m2 -> m1.get("account_id").equals(m2.get("account_id"))).collect(Collectors.groupingBy())); //.mapToDouble(value -> (double) value.get("max")).s)
 
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Map<String, Object> m1 : newAccount_transaction_sum){
+        for (Map<String, Object> m1 : newAccount_transaction_sum) {
             Map<String, Object> newMap = new HashMap<>();
             newMap.putAll(m1);
-            for (Map<String, Object> m2 : account){
-                if (m1.get("account_id").equals(m2.get("account_id"))){
+            for (Map<String, Object> m2 : account) {
+                if (m1.get("account_id").equals(m2.get("account_id"))) {
 //                    newMap.put("total_sale", Double.valueOf(String.format("%.2f", m2.get("max"))));
                     newMap.put("username", m2.get("username"));
                     newMap.put("avatar", m2.get("avatar"));
@@ -132,11 +132,11 @@ public class HomePageServiceImpl implements HomePageService {
 //        List<Map<String, Object>> nftTrendingCount = nftComponentRepository.getTrendingNFt();
 
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Map<String, Object> m1 : nftTrendingMaxBid){
+        for (Map<String, Object> m1 : nftTrendingMaxBid) {
             Map<String, Object> newMap = new HashMap<>();
             newMap.putAll(m1);
-            for (Map<String, Object> m2 : account){
-                if(m1.get("account_id").equals(m2.get("account_id"))){
+            for (Map<String, Object> m2 : account) {
+                if (m1.get("account_id").equals(m2.get("account_id"))) {
                     newMap.put("avatar", m2.get("avatar"));
                     newMap.put("username", m2.get("username"));
                     break;
@@ -151,4 +151,8 @@ public class HomePageServiceImpl implements HomePageService {
         List<Map<String, Object>> firstNElementsResult = result.stream().limit(showlimit).collect(Collectors.toList());
         return firstNElementsResult;
     }
+
+    //vy
+
+
 }
