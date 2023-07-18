@@ -25,15 +25,6 @@ public interface HomePageRepository extends JpaRepository<Transaction, Long> {
     Integer getTotalAccount();
 
 
-//    @Query(value = "SELECT transaction_bid_id, nft_id, highest_bid, date_transaction FROM transaction_bid", nativeQuery = true)
-//    List<Map<String, Object>> getTransaction();
-//
-//    @Query(value = "SELECT nft_id, date_end_bid FROM nft", nativeQuery = true)
-//    List<Map<String, Object>> getNft();
-//
-//    @Query(value = "SELECT account_id FROM account", nativeQuery = true)
-//    List<Integer> getAccountId();
-
     // Get top creator All time
     @Query(value = "SELECT account_id, username, avatar FROM account", nativeQuery = true)
     List<Map<String, Object>> getInfoAccount();
@@ -44,4 +35,17 @@ public interface HomePageRepository extends JpaRepository<Transaction, Long> {
             "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:dateAfterNow)) <=0 " +
             "GROUP BY t.nft_id ", nativeQuery = true)
     List<Map<String, Object>> getMaxTransactionByNftId(String dateAfterNow);
+
+
+//     Trending Collection
+    @Query(value = "SELECT n_o.account_id, n_o.collection_id, c.collection_name, COUNT(*) AS trending_collection " +
+            "FROM nft_owned AS n_o " +
+            "INNER JOIN collection AS c ON n_o.collection_id = c.collection_id " +
+            "GROUP BY n_o.account_id, n_o.collection_id", nativeQuery = true)
+    List<Map<String, Object>> getTotalCollectionAccount();
+
+    @Query(value = "SELECT n.image, n_o.collection_id " +
+            "FROM nft_owned AS n_o " +
+            "INNER JOIN nft AS n ON n_o.nft_owned_id = n.nft_id ", nativeQuery = true)
+    List<Map<String, Object>> getCollectionImage();
 }
