@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,26 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
         LocalDateTime date_current = LocalDateTime.now().minusDays(1);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
-        return topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
-    }
+        Map<String, Object> countResult = topCreatorByDateRepository.getCountTopCreatorAllTime(date_current_format);
+        Long total_page = (long) Math.ceil((long) countResult.get("total_user") / 10d);
 
+
+//        newMap.put("total_page", total_page);
+//        System.out.println("countResult " + total_page);
+
+
+        List<Map<String, Object>> creator = topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> newMap = new HashMap<>();
+        for (Map<String, Object> m1: creator){
+            newMap.putAll(m1);
+            newMap.put("total_page", total_page);
+            result.add(newMap);
+        }
+//        return topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
+
+        return result;
+    }
 }
+
