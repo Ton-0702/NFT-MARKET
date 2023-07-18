@@ -3,38 +3,64 @@ import styled from 'styled-components';
 import {colors} from '../../Global';
 import {PrimaryLayout} from 'components/Layout';
 
-// import { ReactComponent as Avatar } from '../../assets/ranking-imgs/avatar.svg';
-// import avatarImg from '../../assets/ranking-imgs/avatar.svg';
-import {data} from './DataRanking';
+// import {data} from './DataRanking';
+import axios from 'axios';
 
 const Ranking = ({title}) => {
-  const [isActiveClass, setIsActiveClass] = useState(false);
   const [selectedClass, setSelectedClass] = useState('today');
-  const [activeClass, setActiveClass] = useState('');
+  const [dataTopCreator, setDataTopCreator] = useState([]);
+  const [dataTodayTopCreator, setDataTodayTopCreator] = useState();
+  const [dataThisWeekTopCreator, setDataThisWeekTopCreator] = useState();
+  const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
+  const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
+  console.log('dataTopCreator: ', dataTopCreator);
+  useEffect(() => {
+    function getAllTopCreator() {
+      try {
+        function getTopCreatorAlltime() {
+          return axios.get('http://localhost:8080/api/ranking/all?page=1');
+        }
+        function getTopCreatorToday() {
+          return axios.get('http://localhost:8080/api/ranking/today?page=1');
+        }
+        Promise.all([getTopCreatorAlltime(), getTopCreatorToday()]).then(
+          (res) => {
+            const alltime = res[0].data;
+            const today = res[1].data;
+            setDataAlltimeTopCreator(alltime);
+            setDataTodayTopCreator(today);
 
-  // console.log(document.body.clientWidth);
-  // useEffect(() => {
-  //   const width = document.body.clientWidth;
-  //   console.log(width);
-  // }, []);
+            // chưa xong api
+            setDataThisWeekTopCreator(null);
+            setDataThisMonthTopCreator(null);
+          }
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getAllTopCreator();
+  }, []);
 
-  // const liEle = document.querySelectorAll('.ranking-filter-item');
-  // console.log(liEle);
-  // handleClick activeClass
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === 'today') {
       setSelectedClass(activeClass);
+      setDataTopCreator(dataTodayTopCreator);
     }
     if (activeClass === '7day') {
       setSelectedClass(activeClass);
+      setDataTopCreator([]);
     }
     if (activeClass === '30day') {
       setSelectedClass(activeClass);
+      setDataTopCreator([]);
     }
     if (activeClass === 'alltime') {
       setSelectedClass(activeClass);
+      setDataTopCreator(dataAlltimeTopCreator);
     }
   };
+
   return (
     <PrimaryLayout>
       <RankingStyled className="ranking">
@@ -119,78 +145,28 @@ const Ranking = ({title}) => {
                       </tr>
                       {/* Body */}
                       <tbody className="table-body">
-                        {data &&
-                          data.map((item, index) => {
+                        {dataTopCreator &&
+                          dataTopCreator.map((item, index) => {
                             return (
-                              <Fragment key={item.id}>
+                              <Fragment key={index}>
                                 <DataTableRanking
                                   index={index + 1}
                                   src={item.img}
                                   username={item.username}
                                   change={item.change}
-                                  sold={item.sold}
+                                  sold={item.nfts_sold}
                                   volume={item.volume}
                                 ></DataTableRanking>
                               </Fragment>
                             );
                           })}
                       </tbody>
-
-                      {/* {data &&
-                        data.map((item, index) => {
-                          return (
-                            <DataTableRanking
-                              key={item.id}
-                              index={index + 1}
-                              src={item.img}
-                              username={item.username}
-                              change={item.change}
-                              sold={item.sold}
-                              volume={item.volume}
-                            ></DataTableRanking>
-                          );
-                        })} */}
-
-                      {/* <tbody className="table-body">
-                      {data &&
-                        data.map((item, index) => {
-                          return (
-                            <tr key={item.id} className="table-row-body">
-                              <td className="table-body-data">
-                                <span className="body-data-stt">
-                                  {index || 1}
-                                </span>
-                              </td>
-                              <td className="table-body-data">
-                                <img
-                                  className="table-body-data-img"
-                                  src={item.img}
-                                  alt="avatar"
-                                />
-                                <span className="body-data-username">
-                                  {item.username || 'Jaydon Ekstrom Bothman'}{' '}
-                                </span>
-                              </td>
-                              <td className="table-body-data">
-                                <span className="body-data-change">
-                                  {item.change || '+1.41%'}
-                                </span>
-                              </td>
-                              <td className="table-body-data">
-                                <span className="body-data-sold">
-                                  {item.sold || 602}
-                                </span>
-                              </td>
-                              <td className="table-body-data">
-                                <span className="body-data-volume">
-                                  {item.volume || 12.4} ETH
-                                </span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                    </tbody> */}
                     </table>
+                    {dataTopCreator && dataTopCreator.length === 0 && (
+                      <div className="no-auction">
+                        There are no auctions going on Today
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -392,6 +368,14 @@ const RankingStyled = styled.div`
     color: ${colors.whiteColor};
   }
 
+  .no-auction {
+    color: ${colors.whiteColor};
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   /* Responsive */
 
   // Large devices (desktops, less than 1200px)
@@ -440,6 +424,9 @@ const RankingStyled = styled.div`
   @media (max-width: 767.98px) {
     .ranking-container {
       padding: 0 20px;
+    }
+    .no-auction {
+      font-size: 26px;
     }
   }
 
@@ -507,6 +494,9 @@ const RankingStyled = styled.div`
     .body-data-volume {
       font-size: 12px;
     }
+    .no-auction {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -524,7 +514,7 @@ const DataTableRanking = ({index, src, username, change, sold, volume}) => {
           </span>
         </td>
         <td className="table-body-data">
-          <span className="body-data-change">+{change || '+1.41%'}%</span>
+          <span className="body-data-change">{change || '+1.41%'}</span>
         </td>
         <td className="table-body-data">
           <span className="body-data-sold">{sold || 602}</span>
