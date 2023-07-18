@@ -18,4 +18,9 @@ public class AccountCreateConnectWalletDTO {
     @NotBlank
     private String address_wallet;
     private String token;
+    private String username;
+    private String email;
+    private String avatar;
+    private String background;
+    private String bio;
 }

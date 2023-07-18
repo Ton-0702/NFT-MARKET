@@ -1,10 +1,8 @@
 package kits.final_project_api.Service;
 
 import kits.final_project_api.Entity.Account;
-import kits.final_project_api.Model.CreateAccount.AccountCreateDTO;
 
 import java.util.List;
-import java.util.Map;
 
 //@Service
 public interface AccountService {
@@ -17,6 +15,8 @@ public interface AccountService {
     int updateTokenById(String token, Long id);
 
     Account findByToken(String token);
+
+    Account findByAddressWallet(String wallet);
 
     Account findByEmail(String email);
 }
