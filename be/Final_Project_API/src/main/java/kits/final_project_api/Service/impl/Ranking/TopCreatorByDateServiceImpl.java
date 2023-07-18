@@ -23,13 +23,18 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
 
-//        Comparator<Map<String, Object>> c = creatorToday.sort(Comparator.comparing((Map<String, Object> m) -> (int) m.get("nft_sold"), Comparator.nullsLast(Comparator.reverseOrder())).thenComparing(m -> (Double) m.get("volume")));
+        // Comparator<Map<String, Object>> c =
+        // creatorToday.sort(Comparator.comparing((Map<String, Object> m) -> (int)
+        // m.get("nft_sold"),
+        // Comparator.nullsLast(Comparator.reverseOrder())).thenComparing(m -> (Double)
+        // m.get("volume")));
 
-//        Pag page = (Pageable) PageRequest.of(pageable,2);
+        // Pag page = (Pageable) PageRequest.of(pageable,2);
 
-//        Pageable page = PageRequest.of(pageable, 2);
-//
-//        Page<Map<String, Object>> pageResult = (Page<Map<String, Object>>) topCreatorByDateRepository.getTopCreatorToday(date_current_format, page);
+        // Pageable page = PageRequest.of(pageable, 2);
+        //
+        // Page<Map<String, Object>> pageResult = (Page<Map<String, Object>>)
+        // topCreatorByDateRepository.getTopCreatorToday(date_current_format, page);
 
         return topCreatorByDateRepository.getTopCreatorToday(date_current_format, offset);
     }
@@ -46,6 +51,7 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
 //        newMap.put("total_page", total_page);
 //        System.out.println("countResult " + total_page);
 
+
         List<Map<String, Object>> creator = topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
 
         List<Map<String, Object>> result = new ArrayList<>();
@@ -60,3 +66,4 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
         return result;
     }
 }
+
