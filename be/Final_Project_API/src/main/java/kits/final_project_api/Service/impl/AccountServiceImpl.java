@@ -20,10 +20,10 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll();
     }
 
-    @Override
-    public List<Map<String, Object>> getTopCreatorToday(String date) {
-        return accountRepository.getTopCreatorToday(date);
-    }
+//    @Override
+//    public List<Map<String, Object>> getTopCreatorToday(String date) {
+//        return accountRepository.getTopCreatorToday(date);
+//    }
 
     @Override
     public Account findByUsername(String username) {
@@ -48,5 +48,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByToken(String token) {
         return accountRepository.findByToken(token);
+    }
+
+    @Override
+    public Account findByEmail(String email) {
+
+        return accountRepository.findByEmail(email);
     }
 }

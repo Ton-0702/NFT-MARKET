@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {PrimaryLayout} from 'components/Layout';
@@ -8,11 +8,33 @@ import {PrimaryLayout} from 'components/Layout';
 import {data} from './DataRanking';
 
 const Ranking = ({title}) => {
+  const [isActiveClass, setIsActiveClass] = useState(false);
+  const [selectedClass, setSelectedClass] = useState('today');
+  const [activeClass, setActiveClass] = useState('');
+
   // console.log(document.body.clientWidth);
-  useEffect(() => {
-    const width = document.body.clientWidth;
-    console.log(width);
-  }, []);
+  // useEffect(() => {
+  //   const width = document.body.clientWidth;
+  //   console.log(width);
+  // }, []);
+
+  // const liEle = document.querySelectorAll('.ranking-filter-item');
+  // console.log(liEle);
+  // handleClick activeClass
+  const handleClickActiveClass = (activeClass) => {
+    if (activeClass === 'today') {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === '7day') {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === '30day') {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === 'alltime') {
+      setSelectedClass(activeClass);
+    }
+  };
   return (
     <PrimaryLayout>
       <RankingStyled className="ranking">
@@ -27,23 +49,53 @@ const Ranking = ({title}) => {
             <div className="ranking-body">
               <div className="ranking-filter">
                 <ul className="ranking-filter-list">
-                  <li className="ranking-filter-item active">
+                  <li
+                    className={
+                      selectedClass === 'today'
+                        ? 'ranking-filter-item active'
+                        : 'ranking-filter-item'
+                    }
+                    onClick={() => handleClickActiveClass('today')}
+                  >
                     <span className="ranking-filter-item__desktop">Today</span>
                     <span className="ranking-filter-item__mobile">1d</span>
                   </li>
-                  <li className="ranking-filter-item">
+                  <li
+                    className={
+                      selectedClass === '7day'
+                        ? 'ranking-filter-item active'
+                        : 'ranking-filter-item'
+                    }
+                    onClick={() => handleClickActiveClass('7day')}
+                  >
                     <span className="ranking-filter-item__desktop">
                       This Week
                     </span>
                     <span className="ranking-filter-item__mobile">7d</span>
                   </li>
-                  <li className="ranking-filter-item">
+                  <li
+                    className={
+                      selectedClass === '30day'
+                        ? 'ranking-filter-item active'
+                        : 'ranking-filter-item'
+                    }
+                    onClick={() => handleClickActiveClass('30day')}
+                  >
                     <span className="ranking-filter-item__desktop">
                       This Month
                     </span>
                     <span className="ranking-filter-item__mobile">30d</span>
                   </li>
-                  <li className="ranking-filter-item">All Time</li>
+                  <li
+                    className={
+                      selectedClass === 'alltime'
+                        ? 'ranking-filter-item active'
+                        : 'ranking-filter-item'
+                    }
+                    onClick={() => handleClickActiveClass('alltime')}
+                  >
+                    All Time
+                  </li>
                 </ul>
                 <div className="ranking-table">
                   <div className="ranking-table-wrap">
@@ -174,6 +226,10 @@ const RankingStyled = styled.div`
     color: ${colors.whiteColor};
   }
   /* ranking-filter-list */
+
+  ul li {
+    user-select: none;
+  }
   .ranking-filter-list {
     display: flex;
     justify-content: space-between;

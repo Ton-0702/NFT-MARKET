@@ -7,14 +7,16 @@ import {ReactComponent as UserIcon} from '../../assets/header-imgs/User.svg';
 const SignUpButton = ({width, height}) => {
   return (
     <SignUpBtnStyled width={width} height={height}>
-      <div className="signUp-btn">
-        <div className="signUp-Wrap">
-          <div className="signUp-icon">
-            <UserIcon></UserIcon>
+      <a href="/sign-up">
+        <div className="signUp-btn">
+          <div className="signUp-Wrap">
+            <div className="signUp-icon">
+              <UserIcon></UserIcon>
+            </div>
+            <div className="signUp-text">Sign Up</div>
           </div>
-          <div className="signUp-text">Sign Up</div>
         </div>
-      </div>
+      </a>
     </SignUpBtnStyled>
   );
 };
@@ -22,6 +24,9 @@ const SignUpButton = ({width, height}) => {
 export {SignUpButton};
 
 const SignUpBtnStyled = styled.div`
+  a {
+    text-decoration: none;
+  }
   .signUp-btn {
     width: ${(props) => {
       //   console.log(props.width);

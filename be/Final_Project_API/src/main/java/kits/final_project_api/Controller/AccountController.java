@@ -8,6 +8,7 @@ import kits.final_project_api.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 
 @Controller
+@CrossOrigin
 @RequestMapping("users") // /users
 public class AccountController {
     @Autowired
@@ -45,17 +47,17 @@ public class AccountController {
 //        return accounts;
     }
 
-    @GetMapping("/ranking/today")
-    @ResponseBody
-
-    public List<Map<String, Object>> getTopCreatorToday(LocalDate date){
-        LocalDateTime date_current = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
-        String date_current_format = date_current.format(myFormatObj);
-        LocalDateTime dateTime = LocalDateTime.parse(date_current_format, myFormatObj);
-        System.out.println("date_current_format: "+date_current_format);
-        System.out.println("dateTime: "+dateTime);
-        return accountService.getTopCreatorToday(date_current_format);
-    }
+//    @GetMapping("/ranking/today")
+//    @ResponseBody
+//
+//    public List<Map<String, Object>> getTopCreatorToday(LocalDate date){
+//        LocalDateTime date_current = LocalDateTime.now();
+//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+//        String date_current_format = date_current.format(myFormatObj);
+//        LocalDateTime dateTime = LocalDateTime.parse(date_current_format, myFormatObj);
+//        System.out.println("date_current_format: "+date_current_format);
+//        System.out.println("dateTime: "+dateTime);
+//        return accountService.getTopCreatorToday(date_current_format);
+//    }
 }
 

@@ -152,7 +152,38 @@ public class HomePageServiceImpl implements HomePageService {
         return firstNElementsResult;
     }
 
-    //vy
+    @Override
+    public List<Map<String, Object>> getTrendingCollection(Integer showlimit) {
+        List<Map<String, Object>> getAccount = homePageRepository.getInfoAccount();
+        List<Map<String, Object>> getTotalCollectionAccount = homePageRepository.getTotalCollectionAccount();
+        List<Map<String, Object>> getCollectionImage = homePageRepository.getCollectionImage();
 
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map<String, Object> m1 : getTotalCollectionAccount){
+            Map<String, Object> newMap = new HashMap<>();
+            newMap.putAll(m1);
+            List<Object> newNftImage = new ArrayList<>();
+            for(Map<String, Object> m2: getCollectionImage){
+                System.out.println("m1.get(collection_id): "+m1.get("collection_id") + "   " + "m2.get(collection_id): "+m2.get("collection_id"));
+                if(m1.get("collection_id").equals(m2.get("collection_id"))){
+                    newNftImage.add(m2.get("image"));
+                    System.out.println("m2.get(collection_id): "+newNftImage);
+                }
+            }
+            System.out.println(newNftImage);
+            newMap.put("nft_image", newNftImage);
+            for(Map<String, Object> m3 : getAccount){
+                if(m1.get("account_id").equals(m3.get("account_id"))){
+                    newMap.put("username", m3.get("username"));
+                    newMap.put("avatar", m3.get("avatar"));
+                }
+            }
+            result.add(newMap);
+        }
+
+        result.sort(Comparator.comparing(m -> (long) m.get("trending_collection"), Comparator.nullsLast(Comparator.reverseOrder())));
+        List<Map<String, Object>> result_limit = result.stream().limit(showlimit).collect(Collectors.toList());
+        return result_limit;
+    }
 
 }

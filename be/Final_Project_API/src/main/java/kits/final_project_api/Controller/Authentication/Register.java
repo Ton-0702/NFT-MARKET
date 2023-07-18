@@ -12,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/register")
+@CrossOrigin
+@RequestMapping("api/admin/register")
 public class Register {
     @Autowired
     private UtilsService utilsService;
@@ -41,23 +39,25 @@ public class Register {
 
         if(foundAccount == null){
             try {
-                //Encode: mã hóa m password truyền từ client vào và setPassword vào thực thể account
-                 account_create.setPassword(bCryptPasswordEncoder.encode(accountCreateDTO.getPassword()));
-                 //Tạo token ngẫu nhiên qua class UtilsService và hàm getRandomHexString trong class đó, sau đó gắn vào token entity account
-                 account_create.setToken(UtilsService.getRandomHexString(100));
+                    //Encode: mã hóa m password truyền từ client vào và setPassword vào thực thể account
+//                    account_create.setAddress_wallet();
+                    account_create.setPassword(bCryptPasswordEncoder.encode(accountCreateDTO.getPassword()));
+                    //Tạo token ngẫu nhiên qua class UtilsService và hàm getRandomHexString trong class đó, sau đó gắn vào token entity account
+                    account_create.setToken(UtilsService.getRandomHexString(100));
+                    accountService.saveAndFlush(account_create);
+                    // Set cookie
+                    Cookie cookie = new Cookie("token", account_create.getToken());
+                    cookie.setMaxAge(3600); // Set thời gian cookie lưu trữ token là 1 tiếng sau đó xóa đi
 
-                 // Set cookie
-                 Cookie cookie = new Cookie("token", account_create.getToken());
-                 cookie.setMaxAge(3600); // Set thời gian cookie lưu trữ token là 1 tiếng sau đó xóa đi
+                    //add cookie to response
+                    response.addCookie(cookie);
 
-                 //add cookie to response
-                 response.addCookie(cookie);
-
-                 return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto());
+                    return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto());
             }catch (Exception e){
-
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RegisterResponseDto("", "", e.getMessage(),
+                        "UNKNOWN_ERROR"));
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("a", "", "", ""));
+        return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("User already exists", "", "", "USER_EXIST"));
     }
 }

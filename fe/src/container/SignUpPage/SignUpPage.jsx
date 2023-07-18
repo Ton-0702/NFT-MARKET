@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
-import {useEffect, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {useState} from 'react';
 import {colors} from 'Global';
 import {LogoItem} from 'components/Header';
-
-// import {ReactComponent as UserInputIcon} from '../../assets/SignIn_Up_Img/user_icon.svg';
-// import {ReactComponent as MailInputIcon} from '../../assets/SignIn_Up_Img/mail_icon.svg';
-// import {ReactComponent as PasswordInputIcon} from '../../assets/SignIn_Up_Img/password_icon.svg';
 
 const StyledSignUpPage = styled.div`
   a {
