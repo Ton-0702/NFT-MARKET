@@ -18,6 +18,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 @Controller
+@CrossOrigin
 @RequestMapping("nfts")  //đường dẫn là nfts
 public class NftController {
     @Autowired
