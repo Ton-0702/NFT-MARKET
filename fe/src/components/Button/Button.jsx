@@ -60,7 +60,7 @@ const Button = ({
         onClick={onClick}
         jutifyContent={jutifyContent}
       >
-        <button onsubmit={onSubmit} onClick={onClick}>
+        <button onSubmit={onSubmit} onClick={onClick}>
           {img && <img src={img} alt="" />}
           <span>{content}</span>
         </button>

@@ -7,13 +7,13 @@ import {ReactComponent as UserIcon} from '../../assets/header-imgs/User.svg';
 const SignUpButton = ({width, height}) => {
   return (
     <SignUpBtnStyled width={width} height={height}>
-      <a href="/sign-up">
+      <a href="/connect-wallet">
         <div className="signUp-btn">
           <div className="signUp-Wrap">
             <div className="signUp-icon">
               <UserIcon></UserIcon>
             </div>
-            <div className="signUp-text">Sign Up</div>
+            <div className="signUp-text">Connect a wallet</div>
           </div>
         </div>
       </a>

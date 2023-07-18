@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { EthereumInstance } from "sdk/metamask.js";
 import background from "../../assets/ConnectWalletPage/WalletBackground.svg";
 import { Button } from "components/Button";
 import mask from "../../assets/ConnectWalletPage/Metamask.svg";
@@ -185,7 +187,7 @@ const StyledConnectWalletPage = styled.div`
   /* Responsive */
   /* extra large */
   @media (max-width: 1200px) {
-    .wallet-container{
+    .wallet-container {
       width: auto;
     }
 
@@ -269,13 +271,31 @@ const StyledConnectWalletPage = styled.div`
       font-size: 34px;
     }
 
-    .input-form button{
+    .input-form button {
       padding: 10px 20px;
     }
   }
 `;
 
 export const ConnectWalletPage = () => {
+  const [address, setAddress] = useState(localStorage.getItem("address"));
+  const [metamaskAddress, setMetamaskAddress] = useState(
+    localStorage.getItem("metamask-address")
+  );
+  useEffect(() => {
+    if (localStorage.getItem("metamask-address")) {
+      EthereumInstance.getEthereumAccounts();
+    }
+  }, []);
+  const connectMetamask = async (setMetamaskAddress) => {
+    if (localStorage.getItem("metamask-address")) {
+      EthereumInstance.getEthereumAccounts();
+    } else {
+      const account = await EthereumInstance.connectMetaMaskWallet();
+      console.log(account);
+      setMetamaskAddress(account);
+    }
+  };
   return (
     <StyledConnectWalletPage>
       <div className="main">
@@ -283,50 +303,52 @@ export const ConnectWalletPage = () => {
           <div className="wallet-form-wrap">
             <div className="wallet__left">
               <div className="wallet-content">
-                <ul class="progressbar">
-                  <li class="active">Step 1</li>
-                  <li>Step 2</li>
-                  <li>Step 3</li>
-                </ul>
+                {address ||
+                  (metamaskAddress && (
+                    <ul className="progressbar">
+                      <li className="active">Step 1</li>
+                      <li>Step 2</li>
+                      <li>Step 3</li>
+                    </ul>
+                  ))}
                 <h2 className="wallet-title">Connect Wallet</h2>
                 <p>
                   Choose a wallet you want to connect. There are several wallet
                   providers.
                 </p>
-                <form action="#" className="form-control">
-                  <div className="input-form">
-                    <Button
-                      borderRadius="20px"
-                      img={mask}
-                      bgColor="#3B3B3B"
-                      padding="36px 80px"
-                      content="Metamask"
-                      textColor="white"
-                      fontSize="22px"
-                      fontWeight="600"
-                    ></Button>
-                    <Button
-                      borderRadius="20px"
-                      img={wallet}
-                      bgColor="#3B3B3B"
-                      padding="36px 80px"
-                      content="Wallet Connect"
-                      textColor="white"
-                      fontSize="22px"
-                      fontWeight="600"
-                    ></Button>
-                    <Button
-                      borderRadius="20px"
-                      img={coin}
-                      bgColor="#3B3B3B"
-                      padding="36px 80px"
-                      content="Coinbase"
-                      textColor="white"
-                      fontSize="22px"
-                      fontWeight="600"
-                    ></Button>
-                  </div>
-                </form>
+                <div className="input-form">
+                  <Button
+                    borderRadius="20px"
+                    img={mask}
+                    bgColor="#3B3B3B"
+                    padding="36px 80px"
+                    content="Metamask"
+                    textColor="white"
+                    fontSize="22px"
+                    fontWeight="600"
+                    onClick={() => connectMetamask(setMetamaskAddress)}
+                  ></Button>
+                  <Button
+                    borderRadius="20px"
+                    img={wallet}
+                    bgColor="#3B3B3B"
+                    padding="36px 80px"
+                    content="Wallet Connect"
+                    textColor="white"
+                    fontSize="22px"
+                    fontWeight="600"
+                  ></Button>
+                  <Button
+                    borderRadius="20px"
+                    img={coin}
+                    bgColor="#3B3B3B"
+                    padding="36px 80px"
+                    content="Coinbase"
+                    textColor="white"
+                    fontSize="22px"
+                    fontWeight="600"
+                  ></Button>
+                </div>
               </div>
             </div>
             <div className="wallet__right">
