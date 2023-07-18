@@ -16,7 +16,7 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
     private TopCreatorByDateRepository topCreatorByDateRepository;
 
     @Override
-    public List<Map<String, Object>> getTopCreatorToday(Integer offset, Integer limit) {
+    public List<Map<String, Object>> getTopCreatorToday(Integer offset) {
         LocalDateTime date_current = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
@@ -29,15 +29,15 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
 //
 //        Page<Map<String, Object>> pageResult = (Page<Map<String, Object>>) topCreatorByDateRepository.getTopCreatorToday(date_current_format, page);
 
-        return topCreatorByDateRepository.getTopCreatorToday(date_current_format, offset, limit);
+        return topCreatorByDateRepository.getTopCreatorToday(date_current_format, offset);
     }
 
     @Override
-    public List<Map<String, Object>> getTopCreatorAllTime(Integer offset, Integer limit) {
+    public List<Map<String, Object>> getTopCreatorAllTime(Integer offset) {
         LocalDateTime date_current = LocalDateTime.now().minusDays(1);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
-        return topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset, limit);
+        return topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
     }
 
 }

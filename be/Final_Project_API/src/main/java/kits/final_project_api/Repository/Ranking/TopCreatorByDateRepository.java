@@ -33,8 +33,8 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             "LEFT JOIN account AS a ON cte2.creator = a.account_id " +
             "GROUP BY cte2.creator " +
             "ORDER BY COUNT(cte2.nfts_sold) DESC, ROUND(SUM(cte2.volume), 2) DESC " +
-            "LIMIT :limit OFFSET :offset  ", nativeQuery = true)
-    List<Map<String, Object>> getTopCreatorToday(String date, Integer offset, Integer limit);
+            "LIMIT 10 OFFSET :offset  ", nativeQuery = true)
+    List<Map<String, Object>> getTopCreatorToday(String date, Integer offset);
 
     @Query(value = "SELECT a.account_id, a.avatar, a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume " +
             "FROM ( " +
@@ -59,6 +59,6 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             "LEFT JOIN account AS a ON cte2.creator = a.account_id " +
             "GROUP BY cte2.creator " +
             "ORDER BY COUNT(cte2.nfts_sold) DESC, ROUND(SUM(cte2.volume), 2) DESC " +
-            "LIMIT :limit OFFSET :offset ", nativeQuery = true)
-    List<Map<String, Object>> getTopCreatorAllTime(String dateAfterNow, Integer offset, Integer limit);
+            "LIMIT 10 OFFSET :offset ", nativeQuery = true)
+    List<Map<String, Object>> getTopCreatorAllTime(String dateAfterNow, Integer offset);
 }
