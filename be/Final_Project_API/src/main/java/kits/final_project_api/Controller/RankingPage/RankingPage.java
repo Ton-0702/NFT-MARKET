@@ -21,17 +21,16 @@ public class RankingPage {
     @ResponseBody
     // Xuất ra 10 bản top creator cho mỗi page
     public List<Map<String, Object>> getTopCreatorToday(@RequestParam Integer page){
-        Integer limit = page*10;
-        Integer offset = limit -10;
-        return topCreatorByDateService.getTopCreatorToday(offset, limit);
+        Integer offset = (page*10) -10;
+        return topCreatorByDateService.getTopCreatorToday(offset);
     }
 
     @GetMapping("/ranking/all")
     @ResponseBody
     // Xuất ra 10 bản top creator cho mỗi page
     public List<Map<String, Object>> getTopCreatorAllTime(@RequestParam Integer page){
-        Integer limit = page*10;
-        Integer offset = limit -10;
-        return topCreatorByDateService.getTopCreatorAllTime(offset, limit);
+//        Integer limit = page*10;
+        Integer offset = (page*10) -10;
+        return topCreatorByDateService.getTopCreatorAllTime(offset);
     }
 }
