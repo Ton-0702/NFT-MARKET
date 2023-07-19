@@ -1,40 +1,41 @@
+import styled from 'styled-components';
+import axios from 'axios';
 
-import styled from "styled-components";
+import {Card} from 'components/Card';
+import {Button} from 'components/Button';
+import {PrimaryLayout} from 'components/Layout';
+import {InputFooter} from 'components/Input';
 
-import { Card } from "components/Card";
-import { Button } from "components/Button";
-import { PrimaryLayout } from "components/Layout";
-import { InputFooter } from "components/Input";
-
-import rocketIcon from "../../assets/HomePage/RocketIcon.svg";
-import rocketIcon2 from "../../assets/HomePage/RocketIcon2.svg";
-import banner1 from "../../assets/HomePage/Banner1.svg";
-import avatar1 from "../../assets/HomePage/Avatar1.svg";
-import trending1 from "../../assets/HomePage/Trending1.svg";
-import trending2 from "../../assets/HomePage/Trending2.svg";
-import trending3 from "../../assets/HomePage/Trending3.svg";
-import trending4 from "../../assets/HomePage/Trending4.svg";
-import trending5 from "../../assets/HomePage/Trending5.svg";
-import topCreator1 from "../../assets/HomePage/TopCreator/TopCreator1.png";
-import cate1a from "../../assets/HomePage/Categories/cate1a.png";
-import cate1b from "../../assets/HomePage/Categories/cate1b.svg";
-import cate2a from "../../assets/HomePage/Categories/cate2a.png";
-import cate2b from "../../assets/HomePage/Categories/cate2b.svg";
-import cate3a from "../../assets/HomePage/Categories/cate3a.png";
-import cate3b from "../../assets/HomePage/Categories/cate3b.svg";
-import cate5a from "../../assets/HomePage/Categories/cate5a.png";
-import cate5b from "../../assets/HomePage/Categories/cate5b.svg";
-import cate6a from "../../assets/HomePage/Categories/cate6a.png";
-import cate6b from "../../assets/HomePage/Categories/cate6b.svg";
-import cate7a from "../../assets/HomePage/Categories/cate7a.png";
-import cate7b from "../../assets/HomePage/Categories/cate7b.svg";
-import discoverButton from "../../assets/HomePage/DiscoverMore/Eye.svg";
-import mushroom from "../../assets/HomePage/DiscoverMore/NFT_Mushroom.svg";
-import how_it_work1 from "../../assets/HomePage/HowItWorks/HowItWork1.svg";
-import how_it_work2 from "../../assets/HomePage/HowItWorks/HowItWork2.svg";
-import how_it_work3 from "../../assets/HomePage/HowItWorks/HowItWork3.svg";
-import getNoti from "../../assets/HomePage/GetNoti/Photo.png";
-
+import rocketIcon from '../../assets/HomePage/RocketIcon.svg';
+import rocketIcon2 from '../../assets/HomePage/RocketIcon2.svg';
+import banner1 from '../../assets/HomePage/Banner1.svg';
+import avatar1 from '../../assets/HomePage/Avatar1.svg';
+import trending1 from '../../assets/HomePage/Trending1.svg';
+import trending2 from '../../assets/HomePage/Trending2.svg';
+import trending3 from '../../assets/HomePage/Trending3.svg';
+import trending4 from '../../assets/HomePage/Trending4.svg';
+import trending5 from '../../assets/HomePage/Trending5.svg';
+import topCreator1 from '../../assets/HomePage/TopCreator/TopCreator1.png';
+import cate1a from '../../assets/HomePage/Categories/cate1a.png';
+import cate1b from '../../assets/HomePage/Categories/cate1b.svg';
+import cate2a from '../../assets/HomePage/Categories/cate2a.png';
+import cate2b from '../../assets/HomePage/Categories/cate2b.svg';
+import cate3a from '../../assets/HomePage/Categories/cate3a.png';
+import cate3b from '../../assets/HomePage/Categories/cate3b.svg';
+import cate5a from '../../assets/HomePage/Categories/cate5a.png';
+import cate5b from '../../assets/HomePage/Categories/cate5b.svg';
+import cate6a from '../../assets/HomePage/Categories/cate6a.png';
+import cate6b from '../../assets/HomePage/Categories/cate6b.svg';
+import cate7a from '../../assets/HomePage/Categories/cate7a.png';
+import cate7b from '../../assets/HomePage/Categories/cate7b.svg';
+import discoverButton from '../../assets/HomePage/DiscoverMore/Eye.svg';
+import mushroom from '../../assets/HomePage/DiscoverMore/NFT_Mushroom.svg';
+import how_it_work1 from '../../assets/HomePage/HowItWorks/HowItWork1.svg';
+import how_it_work2 from '../../assets/HomePage/HowItWorks/HowItWork2.svg';
+import how_it_work3 from '../../assets/HomePage/HowItWorks/HowItWork3.svg';
+import getNoti from '../../assets/HomePage/GetNoti/Photo.png';
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const trendingCollectionData = [
   {
@@ -139,66 +140,66 @@ const CategoriesData = [
   {
     background_img: cate1a,
     img: cate1b,
-    title: "Art",
-    type: "CategoriesHomePage",
+    title: 'Art',
+    type: 'CategoriesHomePage',
   },
   {
     background_img: cate2a,
     img: cate2b,
-    title: "Collectibles",
-    type: "CategoriesHomePage",
+    title: 'Collectibles',
+    type: 'CategoriesHomePage',
   },
   {
     background_img: cate3a,
     img: cate3b,
-    title: "Music",
-    type: "CategoriesHomePage",
+    title: 'Music',
+    type: 'CategoriesHomePage',
   },
   {
     background_img: cate5a,
     img: cate5b,
-    title: "Video",
-    type: "CategoriesHomePage",
+    title: 'Video',
+    type: 'CategoriesHomePage',
   },
   {
     background_img: cate6a,
     img: cate6b,
-    title: "Utility",
-    type: "CategoriesHomePage",
+    title: 'Utility',
+    type: 'CategoriesHomePage',
   },
   {
     background_img: cate7a,
     img: cate7b,
-    title: "Sport",
-    type: "CategoriesHomePage",
+    title: 'Sport',
+    type: 'CategoriesHomePage',
   },
 ];
 
 const DiscoverMoreData = [
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
@@ -398,7 +399,7 @@ const TrendingCollectionStyled = styled.div`
     justify-content: space-between;
   }
   @media (max-width: 1199.98px) {
-    .body_trending_collection .trending_collection_item{
+    .body_trending_collection .trending_collection_item {
       display: flex;
       justify-content: center;
     }
@@ -521,7 +522,6 @@ const TopCreatorStyled = styled.div`
     }
   }
 `;
-
 
 const CategoriesStyled = styled.div`
   margin-bottom: 160px;
@@ -837,8 +837,58 @@ const GetNotiStyled = styled.div`
   }
 `;
 
-
 const HomePage = () => {
+  const [topCreator, setTopCreator] = useState();
+  const [overall, setOverall] = useState([]);
+  const [trendingCollection, setTrendingCollection] = useState();
+  const [newTrending, setNewTrending] = useState();
+
+  const navigate = useNavigate();
+
+  console.log('newTrending: ', newTrending);
+
+  useEffect(() => {
+    function getAllTopCreator() {
+      try {
+        function getOverall() {
+          return axios.get(`http://localhost:8080/api/home/overall-figures`);
+        }
+        function getTrendingCollection() {
+          return axios.get(
+            `http://localhost:8080/api/home/trending-collection`
+          );
+        }
+        function getTopCreator() {
+          return axios.get(`http://localhost:8080/api/home/top-creator`);
+        }
+        function getNewTrending() {
+          return axios.get('http://localhost:8080/api/home/trending-nft');
+        }
+        Promise.all([
+          getTopCreator(),
+          getOverall(),
+          getTrendingCollection(),
+          getNewTrending(),
+        ]).then((res) => {
+          // console.log(res);
+          const topCreatorData = res[0].data;
+          const overallData = res[1].data[0];
+          const trendingCollectionData = res[2].data;
+          const newTrendingData = res[3].data;
+
+          setTopCreator(topCreatorData);
+          setOverall(overallData);
+          setTrendingCollection(trendingCollectionData);
+          setNewTrending(newTrendingData);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getAllTopCreator();
+  }, []);
+
   return (
     <PrimaryLayout>
       <HomePageStyled>
@@ -852,44 +902,43 @@ const HomePage = () => {
               </p>
               <Button
                 img={rocketIcon}
-                content={"Get Started"}
-                borderRadius={"20px"}
-                bgColor={"#A259FF"}
-                textColor={"#FFF"}
-                fontSize={"16px"}
-                fontWeight={"600"}
-                padding={"22.5px 50px"}
-                jutifyContent={"center"}
+                content={'Get Started'}
+                borderRadius={'20px'}
+                bgColor={'#A259FF'}
+                textColor={'#FFF'}
+                fontSize={'16px'}
+                fontWeight={'600'}
+                padding={'22.5px 50px'}
+                jutifyContent={'center'}
               ></Button>
               <div className="statistical">
                 <div className="statistical_left">
-                  <h4>240k+</h4>
+                  <h4>{overall.total_sales}k+</h4>
                   <span>Total Sale</span>
                 </div>
                 <div className="statistical_middle">
-                  <h4>100k+</h4>
+                  <h4>{overall.auctions}k+</h4>
                   <span>Auctions</span>
                 </div>
                 <div className="statistical_right">
-                  <h4>240k+</h4>
+                  <h4>{overall.artists}k+</h4>
                   <span>Artists</span>
                 </div>
               </div>
             </div>
             <div className="banner_right">
               <Card
-
-                title={"Space Walking"}
+                title={'Space Walking'}
                 img_product={banner1}
-                bgColor={"#3B3B3B"}
-                borderRadius={"20px"}
+                bgColor={'#3B3B3B'}
+                borderRadius={'20px'}
                 img_artist={avatar1}
-                name_artist={"Animakid"}
-
+                name_artist={'Animakid'}
               ></Card>
             </div>
           </div>
         </BannerStyled>
+        {/* Trending collection */}
         <TrendingCollectionStyled>
           <div className="container">
             <div className="header_trending_collection">
@@ -897,23 +946,25 @@ const HomePage = () => {
               <p>Checkout our weekly updated trending collection.</p>
             </div>
             <div className="body_trending_collection">
-              {trendingCollectionData
-                ? trendingCollectionData.map((e, index) => (
-                    <div className="trending_collection_item">
-                      <Card
-                        img_product={e.img_product}
-                        img_artist={e.img_artist}
-                        type={e.type}
-                        name_artist={e.name_artist}
-                        title={e.title}
-                      ></Card>
-                    </div>
-                  ))
+              {trendingCollection
+                ? trendingCollection.map((e, index) => {
+                    return (
+                      <div className="trending_collection_item" key={index}>
+                        <Card
+                          img_product={e.nft_image}
+                          img_artist={e.avatar}
+                          type="TrendingCollection"
+                          name_artist={e.username}
+                          title={e.collection_name}
+                        ></Card>
+                      </div>
+                    );
+                  })
                 : null}
             </div>
-
           </div>
         </TrendingCollectionStyled>
+        {/* Top creator */}
         <TopCreatorStyled>
           <div className="container">
             <div className="header_top_creator">
@@ -923,30 +974,33 @@ const HomePage = () => {
               </div>
               <div className="header_top_creator_right">
                 <Button
-                  bgColor={"none"}
-                  border={"1px solid #A259FF"}
-                  content={"View Rankings"}
-                  borderRadius={"20px"}
-                  textColor={"#fff"}
+                  onClick={() => navigate('/ranking')}
+                  bgColor={'none'}
+                  border={'1px solid #A259FF'}
+                  content={'View Rankings'}
+                  borderRadius={'20px'}
+                  textColor={'#fff'}
                   img={rocketIcon2}
-                  padding={"22.5px 50px"}
-                  jutifyContent={"center"}
+                  padding={'22.5px 50px'}
+                  jutifyContent={'center'}
                 ></Button>
               </div>
             </div>
             <div className="body_top_creator">
-              {topCreatorData
-                ? topCreatorData.map((e, index) => (
-                    <div className="top_creator_item">
-                      <Card
-                        number_id={index}
-                        type={e.type}
-                        img_artist={e.img_artist}
-                        name_artist={e.name_artist}
-                        total_sales={e.total_sales}
-                      ></Card>
-                    </div>
-                  ))
+              {topCreator
+                ? topCreator.map((e, index) => {
+                    return (
+                      <div className="top_creator_item" key={index}>
+                        <Card
+                          number_id={index}
+                          type="TopCreatorHomePage"
+                          img_artist={e.avatar}
+                          name_artist={e.username}
+                          total_sales={e.total_sale}
+                        ></Card>
+                      </div>
+                    );
+                  })
                 : null}
             </div>
           </div>
@@ -959,7 +1013,7 @@ const HomePage = () => {
             <div className="body_category">
               {CategoriesData
                 ? CategoriesData.map((e, index) => (
-                    <div className="categories_item">
+                    <div className="categories_item" key={index}>
                       <Card
                         img_product={e.img}
                         background_img={e.background_img}
@@ -972,6 +1026,7 @@ const HomePage = () => {
             </div>
           </div>
         </CategoriesStyled>
+        {/* new Trending */}
         <DiscoverMoreStyled>
           <div className="container">
             <div className="header_discover_more">
@@ -981,39 +1036,38 @@ const HomePage = () => {
               </div>
               <div className="header_discover_more_right">
                 <Button
-                  bgColor={"none"}
-                  border={"1px solid #A259FF"}
-                  content={"See All"}
-                  borderRadius={"20px"}
-                  textColor={"#fff"}
+                  bgColor={'none'}
+                  border={'1px solid #A259FF'}
+                  content={'See All'}
+                  borderRadius={'20px'}
+                  textColor={'#fff'}
                   img={discoverButton}
-                  padding={"22.5px 50px"}
-                  jutifyContent={"center"}
+                  padding={'22.5px 50px'}
+                  jutifyContent={'center'}
                 ></Button>
               </div>
             </div>
             <div className="body_discover_more">
-              {DiscoverMoreData
-                ? DiscoverMoreData.map((e, index) => (
-                    <div className="body_discover_more_item">
+              {newTrending
+                ? newTrending.map((e, index) => (
+                    <div className="body_discover_more_item" key={index}>
                       <Card
-                        title={e.title}
-                        img_product={e.img}
+                        type="DiscoverMore"
+                        title={e.nft_name}
+                        img_product={e.image}
                         price={e.price}
-                        highest_bid={e.price}
+                        highest_bid={e.highest_bid}
                         img_artist={e.img_artist}
-                        name_artist={e.name_artist}
+                        name_artist={e.username}
                         total_sales={e.total_sales}
-                        bgColor={"#3B3B3B"}
-                        borderRadius={"20px"}
-
+                        bgColor={'#3B3B3B'}
+                        borderRadius={'20px'}
                       ></Card>
                     </div>
                   ))
                 : null}
             </div>
           </div>
-
         </DiscoverMoreStyled>
       </HomePageStyled>
       <ImgBackgroundStyled>
@@ -1075,7 +1129,6 @@ const HomePage = () => {
             </div>
           </div>
         </GetNotiStyled>
-
       </HomePageStyled>
     </PrimaryLayout>
   );
