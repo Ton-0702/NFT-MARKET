@@ -22,24 +22,24 @@ public class HomePageController {
         return figures;
     }
 
-    @GetMapping("/home/top-creator/{limit}")
+    @GetMapping("/home/top-creator")
     @ResponseBody
-    public List<Map<String, Object>> getTopCreatorAllTime(@PathVariable Integer limit){
-        List<Map<String, Object>> topCreator = homePageService.getTopCreatorAllTime(limit);
+    public List<Map<String, Object>> getTopCreatorAllTime(){
+        List<Map<String, Object>> topCreator = homePageService.getTopCreatorAllTime();
         return topCreator;
     }
 
-    @GetMapping("/home/trending-nft/{limit}")
+    @GetMapping("/home/trending-nft")
     @ResponseBody
-    public List<Map<String, Object>> getNewTrendingNft(@PathVariable Integer limit){
-        List<Map<String, Object>> topTrending = homePageService.getNewTrendingNft(limit);
+    public List<Map<String, Object>> getNewTrendingNft(){
+        List<Map<String, Object>> topTrending = homePageService.getNewTrendingNft();
         return topTrending;
     }
 
-    @GetMapping("/home/trending-collection/{limit}")
+    @GetMapping("/home/trending-collection")
     @ResponseBody
-    public List<Map<String, Object>> getNewTrendingCollection(@PathVariable Integer limit){
-        List<Map<String, Object>> topTrending = homePageService.getTrendingCollection(limit);
+    public List<Map<String, Object>> getNewTrendingCollection(){
+        List<Map<String, Object>> topTrending = homePageService.getTrendingCollection();
         return topTrending;
     }
 }

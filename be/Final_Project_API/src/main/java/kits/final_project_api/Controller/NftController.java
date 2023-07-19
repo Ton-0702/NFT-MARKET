@@ -46,7 +46,7 @@ public class NftController {
     @PostMapping("/create")
     public ResponseEntity<?> createNft(@Valid @RequestBody NFT nft) {
 //        NFT nft = new NFT();
-//        nft.setId(nftJson.getNft_id());
+
 //        nft.getNft_name();
 //        nft.getImage();
 //        nft.getPrice();

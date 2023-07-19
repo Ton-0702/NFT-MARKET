@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/admin/register")
+@RequestMapping("api/register-test")
 public class Register {
     @Autowired
     private UtilsService utilsService;
@@ -32,7 +32,7 @@ public class Register {
         Account account_create = new Account();
         account_create.setUsername(accountCreateDTO.getUsername());
         account_create.setEmail(accountCreateDTO.getEmail());
-        account_create.setPassword(accountCreateDTO.getPassword());
+//        account_create.setPassword(accountCreateDTO.getPassword());
 
         // kiểm tra có trùng username không
         Account foundAccount = accountService.findByUsername(accountCreateDTO.getUsername());
@@ -41,7 +41,7 @@ public class Register {
             try {
                     //Encode: mã hóa m password truyền từ client vào và setPassword vào thực thể account
 //                    account_create.setAddress_wallet();
-                    account_create.setPassword(bCryptPasswordEncoder.encode(accountCreateDTO.getPassword()));
+//                    account_create.setPassword(bCryptPasswordEncoder.encode(accountCreateDTO.getPassword()));
                     //Tạo token ngẫu nhiên qua class UtilsService và hàm getRandomHexString trong class đó, sau đó gắn vào token entity account
                     account_create.setToken(UtilsService.getRandomHexString(100));
                     accountService.saveAndFlush(account_create);
