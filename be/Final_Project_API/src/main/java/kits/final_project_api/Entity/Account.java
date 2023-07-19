@@ -41,8 +41,8 @@ public class Account implements Serializable {
     @Column(name = "token", columnDefinition = "TEXTvarchar(200) default NULL unique")
     private String token;
 
-    @Column(name = "password", columnDefinition = "varchar(100) not null")
-    private String password;
+//    @Column(name = "password", columnDefinition = "varchar(100) not null")
+//    private String password;
 
     @Column(name = "biography", columnDefinition = "TEXT DEFAULT NULL")
     private String biography;

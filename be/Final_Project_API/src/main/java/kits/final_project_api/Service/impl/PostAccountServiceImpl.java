@@ -20,7 +20,7 @@ public class PostAccountServiceImpl {
         Account account = new Account();
         account.setAddress_wallet(accountMetaMaskDto.getAddress_wallet());
         account.setUsername(accountMetaMaskDto.getUsername());
-        account.setPassword(accountMetaMaskDto.getPassword());
+//        account.setPassword(accountMetaMaskDto.getPassword());
         account.setToken(accountMetaMaskDto.getToken());
         postAccountRepository.save(account);
 
@@ -30,7 +30,7 @@ public class PostAccountServiceImpl {
         Account accountCreateAccount = new Account();
         accountCreateAccount.setUsername(accountCreateDTO.getUsername());
         accountCreateAccount.setEmail(accountCreateDTO.getEmail());
-        accountCreateAccount.setPassword(accountCreateDTO.getPassword());
+//        accountCreateAccount.setPassword(accountCreateDTO.getPassword());
         postAccountRepository.save(accountCreateAccount);
     }
 

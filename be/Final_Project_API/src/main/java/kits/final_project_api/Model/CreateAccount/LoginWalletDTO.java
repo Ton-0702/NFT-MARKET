@@ -6,28 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
-public class AccountCreateConnectWalletDTO {
+public class LoginWalletDTO {
     @NotNull
     @NotEmpty
     @NotBlank
     private String address_wallet;
-
-    private String token;
-    @NotNull
-    @NotEmpty
-    @NotBlank
-    private String username;
-    @NotNull
-    @NotEmpty
-    @NotBlank
-    private String email;
-    private String avatar;
-    private String background;
-    private String bio;
 }
