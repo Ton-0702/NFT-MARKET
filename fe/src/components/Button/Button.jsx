@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 const ButtonStyled = styled.div`
+  width: ${(props) => (props.width ? props.width : "unset")};
   button {
+    width: ${(props) => (props.width ? props.width : "unset")};
     display: flex;
     padding: ${(props) => props.padding};
     justify-content: ${(props) =>
@@ -24,6 +26,7 @@ const ButtonLargeStyled = styled.div``;
 const ButtonSmallStyled = styled.div``;
 
 const Button = ({
+  width,
   textColor,
   bgColor,
   border,
@@ -46,6 +49,7 @@ const Button = ({
   } else {
     return (
       <ButtonStyled
+        width={width}
         percent={percent}
         textColor={textColor}
         bgColor={bgColor}
