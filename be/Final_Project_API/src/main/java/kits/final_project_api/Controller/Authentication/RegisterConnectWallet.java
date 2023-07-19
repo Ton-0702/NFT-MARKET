@@ -32,7 +32,7 @@ public class RegisterConnectWallet {
 //        account_create.setUsername(accountCreateDTO.getUsername());
 //        account_create.setEmail(accountCreateDTO.getEmail());
 //        account_create.setPassword(accountCreateDTO.getPassword());
-        account_create.setAddress_wallet(accountCreateConnectWalletDTO.getAddress_wallet());
+//        account_create.setAddress_wallet(accountCreateConnectWalletDTO.getAddress_wallet());
 
         // kiểm tra có trùng address wallet không
         Account foundAccountAddressWallet = accountService.findByAddressWallet(accountCreateConnectWalletDTO.getAddress_wallet());
