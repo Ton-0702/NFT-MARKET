@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/register")
+@RequestMapping("api/register/connect-wallet")
 public class RegisterConnectWallet {
     @Autowired
     private UtilsService utilsService;

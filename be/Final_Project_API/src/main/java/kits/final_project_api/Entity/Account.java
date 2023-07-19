@@ -23,7 +23,7 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @Column(name = "address_wallet", columnDefinition = "varchar(150) not null unique")
+    @Column(name = "address_wallet", columnDefinition = "varchar(150) unique")
     private String address_wallet;
 
     @Column(name = "username", columnDefinition = "varchar(150) not null default 'Unnamed'")

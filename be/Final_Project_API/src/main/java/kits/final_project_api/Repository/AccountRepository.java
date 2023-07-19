@@ -25,7 +25,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByToken(@Param("token") String token);
 
     @Query(value = "SELECT * FROM account AS a WHERE a.address_wallet = :wallet ", nativeQuery = true)
-    Account findByAddressWallet(@Param("address_wallet") String wallet);
+    Account findByAddressWallet(String wallet);
 
 
 //    List<Account> findByUsernameAndAccountId(String userName);
