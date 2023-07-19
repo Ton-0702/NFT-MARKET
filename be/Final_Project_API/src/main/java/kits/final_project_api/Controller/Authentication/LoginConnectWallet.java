@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import kits.final_project_api.Entity.Account;
 import kits.final_project_api.Model.CreateAccount.AccountCreateConnectWalletDTO;
+import kits.final_project_api.Model.CreateAccount.LoginWalletDTO;
 import kits.final_project_api.Model.Response.RegisterResponseDto;
 import kits.final_project_api.Service.AccountService;
 import kits.final_project_api.Service.Utils.UtilsService;
@@ -28,17 +29,20 @@ public class LoginConnectWallet {
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
-    public ResponseEntity<RegisterResponseDto> login(@Valid @RequestBody AccountCreateConnectWalletDTO accountCreateConnectWalletDTO,
+    public ResponseEntity<RegisterResponseDto> login(@Valid @RequestBody LoginWalletDTO loginWalletDTO,
                                                                HttpServletResponse response) {
         // account entity
-        Account account = accountService.findByAddressWallet(accountCreateConnectWalletDTO.getAddress_wallet());
+        Account account = accountService.findByAddressWallet(loginWalletDTO.getAddress_wallet());
         System.out.println("account: " + account);
         if (account == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new RegisterResponseDto("Address Wallet not found", "",
                     "", "Address_Wallet_NOT_FOUND"));
         } else {
             // if address wallet exists
-            if (account.equals(account.getAddress_wallet())) {
+            System.out.println("account: "+account.getAddress_wallet());
+            System.out.println("(account.getAddress_wallet()): "+(account.getAddress_wallet()));
+            System.out.println("account.equals(account.getAddress_wallet()) : "+account.equals(account.getAddress_wallet()));
+            if ( (account.getAddress_wallet()).equals(account.getAddress_wallet()) ) {
                 //1. generate new token
                 String newToken = utilsService.getRandomHexString(100);
                 System.out.println("NEW TOKEN: " + newToken);

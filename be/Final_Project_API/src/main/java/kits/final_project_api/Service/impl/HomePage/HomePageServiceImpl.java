@@ -59,7 +59,7 @@ public class HomePageServiceImpl implements HomePageService {
     }
 
     @Override
-    public List<Map<String, Object>> getTopCreatorAllTime(Integer showlimit) {
+    public List<Map<String, Object>> getTopCreatorAllTime() {
 //        LocalDateTime date_current = LocalDateTime.now().minusDays(1);
 //        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = dateBeforeNow();
@@ -115,12 +115,12 @@ public class HomePageServiceImpl implements HomePageService {
         }
         //listMap.sort(Comparator.comparing(m->(double) m.get("full_inc"),Comparator.nullsLast(Comparator.reverseOrder())));
         result.sort(Comparator.comparing(m -> (double) m.get("total_sale"), Comparator.nullsLast(Comparator.reverseOrder())));
-        List<Map<String, Object>> firstNElementsResult = result.stream().limit(showlimit).collect(Collectors.toList());
+        List<Map<String, Object>> firstNElementsResult = result.stream().limit(12).collect(Collectors.toList());
         return firstNElementsResult;
     }
 
     @Override
-    public List<Map<String, Object>> getNewTrendingNft(Integer showlimit) {
+    public List<Map<String, Object>> getNewTrendingNft() {
         String date_current_format = dateBeforeNow();
         //Lấy thông tin account
         List<Map<String, Object>> account = nftComponentRepository.getAccount();
@@ -148,12 +148,12 @@ public class HomePageServiceImpl implements HomePageService {
         result.sort(Comparator.comparing(m -> (long) m.get("trending"), Comparator.nullsLast(Comparator.reverseOrder())));
 
 
-        List<Map<String, Object>> firstNElementsResult = result.stream().limit(showlimit).collect(Collectors.toList());
+        List<Map<String, Object>> firstNElementsResult = result.stream().limit(3).collect(Collectors.toList());
         return firstNElementsResult;
     }
 
     @Override
-    public List<Map<String, Object>> getTrendingCollection(Integer showlimit) {
+    public List<Map<String, Object>> getTrendingCollection() {
         List<Map<String, Object>> getAccount = homePageRepository.getInfoAccount();
         List<Map<String, Object>> getTotalCollectionAccount = homePageRepository.getTotalCollectionAccount();
         List<Map<String, Object>> getCollectionImage = homePageRepository.getCollectionImage();
@@ -182,7 +182,7 @@ public class HomePageServiceImpl implements HomePageService {
         }
 
         result.sort(Comparator.comparing(m -> (long) m.get("trending_collection"), Comparator.nullsLast(Comparator.reverseOrder())));
-        List<Map<String, Object>> result_limit = result.stream().limit(showlimit).collect(Collectors.toList());
+        List<Map<String, Object>> result_limit = result.stream().limit(3).collect(Collectors.toList());
         return result_limit;
     }
 
