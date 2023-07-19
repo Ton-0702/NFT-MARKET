@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/admin/register")
+@RequestMapping("api/register")
 public class Register {
     @Autowired
     private UtilsService utilsService;

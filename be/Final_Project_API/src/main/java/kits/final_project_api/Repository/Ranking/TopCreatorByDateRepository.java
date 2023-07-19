@@ -10,22 +10,27 @@ import java.util.Map;
 
 @Repository
 public interface TopCreatorByDateRepository extends JpaRepository<Transaction, Long> {
-    @Query(value = "SELECT a.account_id, a.avatar, a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume " +
+    @Query(value = "SELECT a.account_id, a.avatar, a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume "
+            +
             "FROM ( " +
             "SELECT account_own AS creator, nfts_sold, volume FROM ( " +
-            "SELECT n.account_id AS account_own, t.account_id AS account_buy,  COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
+            "SELECT n.account_id AS account_own, t.account_id AS account_buy,  COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume "
+            +
             "FROM transaction_bid AS t " +
             "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
-            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
+            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 "
+            +
             "GROUP BY t.nft_id, t.account_id " +
             "HAVING MAX(t.highest_bid) " +
             ") cte " +
             "UNION " +
             "SELECT account_buy, nfts_sold, volume FROM ( " +
-            "SELECT n.account_id AS account_own, t.account_id AS account_buy, COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
-            "FROM transaction_bid AS t "+
+            "SELECT n.account_id AS account_own, t.account_id AS account_buy, COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume "
+            +
+            "FROM transaction_bid AS t " +
             "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
-            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 " +
+            "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:date)) = 0 AND TIMESTAMPDIFF(SECOND, n.date_end_bid, :date) >=0 "
+            +
             "GROUP BY t.nft_id, t.account_id " +
             "HAVING MAX(t.highest_bid) " +
             ") cte " +
@@ -36,10 +41,12 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             "LIMIT 10 OFFSET :offset  ", nativeQuery = true)
     List<Map<String, Object>> getTopCreatorToday(String date, Integer offset);
 
-    @Query(value = "SELECT a.account_id, a.avatar, a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume " +
+    @Query(value = "SELECT a.account_id, a.avatar, a.username, COUNT(cte2.nfts_sold) AS nfts_sold, ROUND(SUM(cte2.volume), 2) AS volume "
+            +
             "FROM ( " +
             "SELECT account_own AS creator, nfts_sold, volume FROM ( " +
-            "SELECT n.account_id AS account_own, t.account_id AS account_buy,  COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
+            "SELECT n.account_id AS account_own, t.account_id AS account_buy,  COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume "
+            +
             "FROM transaction_bid AS t " +
             "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
             "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:dateAfterNow)) >0 " +
@@ -48,8 +55,9 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             ") cte " +
             "UNION " +
             "SELECT account_buy, nfts_sold, volume FROM ( " +
-            "SELECT n.account_id AS account_own, t.account_id AS account_buy, COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume " +
-            "FROM transaction_bid AS t "+
+            "SELECT n.account_id AS account_own, t.account_id AS account_buy, COUNT(n.account_id) AS nfts_sold, MAX(t.highest_bid) AS volume "
+            +
+            "FROM transaction_bid AS t " +
             "INNER JOIN nft AS n ON t.nft_id = n.nft_id " +
             "WHERE DATEDIFF(DATE(n.date_end_bid), DATE(:dateAfterNow)) >0 " +
             "GROUP BY t.nft_id, t.account_id " +
@@ -61,6 +69,7 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             "ORDER BY COUNT(cte2.nfts_sold) DESC, ROUND(SUM(cte2.volume), 2) DESC " +
             "LIMIT 10 OFFSET :offset ", nativeQuery = true)
     List<Map<String, Object>> getTopCreatorAllTime(String dateAfterNow, Integer offset);
+
 
     @Query(value = "SELECT COUNT(*) AS total_user " +
             "FROM (" +
@@ -88,3 +97,4 @@ public interface TopCreatorByDateRepository extends JpaRepository<Transaction, L
             "GROUP BY cte2.creator) cte3 " , nativeQuery = true)
     Map<String, Object> getCountTopCreatorAllTime(String dateAfterNow);
 }
+

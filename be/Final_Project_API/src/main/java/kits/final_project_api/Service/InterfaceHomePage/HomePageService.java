@@ -12,5 +12,4 @@ public interface HomePageService {
     List<Map<String, Object>> getNewTrendingNft(Integer showlimit);
 
     List<Map<String, Object>> getTrendingCollection(Integer showlimit);
-
 }
