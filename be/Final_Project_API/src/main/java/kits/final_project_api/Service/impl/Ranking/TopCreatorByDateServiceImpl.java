@@ -49,9 +49,12 @@ public class TopCreatorByDateServiceImpl implements TopCreatorByDateService {
         List<Map<String, Object>> creator = topCreatorByDateRepository.getTopCreatorAllTime(date_current_format, offset);
 
         List<Map<String, Object>> result = new ArrayList<>();
-        Map<String, Object> newMap = new HashMap<>();
+
         for (Map<String, Object> m1: creator){
+            Map<String, Object> newMap = new HashMap<>();
+//            System.out.println(m1.get("volume"));
             newMap.putAll(m1);
+//            System.out.println("newMap: "+ newMap.get("volume"));
             newMap.put("total_page", total_page);
             result.add(newMap);
         }
