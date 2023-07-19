@@ -9,31 +9,46 @@ import axios from 'axios';
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
-  const [dataTopCreator, setDataTopCreator] = useState([]);
   const [dataTodayTopCreator, setDataTodayTopCreator] = useState();
   const [dataThisWeekTopCreator, setDataThisWeekTopCreator] = useState();
   const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
   const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
-  console.log('dataTopCreator: ', dataTopCreator);
+
+  const [totalPage, setTotalPage] = useState();
+  const [page, setPage] = useState(1);
+
+  console.log('data: ', {
+    dataTodayTopCreator: dataTodayTopCreator,
+    dataThisWeekTopCreator: dataThisWeekTopCreator,
+    dataThisMonthTopCreator: dataThisMonthTopCreator,
+    dataAlltimeTopCreator: dataAlltimeTopCreator,
+  });
   useEffect(() => {
     function getAllTopCreator() {
       try {
         function getTopCreatorAlltime() {
-          return axios.get('http://localhost:8080/api/ranking/all?page=1');
+          return axios.get(
+            `http://localhost:8080/api/ranking/all?page=${page}`
+          );
         }
         function getTopCreatorToday() {
           return axios.get('http://localhost:8080/api/ranking/today?page=1');
         }
         Promise.all([getTopCreatorAlltime(), getTopCreatorToday()]).then(
           (res) => {
-            const alltime = res[0].data;
+            let alltime = res[0].data;
+
+            const alltimeTotalPage = res[0].data[0].total_page;
+            setTotalPage(alltimeTotalPage);
+            console.log('alltime: ', alltime);
+
             const today = res[1].data;
             setDataAlltimeTopCreator(alltime);
             setDataTodayTopCreator(today);
 
             // chưa xong api
-            setDataThisWeekTopCreator(null);
-            setDataThisMonthTopCreator(null);
+            setDataThisWeekTopCreator([]);
+            setDataThisMonthTopCreator([]);
           }
         );
       } catch (error) {
@@ -41,49 +56,35 @@ const Ranking = ({title}) => {
       }
     }
     getAllTopCreator();
-  }, []);
-
-  // pagination
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-  const items = [1, 2, 3, 4, 5, 6];
-  let itemsPerPage = 2;
-
-  // Simulate fetching items from another resources.
-  // (This could be items from props; or items loaded in a local state
-  // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
-  };
-
+  }, [page]);
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === 'today') {
       setSelectedClass(activeClass);
-      setDataTopCreator(dataTodayTopCreator);
+      // setDataTopCreator(dataTodayTopCreator);
     }
     if (activeClass === '7day') {
       setSelectedClass(activeClass);
-      setDataTopCreator([]);
     }
     if (activeClass === '30day') {
       setSelectedClass(activeClass);
-      setDataTopCreator([]);
     }
     if (activeClass === 'alltime') {
       setSelectedClass(activeClass);
-      setDataTopCreator(dataAlltimeTopCreator);
+
+      // setDataTopCreator(dataAlltimeTopCreator);
     }
+  };
+
+  // pagination
+
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newPage = event.selected + 1;
+    console.log(event.selected + 1);
+    setPage(newPage);
   };
 
   return (
@@ -170,8 +171,30 @@ const Ranking = ({title}) => {
                       </tr>
                       {/* Body */}
                       <tbody className="table-body">
-                        {dataTopCreator &&
-                          dataTopCreator.map((item, index) => {
+                        {/* today */}
+                        {selectedClass === 'alltime' &&
+                          dataTodayTopCreator &&
+                          dataTodayTopCreator.length > 0 &&
+                          dataTodayTopCreator.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <DataTableRanking
+                                  index={index + 1}
+                                  src={item.img}
+                                  username={item.username}
+                                  change={item.change}
+                                  sold={item.nfts_sold}
+                                  volume={item.volume}
+                                ></DataTableRanking>
+                              </Fragment>
+                            );
+                          })}
+
+                        {/* Alltime */}
+                        {selectedClass === 'alltime' &&
+                          dataAlltimeTopCreator &&
+                          dataAlltimeTopCreator.length > 0 &&
+                          dataAlltimeTopCreator.map((item, index) => {
                             return (
                               <Fragment key={index}>
                                 <DataTableRanking
@@ -187,21 +210,54 @@ const Ranking = ({title}) => {
                           })}
                       </tbody>
                     </table>
-                    {dataTopCreator && dataTopCreator.length === 0 && (
-                      <div className="no-auction">
-                        There are no auctions going on Today
-                      </div>
-                    )}
-
-                    <ReactPaginate
-                      breakLabel="..."
-                      nextLabel="next >"
-                      onPageChange={handlePageClick}
-                      pageRangeDisplayed={5}
-                      pageCount={pageCount}
-                      previousLabel="< previous"
-                      renderOnZeroPageCount={null}
-                    />
+                    {/* today */}
+                    {selectedClass === 'today' &&
+                      dataTodayTopCreator &&
+                      dataTodayTopCreator.length === 0 && (
+                        <div className="no-auction">
+                          There are no auctions going on Today
+                        </div>
+                      )}
+                    {/* this week */}
+                    {selectedClass === '7day' &&
+                      dataThisWeekTopCreator &&
+                      dataThisWeekTopCreator.length === 0 && (
+                        <div className="no-auction">
+                          There are no auctions going on this week
+                        </div>
+                      )}
+                    {/* this month */}
+                    {selectedClass === '30day' &&
+                      dataThisMonthTopCreator &&
+                      dataThisMonthTopCreator.length === 0 && (
+                        <div className="no-auction">
+                          There are no auctions going on this month
+                        </div>
+                      )}
+                    {/* alltime */}
+                    {selectedClass === 'alltime' &&
+                      dataAlltimeTopCreator &&
+                      dataAlltimeTopCreator.length === 0 && (
+                        <div className="no-auction">
+                          There are no auctions going on Today
+                        </div>
+                      )}
+                    {/* Pagination */}
+                    {selectedClass === 'alltime' &&
+                      dataAlltimeTopCreator &&
+                      dataAlltimeTopCreator.length > 0 && (
+                        <div className="topCreator-pagination">
+                          <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={totalPage}
+                            previousLabel="< previous"
+                            renderOnZeroPageCount={null}
+                          />
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -217,6 +273,9 @@ export default Ranking;
 
 const RankingStyled = styled.div`
   background-color: ${colors.background};
+  .ranking-content {
+    margin-bottom: 20px;
+  }
   .ranking-title {
     margin: 80px 0;
   }
@@ -409,6 +468,36 @@ const RankingStyled = styled.div`
     font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
+  }
+  /* pagination */
+  .topCreator-pagination {
+    width: 100%;
+  }
+
+  .topCreator-pagination ul {
+    list-style: none;
+    color: ${colors.whiteColor};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .topCreator-pagination ul li {
+    text-align: center;
+    margin: 0 6px;
+    padding: 10px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .selected {
+    background-color: ${colors.backgroundColor2};
+    width: 10px;
+    cursor: progress;
+  }
+  .topCreator-pagination ul li.disabled {
+    opacity: 0.6;
+    cursor: default;
   }
 
   /* Responsive */
