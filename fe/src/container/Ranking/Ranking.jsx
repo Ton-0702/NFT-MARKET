@@ -152,23 +152,25 @@ const Ranking = ({title}) => {
                 <div className="ranking-table">
                   <div className="ranking-table-wrap">
                     <table className="table">
-                      <tr className="ranking-row-header">
-                        <th className="table-header-item">
-                          <span className="header-item-stt">#</span>
-                        </th>
-                        <th className="table-header-item header-item-artist">
-                          Artist
-                        </th>
-                        <th className="table-header-item table-header-change">
-                          Change
-                        </th>
-                        <th className="table-header-item table-header-sold">
-                          NFTs Sold
-                        </th>
-                        <th className="table-header-item table-header-volume">
-                          Volume
-                        </th>
-                      </tr>
+                      <thead>
+                        <tr className="ranking-row-header">
+                          <th className="table-header-item">
+                            <span className="header-item-stt">#</span>
+                          </th>
+                          <th className="table-header-item header-item-artist">
+                            Artist
+                          </th>
+                          <th className="table-header-item table-header-change">
+                            Change
+                          </th>
+                          <th className="table-header-item table-header-sold">
+                            NFTs Sold
+                          </th>
+                          <th className="table-header-item table-header-volume">
+                            Volume
+                          </th>
+                        </tr>
+                      </thead>
                       {/* Body */}
                       <tbody className="table-body">
                         {/* today */}
