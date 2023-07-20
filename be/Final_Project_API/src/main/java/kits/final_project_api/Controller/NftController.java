@@ -19,12 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.time.LocalDateTime;
 import java.time.*;
 
 import java.util.*;
@@ -50,8 +46,8 @@ public class NftController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createNft(@Valid @RequestBody NFT nft) {
-        nftServiceImpl.CreateNft(nft);
+    public ResponseEntity createNft(@Valid @RequestParam("nft_name") String nft_name,@RequestParam("image") String image, @RequestParam("price") Double price, @RequestParam("description") String description, @RequestParam("date_start_bid") String date_start_bid, @RequestParam("date_end_bid") String date_end_bid) {
+        nftServiceImpl.CreateNft(nft_name, image, price ,description, date_start_bid, date_end_bid);
         return ResponseEntity.ok("Request completed");
     }
 

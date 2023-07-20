@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors } from "Global";
 import { Button } from "components/Button";
 import React, { useState, useEffect } from "react";
-import Editor from "./Editor";
+import axios from "axios";
 
 import profile_image from "../../assets/profile_detail/profile_image.png";
 
@@ -283,12 +283,46 @@ const CreateNFTStyled = styled.div`
 `;
 
 const CreateNFTPage = () => {
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  const [data, setData] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formValue, setFormValue] = useState({
+    nft_name: "",
+    description: "",
+    price: "",
+    profile_image: document.getElementById("profile_image"),
+    date_start_bid: "",
+    date_end_bid: "",
+  });
 
-  useEffect(() => {
-    setEditorLoaded(true);
-  }, []);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setFormValue((prevState) => ({ ...prevState, [name]: value }));
+  };
+  const handleSubmitForm = (e) => {
+    const FormData = require("form-data");
+    e.preventDefault();
+    console.log(formValue);
+    const formData = new FormData();
+    formData.append("nft_name", formValue.nft_name);
+    formData.append("description", formValue.description);
+    formData.append("price", formValue.price);
+    formData.append("image", formValue.profile_image);
+    formData.append("date_start_bid", formValue.date_start_bid);
+    formData.append("date_end_bid", formValue.date_end_bid);
+    console.log(formData.get("profile_image"));
+    axios
+      .post("http://localhost:8080/nfts/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <PrimaryLayout>
       <CreateNFTStyled>
@@ -305,6 +339,8 @@ const CreateNFTPage = () => {
                       name="nft_name"
                       id="nft_name"
                       placeholder="Enter NFT name"
+                      value={formValue.nft_name}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="profile_detail_form_item">
@@ -315,15 +351,9 @@ const CreateNFTPage = () => {
                       cols="20"
                       rows="2"
                       placeholder="Tell the world your story!"
+                      value={formValue.description}
+                      onChange={handleChange}
                     ></textarea>
-                    {/* <Editor
-                      name={"description"}
-                      onChange={data => {
-                        setData(data);
-                      }}
-                      editorLoaded={editorLoaded}
-                    />
-                    {data} */}
                   </div>
                   <div className="profile_detail_form_item">
                     <label htmlFor="price">Price</label>
@@ -332,6 +362,8 @@ const CreateNFTPage = () => {
                       name="price"
                       id="price"
                       placeholder="Enter Price"
+                      value={formValue.price}
+                      onChange={handleChange}
                     ></input>
                   </div>
                 </div>
@@ -348,26 +380,41 @@ const CreateNFTPage = () => {
                         name="profile_image"
                         id="profile_image"
                         accept="image/*"
+                        value={formValue.profile_image}
+                        onChange={handleChange}
                       ></input>
                     </label>
                   </div>
                   <div className="profile_detail_form_item">
-                      <label htmlFor="date_start_bid">Date Start Bid</label>
-                      <input type="datetime-local" name="date_start_bid" id="date_start_bid" />
+                    <label htmlFor="date_start_bid">Date Start Bid</label>
+                    <input
+                      type="datetime-local"
+                      name="date_start_bid"
+                      id="date_start_bid"
+                      value={formValue.date_start_bid}
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="profile_detail_form_item">
-                      <label htmlFor="Date_end_bid">Date End Bid</label>
-                      <input type="datetime-local" name="date_end_bid" id="date_end_bid" />
+                    <label htmlFor="Date_end_bid">Date End Bid</label>
+                    <input
+                      type="datetime-local"
+                      name="date_end_bid"
+                      id="date_end_bid"
+                      value={formValue.date_end_bid}
+                      onChange={handleChange}
+                    />
                   </div>
                   <Button
-                      content={"Save"}
-                      bgColor={"rgb(71, 30, 84)"}
-                      textColor={colors.whiteColor}
-                      padding={"10px 0px"}
-                      jutifyContent={"center"}
-                      borderRadius={"12px"}
-                      width={"100%"}
-                    ></Button>
+                    content={"Save"}
+                    bgColor={"rgb(71, 30, 84)"}
+                    textColor={colors.whiteColor}
+                    padding={"10px 0px"}
+                    jutifyContent={"center"}
+                    borderRadius={"12px"}
+                    width={"100%"}
+                    onClick={handleSubmitForm}
+                  ></Button>
                 </div>
               </form>
             </div>
@@ -377,5 +424,168 @@ const CreateNFTPage = () => {
     </PrimaryLayout>
   );
 };
+
+// const CreateNFTPage = () => {
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [formValue, setFormValue] = useState({
+//     nft_name: "",
+//     description: "",
+//     price: "",
+//     profile_image: null,
+//     date_start_bid: "",
+//     date_end_bid: "",
+//   });
+
+//   const handleChange = (e) => {
+//     e.persist();
+//     const { name, value } = e.target;
+//     let newValue = value;
+
+//     if (name === "profile_image") {
+//       newValue = e.target.files[0];
+//     }
+
+//     setFormValue((prevState) => ({ ...prevState, [name]: newValue }));
+//   };
+
+//   const handleSubmitForm = (e) => {
+//     e.preventDefault();
+
+//     if (isSubmitting) {
+//       return;
+//     }
+
+//     setIsSubmitting(true);
+
+//     const formData = new FormData();
+//     formData.append("nft_name", formValue.nft_name);
+//     formData.append("description", formValue.description);
+//     formData.append("price", formValue.price);
+//     formData.append("profile_image", formValue.profile_image);
+//     formData.append("date_start_bid", formValue.date_start_bid);
+//     formData.append("date_end_bid", formValue.date_end_bid);
+
+//     axios
+//       .post("http://localhost:8080/nfts/create", formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       })
+//       .then(function (response) {
+//         console.log(response);
+//         setIsSubmitting(false);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//         setIsSubmitting(false);
+//       });
+//   };
+
+//   return (
+//     <PrimaryLayout>
+//       <CreateNFTStyled>
+//         <div className="container_profile_detail">
+//           <div className="profile_detail">
+//             <h2>Create NFT</h2>
+//             <div className="profile_detail_form">
+//               <form>
+//                 <div className="profile_detail_form_left">
+//                   <div className="profile_detail_form_item">
+//                     <label htmlFor="nftname">NFT name</label>
+//                     <input
+//                       type="text"
+//                       name="nft_name"
+//                       id="nft_name"
+//                       placeholder="Enter NFT name"
+//                       value={formValue.nft_name}
+//                       onChange={handleChange}
+//                     />
+//                   </div>
+//                   <div className="profile_detail_form_item">
+//                     <label htmlFor="description">Description</label>
+//                     <textarea
+//                       name="description"
+//                       id="description"
+//                       cols="20"
+//                       rows="2"
+//                       placeholder="Tell the world your story!"
+//                       value={formValue.description}
+//                       onChange={handleChange}
+//                     ></textarea>
+//                   </div>
+//                   <div className="profile_detail_form_item">
+//                     <label htmlFor="price">Price</label>
+//                     <input
+//                       type="number"
+//                       name="price"
+//                       id="price"
+//                       placeholder="Enter Price"
+//                       value={formValue.price}
+//                       onChange={handleChange}
+//                     ></input>
+//                   </div>
+//                 </div>
+//                 <div className="profile_detail_form_right">
+//                   <div className="profile_detail_form_item">
+//                     <label
+//                       htmlFor="profile_image"
+//                       className="profile_background_image_input"
+//                     >
+//                       <span>Image NFT</span>
+//                       {formValue.profile_image && (
+//                         <img
+//                           src={URL.createObjectURL(formValue.profile_image)}
+//                           alt=""
+//                         />
+//                       )}
+//                       {!formValue.profile_image && <span>No image selected</span>}
+//                       <input
+//                         type="file"
+//                         name="profile_image"
+//                         id="profile_image"
+//                         accept="image/*"
+//                         onChange={handleChange}
+//                       ></input>
+//                     </label>
+//                   </div>
+//                   <div className="profile_detail_form_item">
+//                     <label htmlFor="date_start_bid">Date Start Bid</label>
+//                     <input
+//                       type="datetime-local"
+//                       name="date_start_bid"
+//                       id="date_start_bid"
+//                       value={formValue.date_start_bid}
+//                       onChange={handleChange}
+//                     />
+//                   </div>
+//                   <div className="profile_detail_form_item">
+//                     <label htmlFor="Date_end_bid">Date End Bid</label>
+//                     <input
+//                       type="datetime-local"
+//                       name="date_end_bid"
+//                       id="date_end_bid"
+//                       value={formValue.date_end_bid}
+//                       onChange={handleChange}
+//                     />
+//                   </div>
+//                   <Button
+//                     content={"Save"}
+//                     bgColor={"rgb(71, 30, 84)"}
+//                     textColor={colors.whiteColor}
+//                     padding={"10px 0px"}
+//                     jutifyContent={"center"}
+//                     borderRadius={"12px"}
+//                     width={"100%"}
+//                     onClick={handleSubmitForm}
+//                   ></Button>
+//                 </div>
+//               </form>
+//             </div>
+//           </div>
+//         </div>
+//       </CreateNFTStyled>
+//     </PrimaryLayout>
+//   );
+// };
 
 export default CreateNFTPage;
