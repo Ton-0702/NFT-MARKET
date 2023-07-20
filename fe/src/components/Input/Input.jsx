@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import { useState } from "react";
-
+import styled from 'styled-components';
+import {useState} from 'react';
 
 // const { default: styled } = require("styled-components");
 
@@ -8,7 +7,7 @@ const StyledInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.boderColor ? props.border : "none")};
+    border: ${(props) => (props.boderColor ? props.border : 'none')};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -44,7 +43,7 @@ const SearchInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.border ? props.border : "none")};
+    border: ${(props) => (props.border ? props.border : 'none')};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -62,7 +61,7 @@ const SearchInput = styled.div`
     /* align-items: center; */
   }
 
-  i{
+  i {
     position: absolute;
     top: 12px;
     right: 20px;
@@ -71,6 +70,7 @@ const SearchInput = styled.div`
 `;
 
 const Input = ({
+  className,
   textColor,
   bgColor,
   border,
@@ -94,19 +94,19 @@ const Input = ({
   // console.log('password:', password);
   const [passwordShown, setPasswordShown] = useState(false);
   function togglePassword() {
-    console.log("click");
+    console.log('click');
     setPasswordShown(!passwordShown);
-    const eyesClose = document.querySelector(".eyes-close");
-    const eyesOpen = document.querySelector(".eyes-open");
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
     if (passwordShown === false) {
-      eyesClose.classList.add("d-none");
-      eyesOpen.classList.add("d-block");
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
     } else {
-      eyesClose.classList.remove("d-none");
-      eyesOpen.classList.remove("d-block");
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
     }
   }
-  if (type === "search") {
+  if (type === 'search') {
     return (
       <SearchInput
         textColor={textColor}
@@ -149,7 +149,7 @@ const Input = ({
         // type={passwordShown ? "text" : "password"}
         type={type}
         onClick={onClick}
-        id={id}
+        className={className}
         onChange={onChange}
         paddingTop={paddingTop}
         paddingRight={paddingRight}
@@ -159,7 +159,7 @@ const Input = ({
         passwordShown={passwordShown}
       >
         <input
-          type={passwordShown ? "text" : "password"}
+          type={type}
           placeholder={placeHolder}
           id={id}
           onChange={onChange}
@@ -182,4 +182,4 @@ const Input = ({
   }
 };
 
-export { Input };
+export {Input};

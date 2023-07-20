@@ -74,11 +74,16 @@ const auctionData = [
 ];
 
 const NftPage = () => {
-  let TIME = 600;
+  let TIME = 0;
   const [count, setCount] = useState(TIME); // seconds
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+
+  const [inputValue, setInputValue] = useState('');
+  const [transactions, setTransactions] = useState([] || null);
+
+  console.log('transactions: ', transactions);
 
   useEffect(() => {
     if (count >= 0) {
@@ -90,10 +95,9 @@ const NftPage = () => {
         setSecond(timeLeftVar.s);
       }, 1000);
 
-      //   console.log(count);
-      console.log('Hour: ', hour);
-      console.log('Minutes: ', minute);
-      console.log('Seconds: ', second);
+      // console.log('Hour: ', hour);
+      // console.log('Minutes: ', minute);
+      // console.log('Seconds: ', second);
 
       return () => clearInterval(secondsLeft);
     } else {
@@ -115,12 +119,51 @@ const NftPage = () => {
     };
   };
 
+  // handleClickPlaceBid
+  const handleClickPlaceBid = () => {
+    let dataBids;
+    const today = new Date();
+    const currentTime =
+      today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    // console.log('clicked');
+    const inputNumber = Number(inputValue);
+    // 1. get info username
+
+    //2. check Value > 0 || truthy
+    if (!inputNumber) {
+      console.log('Invalid Value');
+      alert('Invalid Value');
+    } else {
+      dataBids = {
+        username: 'hieu',
+        date: today,
+        avatar: 'a',
+        currentTime: currentTime,
+        bids_price: inputNumber,
+      };
+      // setTransactions((prevTransactions) => [...prevTransactions, dataBids]);
+
+      // sort data, likely Unshift method
+      setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
+    }
+    // 3. check ETH BIDS > history table BIDS
+    //4. check ETH user >= ETH BIDS
+
+    console.log('dataBids: ', dataBids);
+    return dataBids;
+  };
+
+  const handleInputChange = (e) => {
+    const {value} = e.target;
+    setInputValue(value);
+  };
+
   return (
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
           <div className="banner"></div>
-          <div className="nft-page-content container">
+          <div className="container nft-page-content">
             <div className="content-left">
               <div className="content-left-wrap">
                 <div className="content-top">
@@ -207,8 +250,33 @@ const NftPage = () => {
                       <div className="card-time-detail">Seconds</div>
                     </div>
                   </div>
+                  <div className="input-bid">
+                    <div className="input-bid-label">Bid Price: </div>
+                    <input
+                      type="number"
+                      placeholder="ETH"
+                      name="inputBid"
+                      required
+                      onChange={handleInputChange}
+                      value={inputValue}
+                    />
+                  </div>
                   <div className="card-btn">
-                    <button>Place Bid</button>
+                    <button
+                      className="btn"
+                      type="button"
+                      onClick={handleClickPlaceBid}
+                    >
+                      <strong>Place Bid</strong>
+                      <div id="container-stars">
+                        <div id="stars"></div>
+                      </div>
+
+                      <div id="glow">
+                        <div className="circle"></div>
+                        <div className="circle"></div>
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -216,13 +284,15 @@ const NftPage = () => {
               <div className="table-content">
                 <table className="auction__table">
                   <thead className="auction__table-header">
-                    <td className="auction__table-header-data">#</td>
-                    <td className="auction__table-header-data">Username</td>
-                    <td className="auction__table-header-data">Amount</td>
+                    <tr>
+                      <td className="auction__table-header-data">#</td>
+                      <td className="auction__table-header-data">Username</td>
+                      <td className="auction__table-header-data">Amount</td>
+                    </tr>
                   </thead>
                   <tbody className="auction__table-body">
-                    {auctionData &&
-                      auctionData.map((item, index) => {
+                    {transactions &&
+                      transactions.map((item, index) => {
                         return (
                           <tr key={index}>
                             <td className="auction__table-body-data">
@@ -240,7 +310,7 @@ const NftPage = () => {
                             </td>
                             <td className="auction__table-body-data">
                               <span className="body-data-amount">
-                                {item.volume}
+                                {item.bids_price}
                               </span>{' '}
                               ETH
                             </td>
@@ -391,7 +461,7 @@ const NftPageStyled = styled.div`
   .auction-card {
     margin: 0 auto;
     width: 295px;
-    height: 234px;
+    /* height: 234px; */
     background-color: ${colors.backgroundColor2};
     border-radius: 20px;
   }
@@ -409,6 +479,7 @@ const NftPageStyled = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
+    margin-bottom: 20px;
   }
   .colon {
     color: ${colors.whiteColor};
@@ -429,9 +500,49 @@ const NftPageStyled = styled.div`
     color: ${colors.whiteColor};
     font-size: 12px;
   }
+
+  // input-bid
+  .input-bid {
+    /* border: 1px solid red; */
+    display: flex;
+    height: 28px;
+    align-items: center;
+  }
+  .input-bid-label {
+    width: 30%;
+    color: ${colors.whiteColor};
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+    border-radius: 20px;
+    height: 100%;
+  }
+  .input-bid input {
+    width: 70%;
+    height: 28px;
+    border-radius: 4px;
+    border: none;
+    text-indent: 10px;
+  }
+  .input-bid input::-webkit-outer-spin-button,
+  .input-bid input::-webkit-inner-spin-button {
+    /* Chrome, Safari, Edge, Opera */
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .input-bid input:focus {
+    outline: none;
+  }
+
+  input[type='number'] {
+    /* Firefox */
+    -moz-appearance: textfield;
+  }
+
   /*  card */
   .card-btn {
-    margin-top: 28px;
+    margin-top: 20px;
     width: 100%;
   }
   .card-btn button {
@@ -443,6 +554,183 @@ const NftPageStyled = styled.div`
     background-color: ${colors.primaryColor};
     border: none;
     cursor: pointer;
+  }
+
+  // star
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background-size: 300% 300%; */
+    backdrop-filter: blur(1rem);
+    border-radius: 5rem;
+    transition: 0.5s;
+    animation: gradient_301 5s ease infinite;
+    border: double 4px transparent;
+    border-radius: 10px;
+    /* background-image: linear-gradient(#212121, #212121),
+      linear-gradient(
+        137.48deg,
+        #ffdb3b 10%,
+        #fe53bb 45%,
+        #8f51ea 67%,
+        #0044ff 87%
+      ); */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+
+  #container-stars {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: 0.5s;
+    backdrop-filter: blur(1rem);
+    border-radius: 20px;
+  }
+
+  strong {
+    z-index: 2;
+    /* font-family: 'Avalors Personal Use'; */
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 4px ${colors.whiteColor};
+  }
+
+  #glow {
+    position: absolute;
+    display: flex;
+    width: 12rem;
+  }
+
+  .circle {
+    width: 100%;
+    height: 30px;
+    filter: blur(2rem);
+    animation: pulse_3011 4s infinite;
+    z-index: -1;
+  }
+
+  .circle:nth-of-type(1) {
+    background: rgba(254, 83, 186, 0.636);
+  }
+
+  .circle:nth-of-type(2) {
+    background: rgba(142, 81, 234, 0.704);
+  }
+
+  .btn:hover #container-stars {
+    z-index: 1;
+    /* background-color: #212121; */
+  }
+
+  .btn:hover {
+    transform: scale(1.1);
+  }
+
+  .btn:active {
+    /* border: double 4px #fe53bb; */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: none;
+  }
+
+  .btn:active .circle {
+    background: #fe53bb;
+  }
+
+  #stars {
+    position: relative;
+    background: transparent;
+    width: 200rem;
+    height: 200rem;
+  }
+
+  #stars::after {
+    content: '';
+    position: absolute;
+    top: -10rem;
+    left: -100rem;
+    width: 100%;
+    height: 100%;
+    animation: animStarRotate 90s linear infinite;
+  }
+
+  #stars::after {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%);
+    background-size: 50px 50px;
+  }
+
+  #stars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 170%;
+    height: 500%;
+    animation: animStar 60s linear infinite;
+  }
+
+  #stars::before {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%);
+    background-size: 50px 50px;
+    opacity: 0.5;
+  }
+
+  @keyframes animStar {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(-135rem);
+    }
+  }
+
+  @keyframes animStarRotate {
+    from {
+      transform: rotate(360deg);
+    }
+
+    to {
+      transform: rotate(0);
+    }
+  }
+
+  @keyframes gradient_301 {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes pulse_3011 {
+    0% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+      transform: scale(0.75);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
   }
 
   /*  Table */
@@ -493,6 +781,7 @@ const NftPageStyled = styled.div`
   .body-data-img {
     width: 24px;
     height: 24px;
+    border-radius: 50%;
   }
   .body-data-username {
     margin-left: 8px;
