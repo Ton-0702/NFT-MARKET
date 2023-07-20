@@ -294,7 +294,7 @@ const CreateNFTPage = () => {
       <CreateNFTStyled>
         <div className="container_profile_detail">
           <div className="profile_detail">
-            <h2>Profile Details</h2>
+            <h2>Create NFT</h2>
             <div className="profile_detail_form">
               <form>
                 <div className="profile_detail_form_left">

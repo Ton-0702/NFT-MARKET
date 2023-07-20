@@ -48,9 +48,6 @@ public class NFT {
     @Column(name = "description", columnDefinition = "LONGTEXT DEFAULT NULL")
     private String description;
 
-    @NotNull
-    @NotBlank
-    @NotEmpty
     @Column(name = "date_create", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_create;
 
@@ -65,6 +62,19 @@ public class NFT {
     @NotEmpty
     @Column(name = "date_end_bid", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_end_bid;
+
+    @Override
+    public String toString() {
+        return "NFT{" +
+                "nft_id='" + id + '\'' +
+                ", nftName=" + nft_name +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", date_create='" + date_create + '\'' +
+                ", date_start_bid='" + date_start_bid + '\'' +
+                ", date_end_bid='" + date_end_bid + '\'' +
+                '}';
+    }
 
 //    @Column(name = "account_id", columnDefinition = "INT")
 //    private Integer account_id;

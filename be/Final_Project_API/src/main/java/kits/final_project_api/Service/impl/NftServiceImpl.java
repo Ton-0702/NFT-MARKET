@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,21 +26,20 @@ public class NftServiceImpl implements NftService {
     }
 
     @Override
-    public NFT CreateNft(NFT nft) {
-//      return null;
-//       return nftRepository.save(nft.getNft_name(), nft.getImage(),nft.getPrice(),nft.getDescription()
-//               ,nft.getDate_create(),nft.getDate_start_bid(),nft.getDate_end_bid(),nft.getAccount_id());
+    public void CreateNft(NFT nft) {
+        LocalDateTime date_current = LocalDateTime.now().minusDays(1);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date_current_format = date_current.format(myFormatObj);
         NFT createNFT = new NFT();
         createNFT.setNft_name(nft.getNft_name());
         createNFT.setImage(nft.getImage());
         createNFT.setPrice(nft.getPrice());
         createNFT.setDescription(nft.getDescription());
-        createNFT.setDate_create(nft.getDate_create());
+        createNFT.setDate_create(date_current_format);
         createNFT.setDate_start_bid(nft.getDate_start_bid());
         createNFT.setDate_end_bid(nft.getDate_end_bid());
-//        createNFT.setAccount(nft.getAccount());
-        return nftRepository.save(createNFT);
-
+        createNFT.setAccount(nft.getAccount());
+        nftRepository.save(createNFT);
     }
 
 }

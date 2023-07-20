@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface NftService {
     List<Map<String, Object>> GetAll();
-    NFT CreateNft(NFT nft);
+    void CreateNft(NFT nft);
 }

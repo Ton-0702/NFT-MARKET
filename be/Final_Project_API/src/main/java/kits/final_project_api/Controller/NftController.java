@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,21 +46,9 @@ public class NftController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createNft(@Valid @RequestBody NFT nft) {
-//        NFT nft = new NFT();
-
-//        nft.getNft_name();
-//        nft.getImage();
-//        nft.getPrice();
-//        nft.getDescription();
-//        nft.getDate_create();
-//        nft.setDate_start_bid(nft.getDate_start_bid());
-//        nft.setDate_end_bid(nft.getDate_end_bid());
-//        nft.setAccount(nftJson.getAccount_id());
-
+    public ResponseEntity createNft(@Valid @RequestBody NFT nft) {
         nftServiceImpl.CreateNft(nft);
-        return ResponseEntity.ok(nft);
-
+        return ResponseEntity.ok("Request completed");
     }
 
     //tạm bỏ
