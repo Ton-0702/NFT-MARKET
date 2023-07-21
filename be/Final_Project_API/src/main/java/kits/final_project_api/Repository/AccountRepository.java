@@ -1,6 +1,8 @@
 package kits.final_project_api.Repository;
 
 import kits.final_project_api.Entity.Account;
+import kits.final_project_api.Entity.NFT;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +29,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "SELECT * FROM account AS a WHERE a.address_wallet = :wallet ", nativeQuery = true)
     Account findByAddressWallet(String wallet);
 
+    @Query(value = "SELECT * FROM account WHERE account_id = :account_id", nativeQuery = true)
+    Account getById(Long account_id);
+    //#region
 
 //    List<Account> findByUsernameAndAccountId(String userName);
 //    List<Followers> findByFollowers();

@@ -28,7 +28,8 @@ public interface NftRepository extends JpaRepository<NFT, Long> {
 //                  @Param("date_create") String date_create, @Param("date_start_bid") String date_start_bid,
 //                   @Param("date_end_bid") String date_end_bid,@Param("account_id") Integer account_id);
 
-
+    @Query(value = "SELECT * FROM nft AS n WHERE n.nft_id = :nft_id ", nativeQuery = true)
+    NFT getById(Long nft_id);
 }
 
 

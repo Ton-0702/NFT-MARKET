@@ -1,5 +1,6 @@
 package kits.final_project_api.Repository;
 
+import kits.final_project_api.Entity.NFT;
 import kits.final_project_api.Entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "INNER JOIN account AS a ON t.account_id = a.account_id " +
             "WHERE n.nft_id = :nft_id", nativeQuery = true)
     List<Map<String, Object>> getHistoryByIdNFT(@Param("nft_id") Long nft_id);
+
+    @Query(value = "SELECT * FROM transaction_bid WHERE transaction_bid_id = :transaction_bid_id", nativeQuery = true)
+    Transaction getByIdTransaction(Long transaction_bid_id);
 }
