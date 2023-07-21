@@ -5,7 +5,7 @@ import {ReactComponent as EmailIcon} from '../../assets/footer-imgs/email-icon.s
 export const InputFooter = ({type, placeholder, text}) => {
   return (
     <InputFooterStyled>
-      <div class="input-wrapper">
+      <div className="input-wrapper">
         <input
           className="input input-footer"
           id="input"
@@ -14,7 +14,7 @@ export const InputFooter = ({type, placeholder, text}) => {
           placeholder={placeholder}
           type={type}
         />
-        <button class="subscribe-btn" type="button">
+        <button className="subscribe-btn" type="button">
           <span className="button-icon">
             <EmailIcon></EmailIcon>
           </span>

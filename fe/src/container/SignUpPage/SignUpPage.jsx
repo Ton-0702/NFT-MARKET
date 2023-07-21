@@ -417,13 +417,6 @@ export const SignUpPage = () => {
   });
   const [formErrors, setFormErrors] = useState({});
 
-  // useEffect(() => {
-  //   console.log(formErrors);
-  //   if (Object.keys(formErrors).length === 0 && isSubmitting) {
-  //     console.log(formErrors);
-  //   }
-  // }, [formErrors]);
-
   const validateValues = (values) => {
     const errors = {};
     const regex =

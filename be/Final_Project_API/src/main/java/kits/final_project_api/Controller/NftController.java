@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.validation.Valid;
 import kits.final_project_api.Entity.NFT;
 import kits.final_project_api.Service.AccountService;
+import kits.final_project_api.Service.InterfaceNftPage.NftPageService;
 import kits.final_project_api.Service.NftService;
 import kits.final_project_api.Service.impl.NftPage.NftPageServiceImpl;
 import kits.final_project_api.Service.impl.NftServiceImpl;
@@ -36,6 +37,9 @@ public class NftController {
 
     @Autowired
     private NftPageServiceImpl nftPageServiceImpl;
+
+    @Autowired
+    private NftPageService nftPageService;
 
     @GetMapping
     @ResponseBody
@@ -174,5 +178,10 @@ public class NftController {
 
         return jacksonData;
     }
-
+    @GetMapping("/nft-detail-page/{id}")
+    @ResponseBody
+    public List<Map<String, Object>> getNftInfoDetailPage(@PathVariable Integer id){
+        List<Map<String, Object>> nftDetailPage = nftPageServiceImpl.getNftInfoDetailPage(id);
+        return nftDetailPage;
+    }
 }

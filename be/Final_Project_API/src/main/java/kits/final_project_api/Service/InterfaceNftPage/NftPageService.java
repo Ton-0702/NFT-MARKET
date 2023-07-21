@@ -5,6 +5,11 @@ import java.util.Map;
 
 public interface NftPageService {
 
-   String getDateStart_EndBid(Integer id);
-//   String getDateEndBid(Integer id);
+    String getDateStart_EndBid(Integer id);
+
+    //   String getDateEndBid(Integer id);
+    List<Map<String, Object>> getNftAndUser_Info(Integer id);
+   List<Map<String, Object>> getClassifyAndCategory_Info(Integer id);
+
+    List<Map<String, Object>> getNftInfoDetailPage(Integer id);
 }
