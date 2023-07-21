@@ -33,13 +33,7 @@ const Header = () => {
                   <span>Rankings</span>
                 </a>
               </div>
-
-              <div className="nav-item">
-                <a href="connect-wallet" className="nav-item-link">
-                  <span>Connect a wallet</span>
-                </a>
-              </div>
-              <SignUpButton></SignUpButton>
+              <SignUpButton width={"200px"}></SignUpButton>
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">

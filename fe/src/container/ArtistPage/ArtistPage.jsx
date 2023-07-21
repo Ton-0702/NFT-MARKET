@@ -1,99 +1,100 @@
-import styled from "styled-components";
-import { colors } from "../../Global";
-import { PrimaryLayout } from "components/Layout";
-import { Button } from "components/Button";
-import { Card } from "components/Card";
+import styled from 'styled-components';
+import {colors} from '../../Global';
+import {PrimaryLayout} from 'components/Layout';
+import {Button} from 'components/Button';
+import {Card} from 'components/Card';
 
-import globe from "../../assets/Artist/Links/Globe.svg";
-import discord from "../../assets/Artist/Links/DiscordLogo.svg";
-import youtube from "../../assets/Artist/Links/YoutubeLogo.svg";
-import twitter from "../../assets/Artist/Links/TwitterLogo.svg";
-import insta from "../../assets/Artist/Links/InstagramLogo.svg";
-import background1 from "../../assets/Artist/background_img.png";
-import avatar1 from "../../assets/Artist/avatar1.png";
-import button1 from "../../assets/Artist/Button1.svg";
-import button2 from "../../assets/Artist/Button2.svg";
-import cate5a from "../../assets/HomePage/Categories/cate5a.png";
+import globe from '../../assets/Artist/Links/Globe.svg';
+import discord from '../../assets/Artist/Links/DiscordLogo.svg';
+import youtube from '../../assets/Artist/Links/YoutubeLogo.svg';
+import twitter from '../../assets/Artist/Links/TwitterLogo.svg';
+import insta from '../../assets/Artist/Links/InstagramLogo.svg';
+import background1 from '../../assets/Artist/background_img.png';
+import avatar1 from '../../assets/Artist/avatar1.png';
+import button1 from '../../assets/Artist/Button1.svg';
+import button2 from '../../assets/Artist/Button2.svg';
+import cate5a from '../../assets/HomePage/Categories/cate5a.png';
+import {useState} from 'react';
 
 const CreatedArtistData = [
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
@@ -179,7 +180,7 @@ const ArtistStyled = styled.div`
 
   .header_artist .infor_artist .body_infor_artist .statistical span {
     color: ${colors.whiteColor};
-    font-family: "Work Sans";
+    font-family: 'Work Sans';
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -216,6 +217,9 @@ const ArtistStyled = styled.div`
     line-height: 160%;
     text-transform: capitalize;
     margin-bottom: 10px;
+  }
+  ul li {
+    user-select: none;
   }
 
   .header_artist .infor_artist .body_infor_artist .links ul {
@@ -258,7 +262,7 @@ const ArtistStyled = styled.div`
   }
 
   .artist-filter-item::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 2px;
@@ -282,7 +286,7 @@ const ArtistStyled = styled.div`
   .artist-filter-item_count {
     font-size: 16px;
     font-style: normal;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-weight: 400;
     line-height: 140%;
     padding: 5px 10px;
@@ -369,6 +373,19 @@ const ArtistStyled = styled.div`
 `;
 
 const ArtistPage = () => {
+  const [selectedClass, setSelectedClass] = useState('created');
+
+  const handleClickActiveClass = (activeClass) => {
+    if (activeClass === 'created') {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === 'owned') {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === 'collection') {
+      setSelectedClass(activeClass);
+    }
+  };
   return (
     <PrimaryLayout>
       <ArtistStyled>
@@ -385,26 +402,26 @@ const ArtistPage = () => {
                   <div className="body_infor_artist_button">
                     <Button
                       img={button1}
-                      bgColor={"#A259FF"}
-                      borderRadius={"20px"}
-                      padding={"15px 30px"}
-                      jutifyContent={"center"}
+                      bgColor={'#A259FF'}
+                      borderRadius={'20px'}
+                      padding={'15px 30px'}
+                      jutifyContent={'center'}
                       textColor={colors.whiteColor}
-                      content={"0xc0E3...B79C"}
-                      fontSize={"16px"}
-                      fontWeight={"600"}
+                      content={'0xc0E3...B79C'}
+                      fontSize={'16px'}
+                      fontWeight={'600'}
                     ></Button>
                     <Button
                       img={button2}
-                      bgColor={"unset"}
-                      border={"2px solid #A259FF"}
-                      borderRadius={"20px"}
-                      jutifyContent={"center"}
-                      padding={"15px 30px"}
+                      bgColor={'unset'}
+                      border={'2px solid #A259FF'}
+                      borderRadius={'20px'}
+                      jutifyContent={'center'}
+                      padding={'15px 30px'}
                       textColor={colors.whiteColor}
-                      content={"Follow"}
-                      fontSize={"16px"}
-                      fontWeight={"600"}
+                      content={'Follow'}
+                      fontSize={'16px'}
+                      fontWeight={'600'}
                     ></Button>
                   </div>
                 </div>
@@ -456,15 +473,36 @@ const ArtistPage = () => {
             <div className="container">
               <div className="artist-filter">
                 <ul className="artist-filter-list">
-                  <li className="artist-filter-item active">
+                  <li
+                    className={
+                      selectedClass === 'created'
+                        ? 'artist-filter-item active'
+                        : 'artist-filter-item '
+                    }
+                    onClick={() => handleClickActiveClass('created')}
+                  >
                     <span className="artist-filter-item_title">Created</span>
                     <span className="artist-filter-item_count">302</span>
                   </li>
-                  <li className="artist-filter-item">
+                  <li
+                    className={
+                      selectedClass === 'owned'
+                        ? 'artist-filter-item active'
+                        : 'artist-filter-item '
+                    }
+                    onClick={() => handleClickActiveClass('owned')}
+                  >
                     <span className="artist-filter-item_title">Owned</span>
                     <span className="artist-filter-item_count">67</span>
                   </li>
-                  <li className="artist-filter-item">
+                  <li
+                    className={
+                      selectedClass === 'collection'
+                        ? 'artist-filter-item active'
+                        : 'artist-filter-item '
+                    }
+                    onClick={() => handleClickActiveClass('collection')}
+                  >
                     <span className="artist-filter-item_title">Collection</span>
                     <span className="artist-filter-item_count">4</span>
                   </li>
@@ -490,7 +528,7 @@ const ArtistPage = () => {
                           name_artist={e.name_artist}
                           total_sales={e.total_sales}
                           bgColor={colors.background}
-                          borderRadius={"20px"}
+                          borderRadius={'20px'}
                         ></Card>
                       </div>
                     ))
