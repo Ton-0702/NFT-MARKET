@@ -1,103 +1,10 @@
-import styled from "styled-components";
-import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
-import { Input } from "components/Input";
-import user_icon from "../../assets/SignIn_Up_Img/user_icon.svg";
-import mail_icon from "../../assets/SignIn_Up_Img/mail_icon.svg";
-import password_icon from "../../assets/SignIn_Up_Img/password_icon.svg";
-import { Button } from "components/Button";
-// import ValidateSignUp from "./SignUpValidate";
-import { useState } from "react";
+import styled from 'styled-components';
+import background from '../../assets/SignIn_Up_Img/background_sign_up.svg';
+import {useState} from 'react';
+import {colors} from 'Global';
+import {LogoItem} from 'components/Header';
+
 const StyledSignUpPage = styled.div`
-  /* * {
-    margin: 0;
-    padding: 0;
-  }
-  .wrapper {
-  }
-  .left-sign-up {
-    float: left;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .left-sign-up img {
-    width: 100%;
-    height: 100%;
-  }
-  .right-sign-up {
-    float: right;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .right-sign-up h2 {
-    color: white;
-    font-size: 51px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 110%;
-    text-transform: capitalize;
-  }
-  .right-sign-up p {
-    font-size: 22px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%;
-    text-transform: capitalize;
-    color: white;
-    padding-top: 20px;
-  }
-  .form-sign-up {
-    padding: 100px 300px 100px 60px;
-  }
-  form {
-   
-    display: flex;
-    flex-direction: column;
-
-    padding-bottom: 60px;
-  }
-  .input_error {
-    color: red;
-  
-    text-align: left;
-    font-size: 14px;
-    font-weight: 300;
-    align-items: c;
-  }
-  .input-and-error {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    height: 60px;
-    position: relative;
-  }
-  .err-msg {
-    position: absolute;
-    top: 39px;
-    left: 420px;
-  } */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    /* --color-1: #c0dbea; */
-    --color-2: #6096b4;
-    --black-color: #000;
-    /* --btn-color: #d885a3; */
-  }
-
-  body {
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-  }
-
   a {
     text-decoration: none;
   }
@@ -105,7 +12,6 @@ const StyledSignUpPage = styled.div`
   .main {
     height: 100vh;
     position: relative;
-    /* z-index: -1; */
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,
@@ -113,11 +19,11 @@ const StyledSignUpPage = styled.div`
     );
   }
 
-  .login-container {
+  .signup-container {
     max-width: 1920px;
   }
 
-  .login-form-wrap {
+  .signup-form-wrap {
     width: 1050px;
     display: flex;
     border-radius: 2rem;
@@ -126,31 +32,33 @@ const StyledSignUpPage = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* padding-bottom: 40px; */
-    /* margin: auto; */
     background-color: #fff;
   }
 
-  .login__left,
-  .login__right {
+  .signup__left,
+  .signup__right {
     width: 50%;
   }
-
-  /* Login Left */
-  .login__left {
+  .signup__left {
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 30px;
   }
 
-  .login-content {
-    margin: 0 auto;
+  .signup-content {
+    margin: 40px auto;
+    /* margin-bottom: 40px; */
   }
 
-  .login-title {
-    margin-top: 80px;
-    font-size: 56px;
+  .header-logo-text svg path {
+    fill: #a259ff;
+  }
+
+  .signup-title {
+    margin: 22px 0;
+    text-align: center;
+    font-size: 38px;
     font-weight: 600;
   }
 
@@ -162,16 +70,60 @@ const StyledSignUpPage = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 26px;
+    position: relative;
+    height: 48px;
+  }
+
+  /* .form-label {
+    display: flex;
+    justify-content: space-between;
+  } */
+
+  .form-group input {
+    text-indent: 12px;
+    font-size: 100%;
+    /* padding: 12px; */
+    outline: none;
+    border: 2px solid rgb(200, 200, 200);
+    /* background-color: transparent; */
+    border-radius: 20px;
+    height: 46px;
+    text-indent: 12px;
+    outline: none;
+  }
+  .form-group input:-webkit-autofill {
+    transition: background-color 5000s;
+    -webkit-fill-color: #fff;
   }
 
   .form-group label {
-    font-weight: 300;
+    position: absolute;
+    left: 0;
+    font-weight: 400px;
+    font-size: 16px;
+    padding: 12px;
+    margin-left: 8px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgb(100, 100, 100);
+    border-radius: 12px;
   }
 
-  .form-label {
-    display: flex;
-    justify-content: space-between;
+  .form-group :is(input:focus, input:valid) ~ label {
+    transform: translateY(-50%) scale(0.9);
+    /* margin: 0 */
+    margin-left: 20px;
+    /* padding: 8px; */
+    background-color: ${colors.whiteColor};
+    font-weight: 500;
+    color: ${colors.blackColor};
+    border-radius: 12px;
+    padding: 0;
+  }
+
+  .form-group :is(input:focus, input:valid) {
+    border-color: rgb(150, 150, 200);
   }
 
   .form-group .form-label-forgot-password {
@@ -179,14 +131,14 @@ const StyledSignUpPage = styled.div`
     cursor: pointer;
   }
 
-  .form-group input {
+  /* .form-group input {
     width: 100%;
     height: 46px;
     border-radius: 6px;
     border: none;
     background-color: #c0dbea;
     padding-left: 10px;
-  }
+  } */
 
   .form-password {
     position: relative;
@@ -201,17 +153,29 @@ const StyledSignUpPage = styled.div`
   }
 
   .eyes-open {
-    display: none;
+    display: block;
+  }
+  .eyes-open-password {
+    display: block;
+  }
+  .eyes-close-password,
+  .eyes-open-password {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #171648;
   }
 
   .eyes-close,
   .eyes-open {
     position: absolute;
-    top: 68%;
+    top: 50%;
     right: 20px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #d885a3;
+    color: #171648;
   }
 
   .d-none {
@@ -229,13 +193,13 @@ const StyledSignUpPage = styled.div`
     row-gap: 40px;
   }
 
-  .btn-login {
+  .btn-signup {
     width: 150px;
     height: 46px;
     border: none;
     border-radius: 20px;
     color: #fff;
-    background-color: #d885a3;
+    background-color: #171648;
     cursor: pointer;
   }
 
@@ -281,25 +245,26 @@ const StyledSignUpPage = styled.div`
     color: var(#d885a3);
   }
 
-  /*  Login right */
-  .login__right {
+  /*  signup right */
+  .signup__right {
     position: relative;
   }
 
   .background {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
     width: 450px;
-    /* background-color: #c0dbea; */
     background-image: url(${background});
-    background-size: cover;
+    background-size: auto;
+    background-position: center;
     z-index: -1;
     border-radius: 2rem;
+    background-repeat: no-repeat;
   }
 
-  .login-right-wrap .images {
+  .signup-right-wrap .images {
     position: absolute;
     top: 50%;
     right: 4px;
@@ -309,216 +274,366 @@ const StyledSignUpPage = styled.div`
     height: 500px;
     z-index: 20;
   }
-
+  /* 
   .girl-laptop {
     width: 100%;
+  } */
+
+  .input_error {
+    color: red;
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    align-items: center;
+  }
+  #password {
+    position: relative;
+  }
+  .err-msg span {
+    /* position: absolute; */
+    padding-bottom: 20px;
+  }
+  .input-form {
+    padding-bottom: 20px;
+  }
+  .show-hide-password {
+    position: absolute;
+    top: 42px;
+    /* right: 64px; */
+    left: 480px;
   }
 
-  /* Responsive */
-  /* extra large */
-  @media (max-width: 1200px) {
-    .login-form-wrap {
-      width: 994px;
-    }
-
-    .login-title {
-      margin-top: 30px;
-      font-size: 52px;
-      text-align: center;
-    }
-
-    .form-control {
-      min-width: 416px;
-    }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 400px;
-      height: 500px;
-    }
-
-    .login-right-wrap .images {
-      top: 58%;
-    }
-
-    .girl-laptop img {
-      width: 500px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 200px;
-      height: 400px;
-    }
+  // Loading
+  .dashed-loading {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
   }
 
-  /* Large */
-  @media (max-width: 992px) {
-    .login-form-wrap {
-      width: 854px;
-    }
-
-    .form-control {
-      min-width: 370px;
-    }
-
-    .btn {
-      row-gap: 24px;
-    }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 324px;
-      height: 486px;
-    }
-
-    .girl-laptop img {
-      width: 392px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 166px;
-      height: 400px;
-    }
+  .dashed-loading:after,
+  .dashed-loading:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
   }
 
-  @media (max-width: 576px) {
-    .login-form-wrap {
-      width: 450px;
+  .dashed-loading:before {
+    z-index: 5;
+    border: 3px dashed #ff6bcb;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    -webkit-animation: dashed 1s linear infinite;
+    animation: dashed 1s linear infinite;
+  }
+
+  .dashed-loading:after {
+    z-index: 10;
+    border: 3px solid #ffb86c;
+    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    -webkit-animation: dashed 1s ease infinite;
+    animation: dashed 1s ease infinite;
+  }
+
+  @keyframes dashed {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  // Responsive
+
+  @media (max-width: 991.98px) {
+    .signup-form-wrap {
+      width: 90%;
+      height: 95%;
+    }
+    .signup-content {
+      width: 80%;
+    }
+    .input-form {
+      width: 80%;
+    }
+    .input-form div {
+      height: 80%;
+    }
+    .signup__right {
+      width: 50%;
+    }
+    .background {
+      width: 75%;
+    }
+    .signup-title {
+      margin-top: 0px;
+    }
+    .dont-have-account-text {
+    }
+  }
+  @media (max-width: 767.98px) {
+    .signup__right {
+      display: none;
+    }
+    .signup-title {
+      /* justify-content: center; */
+    }
+    .signup-content {
+      width: 70%;
     }
 
-    .login__left {
+    .signup__left {
       width: 100%;
     }
-
-    .login__right {
-      display: none;
+    .form-control {
+      min-width: 0;
+    }
+    .input-form {
+      width: 100%;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .signup-title {
+      font-size: 30px;
     }
   }
 `;
 
 export const SignUpPage = () => {
-  const [username, setUsername] = useState("");
-  const [email_address, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const eyesClose = document.querySelector(".eyes-close");
-  const eyesOpen = document.querySelector(".eyes-open");
-  const inputPassword = document.querySelector("#password");
-  const showPassword = () => {
-    inputPassword.type = "text";
-    eyesClose.classList.add("d-none");
-    eyesOpen.classList.add("d-block");
-  };
+  const [passwordConfirm, setPasswordConfirm] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formValue, setFormValue] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [formErrors, setFormErrors] = useState({});
 
-  const hidePassword = () => {
-    inputPassword.type = "password";
-    eyesClose.classList.remove("d-none");
-    eyesOpen.classList.remove("d-block");
-  };
-  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // useEffect(() => {
+  //   console.log(formErrors);
+  //   if (Object.keys(formErrors).length === 0 && isSubmitting) {
+  //     console.log(formErrors);
+  //   }
+  // }, [formErrors]);
 
-  const ValidateSignUp = (e) => {
-    e.preventDefault();
-    if (
-      username.length == 0 ||
-      email_address ||
-      password.length == 0 ||
-      confirm_password.length == 0 ||
-      password != confirm_password ||
-      !emailPattern.test(email_address)
-    ) {
-      setError(true);
+  const validateValues = (values) => {
+    const errors = {};
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!values.username) {
+      errors.username = 'Username is required!';
     }
-    // if (password.value != confirm_password.value) {
-    //   setError(true);
-    // }
-    console.log("username: " + username);
-    console.log("password: " + password);
-    console.log("confirm_password: " + confirm_password);
+    if (!values.email) {
+      errors.email = 'Email is required!';
+    } else if (!regex.test(values.email)) {
+      errors.email = 'Not Valid email!';
+    }
+    if (!values.password) {
+      errors.password = 'Password is required!';
+    } else if (values.password.length < 8) {
+      errors.password = 'Must be more than 8 characters!';
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'ConfirmPassword is required!';
+    } else if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = 'Password is not match';
+    }
+    console.log('Err:', errors);
+
+    return errors;
   };
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    // console.log(name, value);
+    setFormValue((prevState) => ({...prevState, [name]: value}));
+  };
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    console.log('submit');
+    setFormErrors(validateValues(formValue));
+    // setIsSubmitting(true);
+    const isFormValid = Object.keys(formErrors).length === 0;
+    console.log('isVAlid:', isFormValid);
+    if (isFormValid) {
+      handleLoading();
+    }
+  };
+
+  const handleLoading = () => {
+    setTimeout(() => {
+      setIsSubmitting(true);
+    }, 2000);
+    setIsSubmitting(false);
+  };
+
+  function togglePassword() {
+    setPasswordShown(!passwordShown);
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
+    if (passwordShown === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
+
+  function togglePasswordConfirm() {
+    setPasswordConfirm(!passwordConfirm);
+    const eyesOpen = document.querySelector('.eyes-confirm-open');
+    const eyesClose = document.querySelector('.eyes-confirm-close');
+    if (passwordConfirm === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
+  }
   return (
     <StyledSignUpPage>
-      <div class="main">
-        <div class="login-container">
-          <div class="login-form-wrap">
-            <div class="login__left">
-              <div class="login-content">
-                <h2 class="login-title">Create Account</h2>
+      <div className="main">
+        <div className="signup-container">
+          <div className="signup-form-wrap">
+            <div className="signup__left">
+              <div className="signup-content">
+                <LogoItem></LogoItem>
+                <h2 className="signup-title">Create Account</h2>
 
-                <form action="#" class="form-control">
-                  <div class="form-group">
-                    <label for="">Username</label>
-                    {/* <input
-                      type="text"
-                      name=""
-                      id="username"
-                      placeholder="Username"
-                    /> */}
-                    <Input
-                      placeHolder="Username"
-                      type="text"
-                      id="username"
-                    ></Input>
-                    <span class="form-message"></span>
-                  </div>
-
-                  <div class="form-group form-password">
-                    <div class="form-label">
-                      <label class="form-label-password" for="">
-                        Password
-                      </label>
-                      <label class="form-label-forgot-password" for="">
-                        Forgot Password?
-                      </label>
+                <form action="#" className="form-control">
+                  <div className="input-form">
+                    {/* Username */}
+                    <div className="form-group">
+                      {/* <Input></Input> */}
+                      <input
+                        name="username"
+                        type="text"
+                        value={formValue.username}
+                        required
+                        onChange={handleChange}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <label htmlFor="username">Username</label>
+                      {formErrors.username && (
+                        <span className="input_error">
+                          {formErrors.username}
+                        </span>
+                      )}
                     </div>
-                    {/* <input
-                      type="password"
-                      name=""
-                      id="password"
-                      placeholder="Enter password"
-                    /> */}
-                    <Input
-                      type="password"
-                      placeHolder="Enter password"
-                      id="password"
-                    ></Input>
-                    <i
-                      className="fa-solid fa-eye-slash eyes-close"
-                      onClick={showPassword}
-                    ></i>
-                    <i
-                      className="fa-solid fa-eye eyes-open"
-                      onClick={hidePassword}
-                    ></i>
-                    <span className="form-password-message"></span>
-                  </div>
 
+                    {/* Email */}
+                    <div className="form-group">
+                      <input
+                        name="email"
+                        type="text"
+                        value={formValue.email}
+                        required
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="email">Email</label>
+                      {formErrors.email && (
+                        <span className="input_error">{formErrors.email}</span>
+                      )}
+                    </div>
+
+                    {/* Password */}
+                    <div className="form-group">
+                      {/* <Input></Input> */}
+                      <input
+                        name="password"
+                        value={formValue.password}
+                        // onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleChange}
+                        className="password"
+                        type={passwordShown ? 'text' : 'password'}
+                        required
+                      />
+                      <label htmlFor="password">Password</label>
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close"
+                        onClick={togglePassword}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open"
+                        onClick={togglePassword}
+                      ></i>
+
+                      {formErrors.password && (
+                        <span className="input_error">
+                          {formErrors.password}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* ConfirmPassword */}
+                    <div className="form-group">
+                      {/* <Input></Input> */}
+
+                      <input
+                        name="confirmPassword"
+                        value={formValue.confirmPassword}
+                        className="confirm-password"
+                        onChange={handleChange}
+                        type={passwordConfirm ? 'text' : 'password'}
+                        required
+                      />
+                      <label htmlFor="confirm-password">Confirm Password</label>
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close  eyes-confirm-close"
+                        onClick={togglePasswordConfirm}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open  eyes-confirm-open"
+                        onClick={togglePasswordConfirm}
+                      ></i>
+
+                      {formErrors.confirmPassword && (
+                        <span className="input_error">
+                          {formErrors.confirmPassword}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                   <div className="btn">
                     <button
                       type="button"
-                      className="btn-login"
-                      // onclick="logIn()"
+                      className="btn-signup"
+                      onClick={handleSubmitForm}
                     >
-                      LOGIN
-                      <i className="fas fa-arrow-right"></i>
+                      {isSubmitting ? (
+                        <div class="dashed-loading"></div>
+                      ) : (
+                        <span>
+                          Sign Up
+                          <i className="fas fa-arrow-right"></i>
+                        </span>
+                      )}
                     </button>
 
-                    <div className="dont-have-account">
+                    {/* <div className="dont-have-account">
                       <p className="dont-have-account-text">
-                        Don't have an account yet?
-                        <a href="#">Sign up for free</a>
+                        You have an account?
+                        <NavLink to="/sign-in">Sign in now</NavLink>
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </form>
               </div>
             </div>
 
-            <div className="login__right">
-              <div className="login-right-wrap">
+            <div className="signup__right">
+              <div className="signup-right-wrap">
                 <div className="background"></div>
               </div>
             </div>

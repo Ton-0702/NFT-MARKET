@@ -1,103 +1,10 @@
+
 import styled from "styled-components";
 import background from "../../assets/SignIn_Up_Img/background_sign_up.svg";
 import { Input } from "components/Input";
-import user_icon from "../../assets/SignIn_Up_Img/user_icon.svg";
-import mail_icon from "../../assets/SignIn_Up_Img/mail_icon.svg";
-import password_icon from "../../assets/SignIn_Up_Img/password_icon.svg";
-import { Button } from "components/Button";
-// import ValidateSignUp from "./SignUpValidate";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const StyledSignInPage = styled.div`
-  /* * {
-    margin: 0;
-    padding: 0;
-  }
-  .wrapper {
-  }
-  .left-sign-up {
-    float: left;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .left-sign-up img {
-    width: 100%;
-    height: 100%;
-  }
-  .right-sign-up {
-    float: right;
-    height: 100%;
-    width: 50%;
-   
-  }
-  .right-sign-up h2 {
-    color: white;
-    font-size: 51px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 110%;
-    text-transform: capitalize;
-  }
-  .right-sign-up p {
-    font-size: 22px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 160%;
-    text-transform: capitalize;
-    color: white;
-    padding-top: 20px;
-  }
-  .form-sign-up {
-    padding: 100px 300px 100px 60px;
-  }
-  form {
-   
-    display: flex;
-    flex-direction: column;
-
-    padding-bottom: 60px;
-  }
-  .input_error {
-    color: red;
-  
-    text-align: left;
-    font-size: 14px;
-    font-weight: 300;
-    align-items: c;
-  }
-  .input-and-error {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-    height: 60px;
-    position: relative;
-  }
-  .err-msg {
-    position: absolute;
-    top: 39px;
-    left: 420px;
-  } */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    /* --color-1: #c0dbea; */
-    --color-2: #6096b4;
-    --black-color: #000;
-    /* --btn-color: #d885a3; */
-  }
-
-  body {
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-  }
-
   a {
     text-decoration: none;
   }
@@ -105,7 +12,7 @@ const StyledSignInPage = styled.div`
   .main {
     height: 100vh;
     position: relative;
-    /* z-index: -1; */
+
     background: linear-gradient(
       179.4deg,
       rgb(12, 20, 69) -16.9%,
@@ -163,7 +70,7 @@ const StyledSignInPage = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
 
   .form-group label {
@@ -202,7 +109,7 @@ const StyledSignInPage = styled.div`
   }
 
   .eyes-open {
-    display: none;
+    display: block;
   }
 
   .eyes-close,
@@ -212,7 +119,7 @@ const StyledSignInPage = styled.div`
     right: 20px;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #d885a3;
+    color: #171648;
   }
 
   .d-none {
@@ -236,7 +143,7 @@ const StyledSignInPage = styled.div`
     border: none;
     border-radius: 20px;
     color: #fff;
-    background-color: #d885a3;
+    background-color: #171648;
     cursor: pointer;
   }
 
@@ -293,7 +200,7 @@ const StyledSignInPage = styled.div`
     right: 0;
     bottom: 0;
     width: 450px;
-    /* background-color: #c0dbea; */
+
     background-image: url(${background});
     background-size: cover;
     z-index: -1;
@@ -315,193 +222,194 @@ const StyledSignInPage = styled.div`
     width: 100%;
   }
 
+  .input_error {
+    color: red;
+
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    align-items: c;
+  }
+  #password {
+    position: relative;
+  }
+  .err-msg span {
+    position: absolute;
+  }
+  .input-form {
+    padding-bottom: 20px;
+  }
+
   /* Responsive */
   /* extra large */
-  @media (max-width: 1200px) {
-    .login-form-wrap {
-      width: 994px;
-    }
 
+  @media (max-width: 991.98px) {
+    .login-form-wrap {
+      width: 90%;
+      height: 60%;
+    }
+    .login-content {
+      width: 80%;
+    }
+    .input-form {
+      width: 80%;
+    }
+    .input-form div {
+      height: 80%;
+    }
+    .login__right {
+      width: 50%;
+    }
+    .background {
+      width: 75%;
+      height: 101%;
+    }
     .login-title {
-      margin-top: 30px;
-      font-size: 52px;
-      text-align: center;
+      margin-top: 0px;
     }
-
-    .form-control {
-      min-width: 416px;
+    .dont-have-account-text {
+      width: 96%;
     }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 400px;
-      height: 500px;
+    .form-control .form-group .form-password input {
+      width: 90%;
     }
-
-    .login-right-wrap .images {
-      top: 58%;
-    }
-
-    .girl-laptop img {
-      width: 500px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 200px;
-      height: 400px;
-    }
-  }
-
-  /* Large */
-  @media (max-width: 992px) {
-    .login-form-wrap {
-      width: 854px;
-    }
-
-    .form-control {
-      min-width: 370px;
-    }
-
     .btn {
-      row-gap: 24px;
-    }
-
-    /* right */
-    .login-right-wrap .images {
-      width: 324px;
-      height: 486px;
-    }
-
-    .girl-laptop img {
-      width: 392px;
-      height: 400px;
-    }
-
-    .cactus img {
-      width: 166px;
-      height: 400px;
+      width: 80%;
     }
   }
-
-  @media (max-width: 576px) {
-    .login-form-wrap {
-      width: 450px;
+  @media (max-width: 767.98px) {
+    .login__right {
+      display: none;
+    }
+    .login-title {
+      padding-top: 80px;
+      /* height: 100%; */
+    }
+    .login-content {
+      width: 70%;
     }
 
     .login__left {
       width: 100%;
+      justify-content: center;
     }
-
-    .login__right {
-      display: none;
+    .form-control {
+      min-width: 0;
+    }
+    .input-form {
+      width: 100%;
+    }
+    .background {
+      background-size: cover;
+      width: 79%;
+    }
+    .btn {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .login-title {
+      font-size: 30px;
     }
   }
 `;
 
 export const SignInPage = () => {
-  const [username, setUsername] = useState("");
-  const [email_address, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const eyesClose = document.querySelector(".eyes-close");
-  const eyesOpen = document.querySelector(".eyes-open");
-  const inputPassword = document.querySelector("#password");
-  const showPassword = () => {
-    inputPassword.type = "text";
-    eyesClose.classList.add("d-none");
-    eyesOpen.classList.add("d-block");
+  const [passwordShown, setPasswordShown] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+    const eyesClose = document.querySelector('.eyes-close');
+    const eyesOpen = document.querySelector('.eyes-open');
+    if (passwordShown === false) {
+      eyesClose.classList.add('d-none');
+      eyesOpen.classList.add('d-block');
+    } else {
+      eyesClose.classList.remove('d-none');
+      eyesOpen.classList.remove('d-block');
+    }
   };
-
-  const hidePassword = () => {
-    inputPassword.type = "password";
-    eyesClose.classList.remove("d-none");
-    eyesOpen.classList.remove("d-block");
-  };
-  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const ValidateSignUp = (e) => {
+  const ValidateSignIn = (e) => {
     e.preventDefault();
-    if (
-      username.length == 0 ||
-      email_address ||
-      password.length == 0 ||
-      confirm_password.length == 0 ||
-      password != confirm_password ||
-      !emailPattern.test(email_address)
-    ) {
+    if (username.length === 0 || password.length === 0) {
       setError(true);
     }
-    // if (password.value != confirm_password.value) {
-    //   setError(true);
-    // }
-    console.log("username: " + username);
-    console.log("password: " + password);
-    console.log("confirm_password: " + confirm_password);
+    console.log('username: ' + username);
+    console.log('password: ' + password);
   };
   return (
     <StyledSignInPage>
-      <div class="main">
-        <div class="login-container">
-          <div class="login-form-wrap">
-            <div class="login__left">
-              <div class="login-content">
-                <h2 class="login-title">Log In</h2>
+      <div className="main">
+        <div className="login-container">
+          <div className="login-form-wrap">
+            <div className="login__left">
+              <div className="login-content">
+                <h2 className="login-title">Log In</h2>
 
-                <form action="#" class="form-control">
-                  <div class="form-group">
-                    <label for="">Username</label>
-                    {/* <input
-                      type="text"
-                      name=""
-                      id="username"
-                      placeholder="Username"
-                    /> */}
-                    <Input
-                      placeHolder="Username"
-                      type="text"
-                      id="username"
-                    ></Input>
-                    <span class="form-message"></span>
-                  </div>
-
-                  <div class="form-group form-password">
-                    <div class="form-label">
-                      <label class="form-label-password" for="">
-                        Password
-                      </label>
-                      <label class="form-label-forgot-password" for="">
-                        Forgot Password?
-                      </label>
+                <form action="#" className="form-control">
+                  <div className="input-form">
+                    <div className="form-group">
+                      <label>Username</label>
+                      <Input
+                        placeHolder="Username"
+                        type="text"
+                        id="username"
+                        onChange={(e) => setUsername(e.target.value)}
+                      ></Input>
+                      <span className="form-message"></span>
                     </div>
-                    {/* <input
-                      type="password"
-                      name=""
-                      id="password"
-                      placeholder="Enter password"
-                    /> */}
-                    <Input
-                      type="password"
-                      placeHolder="Enter password"
-                      id="password"
-                    ></Input>
-                    <i
-                      className="fa-solid fa-eye-slash eyes-close"
-                      onClick={showPassword}
-                    ></i>
-                    <i
-                      className="fa-solid fa-eye eyes-open"
-                      onClick={hidePassword}
-                    ></i>
-                    <span className="form-password-message"></span>
-                  </div>
+                    <div className="err-msg-username">
+                      {error && username <= 0 ? (
+                        <span className="input_error">Enter Username</span>
+                      ) : (
+                        <span style={{height: 10}}> </span>
+                      )}
+                    </div>
+                    <div className="form-group form-password">
+                      <div className="form-label">
+                        <label className="form-label-password">Password</label>
+                        <label className="form-label-forgot-password">
+                          Forgot Password?
+                        </label>
+                      </div>
 
+                      <Input
+                        placeHolder="Enter password"
+                        id="password"
+                        type={passwordShown ? 'text' : 'password'}
+                        onChange={(e) => setPassword(e.target.value)}
+                      ></Input>
+                      {/* <i
+                      className="fa-solid fa-eye eyes-open"
+                      onClick={togglePassword}
+                    ></i> */}
+                      <div className="err-msg">
+                        {error && password <= 0 ? (
+                          <span className="input_error">Enter Password</span>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+
+                      <i
+                        className="fa-solid fa-eye-slash eyes-close"
+                        onClick={togglePassword}
+                      ></i>
+                      <i
+                        className="fa-solid fa-eye eyes-open"
+                        onClick={togglePassword}
+                      ></i>
+                      <span className="form-password-message"></span>
+                    </div>
+                  </div>
                   <div className="btn">
                     <button
                       type="button"
                       className="btn-login"
-                      // onclick="logIn()"
+                      onClick={ValidateSignIn}
                     >
                       LOGIN
                       <i className="fas fa-arrow-right"></i>
@@ -510,7 +418,7 @@ export const SignInPage = () => {
                     <div className="dont-have-account">
                       <p className="dont-have-account-text">
                         Don't have an account yet?
-                        <a href="#">Sign up for free</a>
+                        <NavLink to="/sign-up">Sign up for free</NavLink>
                       </p>
                     </div>
                   </div>

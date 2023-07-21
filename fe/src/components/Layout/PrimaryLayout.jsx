@@ -12,4 +12,6 @@ const PrimaryLayout = ({children}) => {
   );
 };
 
-export default PrimaryLayout;
+
+export { PrimaryLayout };
+
