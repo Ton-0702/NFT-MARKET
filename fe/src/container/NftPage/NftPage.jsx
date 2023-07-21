@@ -201,10 +201,18 @@ const NftPage = () => {
                   <span className="date-creating">Minted on Sep 30, 2022</span>
                 </div>
                 <div className="content-created">
-                  <div className="create-by-title">Created By</div>
-                  <div className="created-detail">
-                    <img src={avatar} alt="" />
-                    <span className="create-by">Orbitian</span>
+                  <div className="content-created-item">
+                    <div className="create-by-title">Created By</div>
+                    <div className="created-detail">
+                      <img src={avatar} alt="" />
+                      <span className="create-by">Orbitian</span>
+                    </div>
+                  </div>
+                  <div className="content-created-item">
+                    <div className="create-by-title">Price NFT</div>
+                    <div className="created-detail">
+                      <span className="price-nft">0.1 ETH</span>
+                    </div>
                   </div>
                 </div>
                 <div className="content-desc">
@@ -393,6 +401,8 @@ const NftPageStyled = styled.div`
   }
   .content-created {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
   }
   .create-by-title,
   .desc-title,
@@ -413,7 +423,8 @@ const NftPageStyled = styled.div`
     width: 24px;
     height: 24px;
   }
-  .create-by {
+  .create-by,
+  .price-nft {
     height: 24px;
     font-size: 22px;
     font-weight: 600;
