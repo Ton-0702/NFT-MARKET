@@ -12,4 +12,5 @@ public interface NftPageService {
    List<Map<String, Object>> getClassifyAndCategory_Info(Integer id);
 
     List<Map<String, Object>> getNftInfoDetailPage(Integer id);
+    String getDateCreate(Integer id);
 }
