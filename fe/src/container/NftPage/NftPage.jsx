@@ -83,7 +83,7 @@ const NftPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [transactions, setTransactions] = useState([] || null);
 
-  console.log('transactions: ', transactions);
+  // console.log('transactions: ', transactions);
 
   useEffect(() => {
     if (count >= 0) {
@@ -129,27 +129,57 @@ const NftPage = () => {
     const inputNumber = Number(inputValue);
     // 1. get info username
 
-    //2. check Value > 0 || truthy
+    //2. check Value > 0 && truthy
+
+    // if (inputNumber === 0 || inputNumber === '') {
+    //   alert('Invalid Value');
+    // } else if (transactions) {
+    //   console.log('has transactions');
+    // }
+
     if (!inputNumber) {
       console.log('Invalid Value');
       alert('Invalid Value');
     } else {
-      dataBids = {
-        username: 'hieu',
-        date: today,
-        avatar: 'a',
-        currentTime: currentTime,
-        bids_price: inputNumber,
-      };
-      // setTransactions((prevTransactions) => [...prevTransactions, dataBids]);
-
-      // sort data, likely Unshift method
-      setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
+      if (transactions.length === 0) {
+        dataBids = {
+          username: 'hieu',
+          date: today,
+          avatar: 'a',
+          currentTime: currentTime,
+          bids_price: inputNumber,
+        };
+        // sort data, likely Unshift method
+        setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
+        setInputValue('');
+      }
+      if (transactions.length > 0) {
+        const highestBidsPrice = transactions[0].bids_price;
+        console.log('highestBidsPrice: ', highestBidsPrice);
+        if (inputNumber > highestBidsPrice) {
+          dataBids = {
+            username: 'hieu thứ hai',
+            date: today,
+            avatar: 'a',
+            currentTime: currentTime,
+            bids_price: inputNumber,
+          };
+          // sort data, likely Unshift method
+          setTransactions((prevTransactions) => [
+            dataBids,
+            ...prevTransactions,
+          ]);
+          setInputValue('');
+        } else {
+          alert(`Can not bids !!! the highest bid is ${highestBidsPrice} ETH`);
+          console.log('can not add bids');
+        }
+      }
     }
     // 3. check ETH BIDS > history table BIDS
-    //4. check ETH user >= ETH BIDS
+    // 4. check ETH user >= ETH BIDS
 
-    console.log('dataBids: ', dataBids);
+    // console.log('dataBids: ', dataBids);
     return dataBids;
   };
 
