@@ -50,8 +50,8 @@ public class NftController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createNft(@Valid @RequestParam("nft_name") String nft_name,@RequestParam("image") String image, @RequestParam("price") Double price, @RequestParam("description") String description, @RequestParam("date_start_bid") String date_start_bid, @RequestParam("date_end_bid") String date_end_bid) {
-        nftServiceImpl.CreateNft(nft_name, image, price ,description, date_start_bid, date_end_bid);
+    public ResponseEntity createNft(@Valid @RequestParam("nft_name") String nft_name, @RequestParam("image") String image, @RequestParam("price") Double price, @RequestParam("description") String description, @RequestParam("date_start_bid") String date_start_bid, @RequestParam("date_end_bid") String date_end_bid) {
+        nftServiceImpl.CreateNft(nft_name, image, price, description, date_start_bid, date_end_bid);
         return ResponseEntity.ok("Request completed");
     }
 
@@ -178,10 +178,18 @@ public class NftController {
 
         return jacksonData;
     }
+
     @GetMapping("/nft-detail-page/{id}")
     @ResponseBody
-    public List<Map<String, Object>> getNftInfoDetailPage(@PathVariable Integer id){
+    public List<Map<String, Object>> getNftInfoDetailPage(@PathVariable Integer id) {
         List<Map<String, Object>> nftDetailPage = nftPageServiceImpl.getNftInfoDetailPage(id);
         return nftDetailPage;
     }
+
+//     @GetMapping("/search-nft/{name}")
+//     @ResponseBody
+//     public List<Map<String, Object>> getNftInfoByName(@PathVariable String name) {
+//         List<Map<String, Object>> nftInfo = nftPageServiceImpl.getNftInfoByName(name);
+//         return nftInfo;
+//     }
 }
