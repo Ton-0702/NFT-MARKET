@@ -90,7 +90,7 @@ const Ranking = ({title}) => {
   return (
     <PrimaryLayout>
       <RankingStyled className="ranking">
-        <div className="ranking-container container">
+        <div className="container ranking-container">
           <div className="ranking-content">
             <div className="ranking-title">
               <h2>{title || 'Top Creators'}</h2>

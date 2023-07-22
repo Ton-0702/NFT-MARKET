@@ -6,21 +6,37 @@ import {SignUpButton} from '../Button/SignUpButton';
 import {ReactComponent as MarketIcon} from '../../assets/header-imgs/market.svg';
 import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
+import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
+import {useNavigate} from 'react-router-dom';
 
 const Header = () => {
+  const handleClickBarIcon = () => {
+    const overlay = document.querySelector('.overplay');
+    const barIcon = document.querySelector('.nav-mobile');
+    // visibility:   visibility: visible
+    barIcon.style.visibility = 'visible';
+    overlay.style.display = 'block';
+  };
+  const handleClickCloseBtn = () => {
+    const overlay = document.querySelector('.overplay');
+    const barIcon = document.querySelector('.nav-mobile');
+    // barIcon.style.display = 'none';
+    overlay.style.display = 'none';
+    barIcon.style.visibility = 'hidden';
+  };
+
+  const navigate = useNavigate();
   return (
     <HeaderStyled>
       <header className="header">
         <div className="header-wrapper">
           <div className="header-left">
-            {/* <div className="icon">
-              <MarketIcon></MarketIcon>
+            <div onClick={() => navigate('/')}>
+              <LogoItem></LogoItem>
             </div>
-            <div className="header-logo">
-              <Logo></Logo>
-            </div> */}
-            <LogoItem></LogoItem>
           </div>
+          {/* Overlay */}
+          <div className="overplay" onClick={handleClickCloseBtn}></div>
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
@@ -33,12 +49,37 @@ const Header = () => {
                   <span>Rankings</span>
                 </a>
               </div>
-              <SignUpButton width={"200px"}></SignUpButton>
+              <SignUpButton width={'200px'}></SignUpButton>
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">
-              <div className="tablet-mobile-icon">
+              <div className="tablet-mobile-icon" onClick={handleClickBarIcon}>
                 <MenuBar></MenuBar>
+              </div>
+              <div className="nav-mobile">
+                <div className="close-btn" onClick={handleClickCloseBtn}>
+                  <Close></Close>
+                </div>
+                <div className="nav-mobile-item">
+                  <a href="/user-page" className="nav-mobile-item-link">
+                    <span>username</span>
+                  </a>
+                </div>
+                <div className="nav-mobile-item">
+                  <a href="market-place" className="nav-mobile-item-link">
+                    <span>Marketplace</span>
+                  </a>
+                </div>
+                <div className="nav-mobile-item">
+                  <a href="ranking" className="nav-mobile-item-link">
+                    <span>Rankings</span>
+                  </a>
+                </div>
+                <div className="nav-mobile-item">
+                  <a href="/logout" className="nav-mobile-item-link">
+                    <span>Log Out</span>
+                  </a>
+                </div>
               </div>
             </nav>
           </div>
@@ -67,6 +108,7 @@ export const LogoItem = () => {
 // LogoItem Style
 const LogoItemStyled = styled.div`
   display: flex;
+
   align-items: center;
   .logo-icon {
     margin-right: 16px;
@@ -75,6 +117,7 @@ const LogoItemStyled = styled.div`
     display: flex;
     align-items: center;
   }
+  cursor: pointer;
 `;
 
 // Header Style
@@ -114,9 +157,54 @@ const HeaderStyled = styled.div`
     cursor: pointer;
   }
 
-  // nav-mobile
-  .tablet-mobile-nav {
+  /* overlay */
+  .overplay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
     display: none;
+  }
+  // nav-mobile
+
+  .tablet-mobile-nav {
+    position: relative;
+    display: none;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .close-btn svg {
+    width: 100%;
+    height: 100%;
+  }
+  .close-btn svg path {
+    fill: ${colors.primaryColor};
+    opacity: 0.8;
+  }
+  .close-btn:hover svg path {
+    opacity: 1;
+  }
+
+  .nav-mobile {
+    visibility: hidden;
+    position: absolute;
+    padding-top: 30px;
+    top: -38px;
+    right: -120px;
+    background-color: ${colors.backgroundColor2};
+    width: 250px;
+    height: 100vh;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    opacity: 1;
+    animation: fadeIn 0.4s ease-in-out;
   }
 
   .tablet-mobile-nav .tablet-mobile-icon {
@@ -125,6 +213,30 @@ const HeaderStyled = styled.div`
   }
   .tablet-mobile-nav .tablet-mobile-icon svg {
     width: 100%;
+    cursor: pointer;
+  }
+
+  .nav-mobile-item a {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: ${colors.whiteColor};
+    padding: 10px 0;
+  }
+  .nav-mobile-item a:hover {
+    color: ${colors.primaryColor};
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   // Responsive
@@ -139,10 +251,15 @@ const HeaderStyled = styled.div`
     }
     .tablet-mobile-nav {
       display: block;
-      cursor: pointer;
     }
     .header-right-nav {
       display: none;
+    }
+  }
+
+  @media (max-width: 840px) {
+    .nav-mobile {
+      right: -94px;
     }
   }
 
