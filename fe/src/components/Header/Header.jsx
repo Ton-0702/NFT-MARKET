@@ -10,6 +10,7 @@ import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
 import {useNavigate} from 'react-router-dom';
 // import Switch from 'react-switch';
 import {useSettingsStore} from 'store/store';
+import DarkMode from 'components/DarkMode/DarkMode';
 
 const Header = () => {
   const {toggleDarkMode} = useSettingsStore();
@@ -66,10 +67,14 @@ const Header = () => {
                   <span>Marketplace</span>
                 </a>
               </div>
+
               <div className="nav-item">
                 <a href="ranking" className="nav-item-link">
                   <span>Rankings</span>
                 </a>
+              </div>
+              <div className="nav-item">
+                <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
               <SignUpButton width={'200px'}></SignUpButton>
             </nav>
@@ -82,10 +87,12 @@ const Header = () => {
               >
                 <MenuBar></MenuBar>
               </MenuBarIconStyled>
-              <div className="nav-mobile">
+
+              <NavMobileStyled className="nav-mobile" light={light}>
                 <div className="close-btn" onClick={handleClickCloseBtn}>
                   <Close></Close>
                 </div>
+
                 <div className="nav-mobile-item">
                   <a href="/user-page" className="nav-mobile-item-link">
                     <span>username</span>
@@ -106,17 +113,11 @@ const Header = () => {
                     <span>Log Out</span>
                   </a>
                 </div>
-                <div className="switch">
-                  <button onClick={toggleDarkMode}>ToggleDarkMode</button>
-                  {/* <Switch
-                    onChange={() => {
-                      console.log('checked');
-                      setToggle(!toggle);
-                    }}
-                    checked={toggle}
-                  ></Switch> */}
+                <div className="switch-darkMode">
+                  <DarkMode onChange={toggleDarkMode}></DarkMode>
+                  {/* <button onClick={toggleDarkMode}>ToggleDarkMode</button> */}
                 </div>
-              </div>
+              </NavMobileStyled>
             </nav>
           </div>
         </div>
@@ -170,6 +171,17 @@ const MenuBarIconStyled = styled.div`
 
   svg path {
     fill: ${(prop) => (prop.light ? colors.blackColor : colors.whiteColor)};
+  }
+`;
+
+// Nav-Mobile styled
+const NavMobileStyled = styled.div`
+  background-color: ${(prop) =>
+    prop.light ? colors.whiteColor : colors.backgroundColor2};
+
+  .nav-mobile-item .nav-mobile-item-link {
+    color: ${(prop) =>
+      prop.light ? colors.backgroundColor2 : colors.whiteColor};
   }
 `;
 
@@ -246,12 +258,11 @@ const HeaderStyled = styled.div`
   }
 
   .nav-mobile {
-    /* visibility: hidden; */
     position: absolute;
     padding-top: 30px;
     top: -38px;
     right: -120px;
-    background-color: ${colors.backgroundColor2};
+    /* background-color: ${colors.backgroundColor2}; */
     width: 250px;
     height: 100vh;
     z-index: 1;
@@ -262,26 +273,24 @@ const HeaderStyled = styled.div`
     animation: fadeIn 0.4s ease-in-out;
   }
 
-  /* .tablet-mobile-nav .tablet-mobile-icon {
-    width: 24px;
-    height: 24px;
+  .switch-darkMode {
+    margin-top: 10px;
   }
-  .tablet-mobile-nav .tablet-mobile-icon svg {
-    width: 100%;
-    cursor: pointer;
-  } */
+  .switch-darkMode .darkMode {
+    text-align: center;
+  }
 
-  .nav-mobile-item a {
+  .nav-mobile-item .nav-mobile-item-link {
     display: inline-block;
     text-align: center;
     width: 100%;
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
     padding: 10px 0;
   }
-  .nav-mobile-item a:hover {
+  .nav-mobile-item .nav-mobile-item-link:hover {
     color: ${colors.primaryColor};
   }
 

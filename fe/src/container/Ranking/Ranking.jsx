@@ -278,6 +278,7 @@ export default Ranking;
 
 const RankingStyled = styled.div`
   /* background-color: ${colors.background}; */
+  padding-bottom: 10px;
   background-color: ${(prop) =>
     prop.light ? colors.whiteColor : colors.background};
   .ranking-content {
