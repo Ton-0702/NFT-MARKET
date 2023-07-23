@@ -7,4 +7,5 @@ export const colors = {
   borderColor: '#858584',
   greenColor: '#00AC4F',
   blackColor: '#000',
+  backgroundColor3: 'rgb(219 219 219)',
 };
