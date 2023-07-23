@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {SignUpButton} from '../Button/SignUpButton';
@@ -8,8 +8,32 @@ import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
 import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
 import {useNavigate} from 'react-router-dom';
+// import Switch from 'react-switch';
+import {useSettingsStore} from 'store/store';
+import DarkMode from 'components/DarkMode/DarkMode';
 
 const Header = () => {
+  const {toggleDarkMode} = useSettingsStore();
+  const light = useSettingsStore((state) => state.light);
+
+  useEffect(() => {
+    if (light) {
+      document.querySelector('body').style.backgroundColor =
+        'rgb(242 242 242 / 60%)';
+      const navItemLink = document.querySelectorAll('.nav-item-link');
+      navItemLink[0].style.color = '#A259FF';
+      navItemLink[1].style.color = '#A259FF';
+      document.querySelector('.header').classList.add('light');
+      document.querySelector('#footer').classList.add('light');
+    } else {
+      document.querySelector('body').style.backgroundColor = '#2B2B2B';
+      const navItemLink = document.querySelectorAll('.nav-item-link');
+      navItemLink[0].style.color = '#fff';
+      navItemLink[1].style.color = '#fff';
+      document.querySelector('.header').classList.remove('light');
+      document.querySelector('#footer').classList.remove('light');
+    }
+  }, [light]);
   const handleClickBarIcon = () => {
     const overlay = document.querySelector('.overplay');
     const barIcon = document.querySelector('.nav-mobile');
@@ -31,7 +55,7 @@ const Header = () => {
         <div className="header-wrapper">
           <div className="header-left">
             <div onClick={() => navigate('/')}>
-              <LogoItem></LogoItem>
+              <LogoItem light={light}></LogoItem>
             </div>
           </div>
           {/* Overlay */}
@@ -43,22 +67,32 @@ const Header = () => {
                   <span>Marketplace</span>
                 </a>
               </div>
+
               <div className="nav-item">
                 <a href="ranking" className="nav-item-link">
                   <span>Rankings</span>
                 </a>
               </div>
+              <div className="nav-item">
+                <DarkMode onChange={toggleDarkMode}></DarkMode>
+              </div>
               <SignUpButton width={'200px'}></SignUpButton>
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">
-              <div className="tablet-mobile-icon" onClick={handleClickBarIcon}>
+              <MenuBarIconStyled
+                light={light}
+                className="tablet-mobile-icon"
+                onClick={handleClickBarIcon}
+              >
                 <MenuBar></MenuBar>
-              </div>
-              <div className="nav-mobile">
+              </MenuBarIconStyled>
+
+              <NavMobileStyled className="nav-mobile" light={light}>
                 <div className="close-btn" onClick={handleClickCloseBtn}>
                   <Close></Close>
                 </div>
+
                 <div className="nav-mobile-item">
                   <a href="/user-page" className="nav-mobile-item-link">
                     <span>username</span>
@@ -79,7 +113,11 @@ const Header = () => {
                     <span>Log Out</span>
                   </a>
                 </div>
-              </div>
+                <div className="switch-darkMode">
+                  <DarkMode onChange={toggleDarkMode}></DarkMode>
+                  {/* <button onClick={toggleDarkMode}>ToggleDarkMode</button> */}
+                </div>
+              </NavMobileStyled>
             </nav>
           </div>
         </div>
@@ -91,9 +129,9 @@ const Header = () => {
 export default Header;
 
 // logo
-export const LogoItem = () => {
+export const LogoItem = ({light}) => {
   return (
-    <LogoItemStyled className="logo">
+    <LogoItemStyled className="logo" light={light}>
       <div className="logo-icon">
         <MarketIcon></MarketIcon>
       </div>
@@ -116,7 +154,35 @@ const LogoItemStyled = styled.div`
     display: flex;
     align-items: center;
   }
+  .header-logo-text svg path {
+    fill: ${(prop) => (prop.light ? colors.primaryColor : colors.whiteColor)};
+  }
   cursor: pointer;
+`;
+// MenuBarIconStyled
+const MenuBarIconStyled = styled.div`
+  width: 24px;
+  height: 24px;
+
+  svg {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  svg path {
+    fill: ${(prop) => (prop.light ? colors.blackColor : colors.whiteColor)};
+  }
+`;
+
+// Nav-Mobile styled
+const NavMobileStyled = styled.div`
+  background-color: ${(prop) =>
+    prop.light ? colors.whiteColor : colors.backgroundColor2};
+
+  .nav-mobile-item .nav-mobile-item-link {
+    color: ${(prop) =>
+      prop.light ? colors.backgroundColor2 : colors.whiteColor};
+  }
 `;
 
 // Header Style
@@ -192,12 +258,11 @@ const HeaderStyled = styled.div`
   }
 
   .nav-mobile {
-    /* visibility: hidden; */
     position: absolute;
     padding-top: 30px;
     top: -38px;
     right: -120px;
-    background-color: ${colors.backgroundColor2};
+    /* background-color: ${colors.backgroundColor2}; */
     width: 250px;
     height: 100vh;
     z-index: 1;
@@ -208,26 +273,24 @@ const HeaderStyled = styled.div`
     animation: fadeIn 0.4s ease-in-out;
   }
 
-  .tablet-mobile-nav .tablet-mobile-icon {
-    width: 24px;
-    height: 24px;
+  .switch-darkMode {
+    margin-top: 10px;
   }
-  .tablet-mobile-nav .tablet-mobile-icon svg {
-    width: 100%;
-    cursor: pointer;
+  .switch-darkMode .darkMode {
+    text-align: center;
   }
 
-  .nav-mobile-item a {
+  .nav-mobile-item .nav-mobile-item-link {
     display: inline-block;
     text-align: center;
     width: 100%;
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
     padding: 10px 0;
   }
-  .nav-mobile-item a:hover {
+  .nav-mobile-item .nav-mobile-item-link:hover {
     color: ${colors.primaryColor};
   }
 
