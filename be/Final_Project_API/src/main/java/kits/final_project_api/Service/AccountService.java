@@ -8,6 +8,8 @@ import java.util.List;
 public interface AccountService {
     List<Account> findAll();
 
+    Account getReferenceById(Long nft_id);
+
     Account findByUsername(String username);
 
     <S extends Account> S saveAndFlush(S entity);

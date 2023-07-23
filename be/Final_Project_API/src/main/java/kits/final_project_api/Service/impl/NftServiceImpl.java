@@ -22,6 +22,21 @@ public class NftServiceImpl implements NftService {
     private NftRepository nftRepository;
 
     @Override
+    public NFT getReferenceById(Long nft_id) {
+        return nftRepository.getReferenceById(nft_id);
+    }
+
+    @Override
+    public <S extends NFT> S saveAndFlush(S entity) {
+        return nftRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    public void updateNFTOwner(Long nft_id, Long account_id){
+        nftRepository.updateNFTOwner(nft_id, account_id);
+    }
+
+    @Override
     public List<Map<String, Object>> GetAll() {
         return nftRepository.GetAll();
 

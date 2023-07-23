@@ -10,11 +10,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(includeFieldNames = true)
 public class PlaceBidDTO {
     @NotNull
     @NotEmpty

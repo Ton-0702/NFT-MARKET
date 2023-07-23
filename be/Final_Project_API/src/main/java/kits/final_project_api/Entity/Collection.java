@@ -20,5 +20,5 @@ public class Collection {
 
     @JsonIgnore
     @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
-    private List<NFTOwened> nftOwens;
+    private List<NFTOwned> nftOwens;
 }
