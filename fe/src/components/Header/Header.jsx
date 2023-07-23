@@ -13,16 +13,15 @@ const Header = () => {
   const handleClickBarIcon = () => {
     const overlay = document.querySelector('.overplay');
     const barIcon = document.querySelector('.nav-mobile');
-    // visibility:   visibility: visible
-    barIcon.style.visibility = 'visible';
+    barIcon.style.transform = 'translateX(0)';
+
     overlay.style.display = 'block';
   };
   const handleClickCloseBtn = () => {
     const overlay = document.querySelector('.overplay');
     const barIcon = document.querySelector('.nav-mobile');
-    // barIcon.style.display = 'none';
     overlay.style.display = 'none';
-    barIcon.style.visibility = 'hidden';
+    barIcon.style.transform = 'translateX(100%)';
   };
 
   const navigate = useNavigate();
@@ -193,7 +192,7 @@ const HeaderStyled = styled.div`
   }
 
   .nav-mobile {
-    visibility: hidden;
+    /* visibility: hidden; */
     position: absolute;
     padding-top: 30px;
     top: -38px;
@@ -203,6 +202,8 @@ const HeaderStyled = styled.div`
     height: 100vh;
     z-index: 1;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    transform: translateX(100%);
+    transition: all 0.3s linear;
     opacity: 1;
     animation: fadeIn 0.4s ease-in-out;
   }
@@ -259,7 +260,7 @@ const HeaderStyled = styled.div`
 
   @media (max-width: 840px) {
     .nav-mobile {
-      right: -94px;
+      right: -60px;
     }
   }
 

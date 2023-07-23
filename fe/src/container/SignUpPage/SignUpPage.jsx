@@ -583,11 +583,11 @@ export const SignUpPage = () => {
                       />
                       <label htmlFor="confirm-password">Confirm Password</label>
                       <i
-                        className="fa-solid fa-eye-slash eyes-close  eyes-confirm-close"
+                        className="fa-solid fa-eye-slash eyes-close eyes-confirm-close"
                         onClick={togglePasswordConfirm}
                       ></i>
                       <i
-                        className="fa-solid fa-eye eyes-open  eyes-confirm-open"
+                        className="fa-solid fa-eye eyes-open eyes-confirm-open"
                         onClick={togglePasswordConfirm}
                       ></i>
 
@@ -605,7 +605,7 @@ export const SignUpPage = () => {
                       onClick={handleSubmitForm}
                     >
                       {isSubmitting ? (
-                        <div class="dashed-loading"></div>
+                        <div className="dashed-loading"></div>
                       ) : (
                         <span>
                           Sign Up
