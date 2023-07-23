@@ -86,7 +86,7 @@ const NftPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [transactions, setTransactions] = useState([] || null);
 
-  console.log('count: ', count);
+  // console.log('count: ', count);
 
   useEffect(() => {
     // http://localhost:8080/nfts/nft-detail-page/1

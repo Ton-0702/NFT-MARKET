@@ -13,6 +13,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #2B2B2B;
+  overflow-x: hidden;
 }
 
 .container {
