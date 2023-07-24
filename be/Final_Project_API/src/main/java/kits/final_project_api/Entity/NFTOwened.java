@@ -2,7 +2,6 @@ package kits.final_project_api.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +10,10 @@ import lombok.Setter;
 @Setter
 @Table(name = "nft_owned")
 public class NFTOwened {
+//    @Id
+//    @Column(name = "nft_owned_id")
+//    private Long id;
     @Id
-    @Column(name = "nft_owned_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @OneToOne
     @JoinColumn(name = "nft_id")
     private NFT nft_owned_id;

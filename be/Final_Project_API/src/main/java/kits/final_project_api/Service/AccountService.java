@@ -3,6 +3,7 @@ package kits.final_project_api.Service;
 import kits.final_project_api.Entity.Account;
 
 import java.util.List;
+import java.util.Map;
 
 //@Service
 public interface AccountService {
@@ -15,6 +16,8 @@ public interface AccountService {
     int updateTokenById(String token, Long id);
 
     Account findByToken(String token);
+
+    List<Map<String, Object>> findByTokenList(String token);
 
     Account findByAddressWallet(String wallet);
 

@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { colors } from "Global";
 import { PrimaryLayout } from "components/Layout";
 import { Button } from "components/Button";
-
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import {useNavigate} from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import profile_image from "../../assets/profile_detail/profile_image.png";
 
 const ProfileDetailStyled = styled.div`
@@ -315,6 +319,58 @@ const ProfileDetailStyled = styled.div`
 `;
 
 const ProfileDetail = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {address_wallet} = location.state;
+  // const address_wallet_detail = address_wallet[0]
+  console.log("heeloo: ",address_wallet);
+  const [formValue, setFormValue] = useState({
+    address_wallet: address_wallet,
+    username: "",
+    bio: "",
+    email: "",
+    profile_image: document.getElementById("profile_image"),
+    profile_background_image: document.getElementById("profile_background_image"),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setFormValue((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmitForm = (e) => {
+    const FormData = require("form-data");
+    e.preventDefault();
+    console.log(formValue);
+    const formData = new FormData();
+    formData.append("address_wallet", formValue.address_wallet);
+    formData.append("username", formValue.username);
+    formData.append("bio", formValue.bio);
+    formData.append("email", formValue.email);
+    formData.append("image", formValue.profile_image);
+    formData.append("background", formValue.profile_background_image);
+    console.log("formData:", formData.get("email"));
+    
+    axios
+      .post("http://localhost:8080/api/register/connect-wallet", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // 'Access-Control-Allow-Credentials': 'true',
+        },
+      })
+      .then(function (response) {
+        
+        console.log("phan hoi thanh cong: ",response.data.data);
+        const cookies = new Cookies();
+        cookies.set("token", response.data.data);
+        navigate("/login-success");
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+  };
+
   return (
     <PrimaryLayout>
       <ProfileDetailStyled>
@@ -329,6 +385,15 @@ const ProfileDetail = () => {
             <div className="profile_detail_form">
               <form>
                 <div className="profile_detail_form_left">
+                <input
+                      type="hidden"
+                      name="address_waleet"
+                      id="address_waleet"
+                      // placeholder="Enter username"
+                      value={address_wallet}
+                      // onChange={handleChange}
+                      
+                    />
                   <div className="profile_detail_form_item">
                     <label htmlFor="username">Username</label>
                     <input
@@ -336,6 +401,8 @@ const ProfileDetail = () => {
                       name="username"
                       id="username"
                       placeholder="Enter username"
+                      value={formValue.username}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="profile_detail_form_item">
@@ -346,15 +413,19 @@ const ProfileDetail = () => {
                       cols="20"
                       rows="2"
                       placeholder="Tell the world your story!"
+                      value={formValue.bio}
+                      onChange={handleChange}
                     ></textarea>
                   </div>
                   <div className="profile_detail_form_item">
                     <label htmlFor="email">Email</label>
                     <input
                       type="email"
-                      name="bio"
-                      id="bio"
+                      name="email"
+                      id="email"
                       placeholder="Enter email"
+                      value={formValue.email}
+                      onChange={handleChange}
                     ></input>
                   </div>
                   <div className="profile_detail_form_item">
@@ -422,6 +493,8 @@ const ProfileDetail = () => {
                         name="profile_image"
                         id="profile_image"
                         accept="image/*"
+                        value={formValue.profile_image}
+                        onChange={handleChange}
                       ></input>
                     </label>
                   </div>
@@ -437,6 +510,8 @@ const ProfileDetail = () => {
                         name="profile_background_image"
                         id="profile_background_image"
                         accept="image/*"
+                        value={formValue.profile_background_image}
+                        onChange={handleChange}
                       ></input>
                     </label>
                     <Button
@@ -446,6 +521,7 @@ const ProfileDetail = () => {
                       padding={"10px 0px"}
                       jutifyContent={"center"}
                       borderRadius={"12px"}
+                      onClick={handleSubmitForm}
                     ></Button>
                   </div>
                 </div>
