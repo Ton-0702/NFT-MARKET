@@ -13,6 +13,7 @@ import avatar4 from '../../assets/ranking-imgs/avatar4.svg';
 import avatar5 from '../../assets/ranking-imgs/avatar5.svg';
 import avatar6 from '../../assets/ranking-imgs/avatar6.svg';
 import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
+import axios from 'axios';
 
 const auctionData = [
   {
@@ -74,16 +75,34 @@ const auctionData = [
 ];
 
 const NftPage = () => {
-  let TIME = 0;
+  let TIME = 15;
   const [count, setCount] = useState(TIME); // seconds
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const [dataNftPage, setDataNftPage] = useState();
+
   const [inputValue, setInputValue] = useState('');
   const [transactions, setTransactions] = useState([] || null);
 
-  console.log('transactions: ', transactions);
+  // console.log('count: ', count);
+
+  useEffect(() => {
+    // http://localhost:8080/nfts/nft-detail-page/1
+    async function getDetail() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/nfts/nft-detail-page/1`
+        );
+        console.log(response.data[0]);
+        setDataNftPage(response.data[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getDetail();
+  }, []);
 
   useEffect(() => {
     if (count >= 0) {
@@ -119,6 +138,10 @@ const NftPage = () => {
     };
   };
 
+  if (!dataNftPage) return null;
+  const {nft_name, categories_name, date_create, description, price, username} =
+    dataNftPage;
+
   // handleClickPlaceBid
   const handleClickPlaceBid = () => {
     let dataBids;
@@ -129,27 +152,59 @@ const NftPage = () => {
     const inputNumber = Number(inputValue);
     // 1. get info username
 
-    //2. check Value > 0 || truthy
+    //2. check Value > 0 && truthy
+
+    // if (inputNumber === 0 || inputNumber === '') {
+    //   alert('Invalid Value');
+    // } else if (transactions) {
+    //   console.log('has transactions');
+    // }
+
     if (!inputNumber) {
       console.log('Invalid Value');
       alert('Invalid Value');
+    } else if (inputNumber < price) {
+      alert(`Must be greater than ${price} ETH`);
     } else {
-      dataBids = {
-        username: 'hieu',
-        date: today,
-        avatar: 'a',
-        currentTime: currentTime,
-        bids_price: inputNumber,
-      };
-      // setTransactions((prevTransactions) => [...prevTransactions, dataBids]);
-
-      // sort data, likely Unshift method
-      setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
+      if (transactions.length === 0) {
+        dataBids = {
+          username: 'hieu',
+          date: today,
+          avatar: 'a',
+          currentTime: currentTime,
+          bids_price: inputNumber,
+        };
+        // sort data, likely Unshift method
+        setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
+        setInputValue('');
+      }
+      if (transactions.length > 0) {
+        const highestBidsPrice = transactions[0].bids_price;
+        console.log('highestBidsPrice: ', highestBidsPrice);
+        if (inputNumber > highestBidsPrice) {
+          dataBids = {
+            username: 'hieu thứ hai',
+            date: today,
+            avatar: 'a',
+            currentTime: currentTime,
+            bids_price: inputNumber,
+          };
+          // sort data, likely Unshift method
+          setTransactions((prevTransactions) => [
+            dataBids,
+            ...prevTransactions,
+          ]);
+          setInputValue('');
+        } else {
+          alert(`Can not bids !!! the highest bid is ${highestBidsPrice} ETH`);
+          console.log('can not add bids');
+        }
+      }
     }
     // 3. check ETH BIDS > history table BIDS
-    //4. check ETH user >= ETH BIDS
+    // 4. check ETH user >= ETH BIDS
 
-    console.log('dataBids: ', dataBids);
+    // console.log('dataBids: ', dataBids);
     return dataBids;
   };
 
@@ -167,20 +222,32 @@ const NftPage = () => {
             <div className="content-left">
               <div className="content-left-wrap">
                 <div className="content-top">
-                  <div className="artist-name">The Orbitians</div>
-                  <span className="date-creating">Minted on Sep 30, 2022</span>
+                  <div className="artist-name">{nft_name}</div>
+                  <span className="date-creating">Minted on {date_create}</span>
                 </div>
                 <div className="content-created">
-                  <div className="create-by-title">Created By</div>
-                  <div className="created-detail">
-                    <img src={avatar} alt="" />
-                    <span className="create-by">Orbitian</span>
+                  <div className="content-created-item">
+                    <div className="create-by-title">Created By</div>
+                    <div className="created-detail">
+                      <img src={avatar} alt="" />
+                      <span className="create-by">
+                        {username || 'Orbitian'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="content-created-item">
+                    <div className="create-by-title">Price NFT</div>
+                    <div className="created-detail">
+                      <span className="price-nft">{price} ETH</span>
+                    </div>
                   </div>
                 </div>
                 <div className="content-desc">
                   <div className="desc-title">Description</div>
                   <span className="desc">
-                    The Orbitians is a collection of 10,000 unique NFTs on the
+                    {description
+                      ? description
+                      : `The Orbitians is a collection of 10,000 unique NFTs on the
                     Ethereum blockchain,There are all sorts of beings in the NFT
                     Universe. The most advanced and friendly of the bunch are
                     Orbitians. They live in a metal space machines, high up in
@@ -191,7 +258,7 @@ const NftPage = () => {
                     the ground, yet do not know any other way to be.
                     Upside-Downs believe that they will be able to win this war
                     if they could only get an eye into Orbitian territory, so
-                    they've taken to make human beings their target.
+                    they've taken to make human beings their target.`}
                   </span>
                 </div>
 
@@ -210,6 +277,14 @@ const NftPage = () => {
                 <div className="content-tags">
                   <div className="tags-tittle">Tags</div>
                   <ul className="tags-list">
+                    {/* {categories_name &&
+                      categories_name.map((tag, index) => {
+                        return (
+                          <li className="tags-item" key={index}>
+                            animation
+                          </li>
+                        );
+                      })} */}
                     <li className="tags-item">animation</li>
                     <li className="tags-item">illustration</li>
                     <li className="tags-item">moon</li>
@@ -220,8 +295,8 @@ const NftPage = () => {
             </div>
             <div className="content-right">
               <div className="content-top content-top__small-devices">
-                <div className="artist-name">The Orbitians</div>
-                <span className="date-creating">Minted on Sep 30, 2022</span>
+                <div className="artist-name">{nft_name}</div>
+                <span className="date-creating">Minted on {date_create}</span>
               </div>
               <div className="auction-card">
                 <div className="card-content">
@@ -261,23 +336,30 @@ const NftPage = () => {
                       value={inputValue}
                     />
                   </div>
-                  <div className="card-btn">
-                    <button
-                      className="btn"
-                      type="button"
-                      onClick={handleClickPlaceBid}
-                    >
-                      <strong>Place Bid</strong>
-                      <div id="container-stars">
-                        <div id="stars"></div>
-                      </div>
 
-                      <div id="glow">
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                      </div>
-                    </button>
-                  </div>
+                  {hour === 0 && minute === 0 && second === 0 ? (
+                    <div className="bids-end">
+                      <span>The Auction has ended</span>
+                    </div>
+                  ) : (
+                    <div className="card-btn">
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={handleClickPlaceBid}
+                      >
+                        <strong>Place Bid</strong>
+                        <div id="container-stars">
+                          <div id="stars"></div>
+                        </div>
+
+                        <div id="glow">
+                          <div className="circle"></div>
+                          <div className="circle"></div>
+                        </div>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -363,6 +445,8 @@ const NftPageStyled = styled.div`
   }
   .content-created {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
   }
   .create-by-title,
   .desc-title,
@@ -383,7 +467,8 @@ const NftPageStyled = styled.div`
     width: 24px;
     height: 24px;
   }
-  .create-by {
+  .create-by,
+  .price-nft {
     height: 24px;
     font-size: 22px;
     font-weight: 600;
@@ -682,6 +767,16 @@ const NftPageStyled = styled.div`
     opacity: 0.5;
   }
 
+  .bids-end span {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: ${colors.whiteColor};
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+
   @keyframes animStar {
     from {
       transform: translateY(0);
@@ -819,9 +914,13 @@ const NftPageStyled = styled.div`
     .create-by-title,
     .desc-title,
     .detail-title,
-    .tags-tittle .tags-list {
+    .tags-tittle .tags-list,
+    .price-nft {
       font-size: 16px;
       font-weight: 400;
+    }
+    .price-nft {
+      font-weight: 600;
     }
     .create-by {
       font-size: 16px;

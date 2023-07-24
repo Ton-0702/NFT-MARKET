@@ -366,9 +366,10 @@ const Card = ({
       ));
     } else if (img_product.length > 4) {
       for (let index = 0; index < 3; index++) {
-        type2 += `<div class='list_image_item' key='${index}'><img src=${img_product[index]} alt='' /></div>`;
+        type2 += `<div className='list_image_item' key='${index}'><img src=${img_product[index]} alt='' /></div>`;
       }
-      box_img = "<div class='list_image_item box_img'><span>1025+</span></div>";
+      box_img =
+        "<div className='list_image_item box_img'><span>1025+</span></div>";
       type2 += box_img;
     }
     return [

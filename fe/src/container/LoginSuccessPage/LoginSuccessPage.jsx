@@ -1,9 +1,9 @@
-import { PrimaryLayout } from "components/Layout";
-import styled from "styled-components";
-import { colors } from "Global";
+import {PrimaryLayout} from 'components/Layout';
+import styled from 'styled-components';
+import {colors} from 'Global';
 
-import login_success from "../../assets/LoginSuccess/store_roof_lap.png";
-import { Button } from "components/Button";
+import login_success from '../../assets/LoginSuccess/store_roof_lap.png';
+import {Button} from 'components/Button';
 
 const LoginSuccessStyled = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ const LoginSuccessStyled = styled.div`
   }
 
   .progressbar li:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 50%;
     height: 1px;
@@ -73,7 +73,7 @@ const LoginSuccessStyled = styled.div`
 
   .progressbar li.active:before {
     background: rgb(71, 30, 84);
-    content: "✔";
+    content: '✔';
     color: #ffffff;
   }
 
@@ -91,7 +91,7 @@ const LoginSuccessStyled = styled.div`
   }
 
   .container_login_success .login_success p {
-    font-family: "Work Sans";
+    font-family: 'Work Sans';
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -134,10 +134,10 @@ const LoginSuccessPage = () => {
       <LoginSuccessStyled>
         <div className="container_login_success">
           <div className="login_success">
-            <ul class="progressbar">
-              <li class="active">Step 1</li>
-              <li class="active">Step 2</li>
-              <li class="active">Step 3</li>
+            <ul className="progressbar">
+              <li className="active">Step 1</li>
+              <li className="active">Step 2</li>
+              <li className="active">Step 3</li>
             </ul>
             <img src={login_success} alt="" />
             <h2>Login Successsful</h2>
@@ -147,11 +147,11 @@ const LoginSuccessPage = () => {
             </p>
             <a href="/">
               <Button
-                content={"Back to home"}
-                bgColor={"rgb(71, 30, 84)"}
+                content={'Back to home'}
+                bgColor={'rgb(71, 30, 84)'}
                 textColor={colors.whiteColor}
-                borderRadius={"12px"}
-                padding={"10px 20px"}
+                borderRadius={'12px'}
+                padding={'10px 20px'}
               ></Button>
             </a>
           </div>

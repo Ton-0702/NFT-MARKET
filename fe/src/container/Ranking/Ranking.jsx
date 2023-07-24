@@ -4,8 +4,11 @@ import {colors} from '../../Global';
 import {PrimaryLayout} from 'components/Layout';
 import ReactPaginate from 'react-paginate';
 
-// import {data} from './DataRanking';
+import {dataOfThisMonthFake} from './DataRanking';
+import {dataOfThisWeekFake} from './DataRanking';
 import axios from 'axios';
+import {useSettingsStore} from 'store/store';
+console.log('dataOfThisMonth:', dataOfThisMonthFake);
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
@@ -14,15 +17,17 @@ const Ranking = ({title}) => {
   const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
   const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
 
+  const light = useSettingsStore((state) => state.light);
+
   const [totalPage, setTotalPage] = useState();
   const [page, setPage] = useState(1);
 
-  console.log('data: ', {
-    dataTodayTopCreator: dataTodayTopCreator,
-    dataThisWeekTopCreator: dataThisWeekTopCreator,
-    dataThisMonthTopCreator: dataThisMonthTopCreator,
-    dataAlltimeTopCreator: dataAlltimeTopCreator,
-  });
+  // console.log('data: ', {
+  //   dataTodayTopCreator: dataTodayTopCreator,
+  //   dataThisWeekTopCreator: dataThisWeekTopCreator,
+  //   dataThisMonthTopCreator: dataThisMonthTopCreator,
+  //   dataAlltimeTopCreator: dataAlltimeTopCreator,
+  // });
   useEffect(() => {
     function getAllTopCreator() {
       try {
@@ -83,14 +88,14 @@ const Ranking = ({title}) => {
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
-    console.log(event.selected + 1);
+    // console.log(event.selected + 1);
     setPage(newPage);
   };
 
   return (
     <PrimaryLayout>
-      <RankingStyled className="ranking">
-        <div className="ranking-container container">
+      <RankingStyled className="ranking" light={light}>
+        <div className="container ranking-container">
           <div className="ranking-content">
             <div className="ranking-title">
               <h2>{title || 'Top Creators'}</h2>
@@ -182,7 +187,7 @@ const Ranking = ({title}) => {
                               <Fragment key={index}>
                                 <DataTableRanking
                                   index={index + 1}
-                                  src={item.img}
+                                  src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
@@ -191,6 +196,44 @@ const Ranking = ({title}) => {
                               </Fragment>
                             );
                           })}
+                        {/* This Week */}
+                        {selectedClass === '7day' &&
+                          dataOfThisWeekFake &&
+                          dataOfThisWeekFake.length > 0 &&
+                          dataOfThisWeekFake.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <DataTableRanking
+                                  index={index + 1}
+                                  src={item.avatar}
+                                  username={item.username}
+                                  change={item.change}
+                                  sold={item.nfts_sold}
+                                  volume={item.volume}
+                                ></DataTableRanking>
+                              </Fragment>
+                            );
+                          })}
+                        {/* This Month */}
+                        {selectedClass === '30day' &&
+                          dataOfThisMonthFake &&
+                          dataOfThisMonthFake.length > 0 &&
+                          dataOfThisMonthFake
+                            .slice(10, 20)
+                            .map((item, index) => {
+                              return (
+                                <Fragment key={index}>
+                                  <DataTableRanking
+                                    index={index + 1}
+                                    src={item.avatar}
+                                    username={item.username}
+                                    change={item.change}
+                                    sold={item.nfts_sold}
+                                    volume={item.volume}
+                                  ></DataTableRanking>
+                                </Fragment>
+                              );
+                            })}
 
                         {/* Alltime */}
                         {selectedClass === 'alltime' &&
@@ -201,7 +244,7 @@ const Ranking = ({title}) => {
                               <Fragment key={index}>
                                 <DataTableRanking
                                   index={index + 1}
-                                  src={item.img}
+                                  src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
@@ -212,6 +255,8 @@ const Ranking = ({title}) => {
                           })}
                       </tbody>
                     </table>
+
+                    {/* checking no data --> show 'There are no auctions'  */}
                     {/* today */}
                     {selectedClass === 'today' &&
                       dataTodayTopCreator &&
@@ -222,16 +267,16 @@ const Ranking = ({title}) => {
                       )}
                     {/* this week */}
                     {selectedClass === '7day' &&
-                      dataThisWeekTopCreator &&
-                      dataThisWeekTopCreator.length === 0 && (
+                      dataOfThisWeekFake &&
+                      dataOfThisWeekFake.length === 0 && (
                         <div className="no-auction">
                           There are no auctions going on this week
                         </div>
                       )}
                     {/* this month */}
                     {selectedClass === '30day' &&
-                      dataThisMonthTopCreator &&
-                      dataThisMonthTopCreator.length === 0 && (
+                      dataOfThisMonthFake &&
+                      dataOfThisMonthFake.length === 0 && (
                         <div className="no-auction">
                           There are no auctions going on this month
                         </div>
@@ -274,7 +319,10 @@ const Ranking = ({title}) => {
 export default Ranking;
 
 const RankingStyled = styled.div`
-  background-color: ${colors.background};
+  /* background-color: ${colors.background}; */
+  padding-bottom: 10px;
+  background-color: ${(prop) =>
+    prop.light ? colors.whiteColor : colors.background};
   .ranking-content {
     margin-bottom: 20px;
   }
@@ -285,7 +333,9 @@ const RankingStyled = styled.div`
     font-size: 51px;
     font-weight: 600;
     /* line-height: 56.1px; */
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.primaryColor : colors.whiteColor)};
+
     /* margin: 0;
     padding: 0; */
     cursor: default;
@@ -330,12 +380,15 @@ const RankingStyled = styled.div`
     height: 2px;
     left: 0;
     bottom: 0;
-    background-color: ${colors.borderColor};
+    /* background-color: ${colors.borderColor}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.primaryColor : colors.borderColor};
     transform: scaleX(0); /* Initially hide the line */
     transition: transform 0.3s ease-in-out;
   }
   .active {
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.primaryColor : colors.borderColor)};
   }
   .active::after {
     transform: scaleX(1);
@@ -362,9 +415,12 @@ const RankingStyled = styled.div`
     line-height: 30px;
   }
   .table-header-item {
-    border: 1px solid ${colors.borderColor};
+    /* border: 1px solid ${colors.borderColor}; */
+    border: 1px solid
+      ${(prop) => (prop.light ? colors.primaryColor : colors.borderColor)};
     border-style: solid none;
-    color: ${colors.borderColor};
+    /* color: ${colors.borderColor}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.borderColor)};
     font-weight: 400;
     text-align: left;
   }
@@ -403,9 +459,13 @@ const RankingStyled = styled.div`
   // Table body
   .table-row-body {
     height: 84px;
-    background-color: ${colors.backgroundColor2};
+    /* background-color: ${colors.backgroundColor2}; */
+    /* background-color: ${colors.whiteColor}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.backgroundColor3 : colors.backgroundColor2};
     border-radius: 20px;
   }
+
   .table-body-data {
     font-weight: 400;
     text-align: left;
@@ -427,9 +487,12 @@ const RankingStyled = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: ${colors.background};
+    /* background-color: ${colors.background}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.backgroundColor3 : colors.background};
     font-weight: 500;
-    color: ${colors.borderColor};
+    /* color: ${colors.borderColor}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.borderColor)};
     text-align: center;
     line-height: 30px;
   }
@@ -450,22 +513,27 @@ const RankingStyled = styled.div`
     font-size: 22px;
     font-weight: 600;
     line-height: 30.8px;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.background : colors.whiteColor)};
     margin-left: 20px;
   }
   .body-data-change {
-    font-weight: 400;
+    font-weight: ${(prop) => (prop.light ? '600' : '400')};
     line-height: 22.4px;
     color: ${colors.greenColor};
+    /* color: ${(prop) =>
+      prop.light ? colors.blackColor : colors.greenColor}; */
   }
   .body-data-sold,
   .body-data-volume {
     font-weight: 400;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.background : colors.whiteColor)};
   }
 
   .no-auction {
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.borderColor : colors.whiteColor)};
     font-weight: 600;
     font-size: 30px;
     text-align: center;
@@ -478,7 +546,8 @@ const RankingStyled = styled.div`
 
   .topCreator-pagination ul {
     list-style: none;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.whiteColor)};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -493,7 +562,10 @@ const RankingStyled = styled.div`
   }
 
   .selected {
-    background-color: ${colors.backgroundColor2};
+    /* background-color: ${colors.backgroundColor2}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.primaryColor : colors.backgroundColor2};
+
     width: 10px;
     cursor: progress;
   }
