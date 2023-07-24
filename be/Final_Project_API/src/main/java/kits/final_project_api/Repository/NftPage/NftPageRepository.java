@@ -43,4 +43,12 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
             "GROUP BY nft_id;", nativeQuery = true)
     List<Map<String, Object>> getTransactionInfo();
 
+
+    @Query(value = "select count(*) as totalNFT\n" +
+            "from nft",nativeQuery = true)
+    String getTotalNFT();
+
+    @Query(value = "select count(*) as totalCollection\n" +
+            "from collection",nativeQuery = true)
+    String getTotalCollection();
 }
