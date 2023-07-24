@@ -2,12 +2,14 @@ package kits.final_project_api.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "collection")
 public class Collection {
     @Id
@@ -20,5 +22,5 @@ public class Collection {
 
     @JsonIgnore
     @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
-    private List<NFTOwned> nftOwens;
+    private List<NFTOwened> nftOwens;
 }

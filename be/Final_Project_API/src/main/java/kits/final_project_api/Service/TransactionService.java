@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.hibernate.mapping.Map;
 
-import kits.final_project_api.Model.PlaceBidDTO.PlaceBidDTO;
-
 public interface TransactionService {
     List<?> getHistoryByIdNFT(Long nft_id);
+    List<?> getHistoryTransactionHighestBid(Long nft_id);
+    void createBid(Long nft_id, Long account_id, Double highest_bid);
+    void completeTransaction(Long nft_id);
 }

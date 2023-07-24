@@ -14,10 +14,9 @@ import java.util.List;
 @Table(name = "account")
 @NoArgsConstructor
 @AllArgsConstructor
-// @Data // lombok giúp generate các hàm constructor, get, set v.v.
+//@Data // lombok giúp generate các hàm constructor, get, set v.v.
 @Getter
 @Setter
-@ToString(includeFieldNames = true)
 public class Account implements Serializable {
     @Id
     @Column(name = "account_id")
@@ -42,47 +41,36 @@ public class Account implements Serializable {
     @Column(name = "token", columnDefinition = "TEXTvarchar(200) default NULL unique")
     private String token;
 
-    // @Column(name = "password", columnDefinition = "varchar(100) not null")
-    // private String password;
+    @Column(name = "price", columnDefinition = "DOUBLE DEFAULT 0")
+    private Double price;
 
     @Column(name = "biography", columnDefinition = "TEXT DEFAULT NULL")
     private String biography;
 
-    @Column(name = "asset", columnDefinition = "not null")
-    private Double asset;
-
-    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<NFT> ntfs;
 
-    // public Account less() {
-    // return new Account(this.accountId, this.username, this.email, this.password,
-    // this.biography);
-    // }
+//    public Account less() {
+//        return new Account(this.accountId, this.username, this.email, this.password, this.biography);
+//    }
 
-    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Followers> account_have_fl;
 
-    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account_follower", cascade = CascadeType.ALL)
     private List<Followers> followers;
 
-    @ToString.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // MappedBy trỏ tới tên biến
-                                                                                        // product ở trong ProductOwend.
-    private List<NFTOwned> nftOwens;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // MappedBy trỏ tới tên biến product ở trong ProductOwend.
+    private List<NFTOwened> nftOwens;
 
-    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
-    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<NFTLike> nftLikes;

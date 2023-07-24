@@ -27,7 +27,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "SELECT * FROM account AS a WHERE a.address_wallet = :wallet ", nativeQuery = true)
     Account findByAddressWallet(String wallet);
 
-
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE account AS a SET a.price = :price WHERE a.account_id = :account_id", nativeQuery = true)
+    void updateAssetById(Long account_id, Double price);
 //    List<Account> findByUsernameAndAccountId(String userName);
 //    List<Followers> findByFollowers();
 }

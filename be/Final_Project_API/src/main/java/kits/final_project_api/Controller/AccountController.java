@@ -6,11 +6,14 @@ import kits.final_project_api.Entity.Account;
 import kits.final_project_api.Model.TopCreatorDTO;
 import kits.final_project_api.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
@@ -59,5 +62,11 @@ public class AccountController {
 //        System.out.println("dateTime: "+dateTime);
 //        return accountService.getTopCreatorToday(date_current_format);
 //    }
+
+    @PostMapping("/update-asset")
+    public ResponseEntity updateAssetById( @RequestParam("account_id") Long account_id, @RequestParam("price") Double price){
+        accountService.updateAssetById(account_id, price);
+        return ResponseEntity.ok("Request completed");
+    }
 }
 

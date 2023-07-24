@@ -20,7 +20,7 @@ public class Transaction {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = NFT.class, fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "nft_id", insertable = false, updatable = false) // Thông qua khóa ngoại product_id
     private NFT nft;
 
@@ -28,7 +28,7 @@ public class Transaction {
     private Long nft_id;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = Account.class, fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
 

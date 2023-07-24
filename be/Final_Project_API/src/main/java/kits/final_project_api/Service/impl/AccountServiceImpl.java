@@ -65,4 +65,9 @@ public class AccountServiceImpl implements AccountService {
 
         return accountRepository.findByEmail(email);
     }
+
+    @Override 
+    public void updateAssetById(Long account_id, Double price){
+        accountRepository.updateAssetById(account_id, price);
+    }
 }

@@ -27,7 +27,7 @@ public interface NftRepository extends JpaRepository<NFT, Long> {
     // date_create, date_start_bid, date_end_bid, account_id) " +
     // "values (:nft_name, :image, :price, :description, :date_create,
     // :date_start_bid, :date_end_bid, :account_id)", nativeQuery = true)
-    //
+    
     // void createNft(@Param("nft_name") String nft_name
     // , @Param("image") String image, @Param("price") Double price,
     // @Param("description") String description,

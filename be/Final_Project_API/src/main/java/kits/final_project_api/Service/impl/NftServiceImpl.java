@@ -31,10 +31,10 @@ public class NftServiceImpl implements NftService {
         return nftRepository.saveAndFlush(entity);
     }
 
-    @Override
-    public void updateNFTOwner(Long nft_id, Long account_id){
-        nftRepository.updateNFTOwner(nft_id, account_id);
-    }
+    // @Override
+    // public void updateNFTOwner(Long nft_id, Long account_id){
+    //     nftRepository.updateNFTOwner(nft_id, account_id);
+    // }
 
     @Override
     public List<Map<String, Object>> GetAll() {
@@ -60,7 +60,7 @@ public class NftServiceImpl implements NftService {
         nftRepository.save(createNFT);
     }
 
-    public void CreateNft() {
-    }
+    // public void CreateNft() {
+    // }
 
 }
