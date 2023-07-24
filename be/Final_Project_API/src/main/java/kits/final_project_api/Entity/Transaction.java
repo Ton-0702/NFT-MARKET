@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-//@Data
+// @Data
 @Getter
 @Setter
 @Table(name = "transaction_bid")
@@ -21,18 +21,24 @@ public class Transaction {
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "nft_id") // Thông qua khóa ngoại product_id
+    @JoinColumn(name = "nft_id", insertable = false, updatable = false) // Thông qua khóa ngoại product_id
     private NFT nft;
+
+    @Column(name = "nft_id")
+    private Long nft_id;
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
+
+    @Column(name = "account_id")
+    private Long account_id;
 
     @Column(name = "highest_bid", columnDefinition = "DOUBLE DEFAULT 0")
     private Double highest_bid;
 
     @Column(name = "date_transaction", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
-//    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     private String date_transaction;
 }
