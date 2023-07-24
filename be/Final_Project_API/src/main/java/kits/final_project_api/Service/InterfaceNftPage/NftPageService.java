@@ -22,4 +22,7 @@ public interface NftPageService {
     List<Map<String, Object>> getTransactionInfo();
 
     List<Map<String, Object>> getAllNftInfo();
+
+    List<Map<String, Object>> getTotalNftAndCollection();
+
 }

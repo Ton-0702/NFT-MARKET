@@ -200,4 +200,11 @@ public class NftController {
         return showAllNft;
     }
 
+    @GetMapping("/nft-collection-total")
+    @ResponseBody
+    public List<Map<String, Object>> totalNftAndCollection() {
+        List<Map<String, Object>> totalNftAndCollection = nftPageServiceImpl.getTotalNftAndCollection();
+        return totalNftAndCollection;
+    }
+
 }

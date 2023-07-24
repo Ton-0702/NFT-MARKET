@@ -155,4 +155,16 @@ public class NftPageServiceImpl implements NftPageService {
         return result;
     }
 
+    @Override
+    public List<Map<String, Object>> getTotalNftAndCollection() {
+        String totalNFT = nftPageRepository.getTotalNFT();
+        String totalCollection = nftPageRepository.getTotalCollection();
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("total_nft", totalNFT);
+        newMap.put("total_collection", totalCollection);
+        result.add(newMap);
+        System.out.println(result);
+        return result;
+    }
 }
