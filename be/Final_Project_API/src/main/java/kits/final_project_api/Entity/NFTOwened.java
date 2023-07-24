@@ -10,21 +10,30 @@ import lombok.Setter;
 @Setter
 @Table(name = "nft_owned")
 public class NFTOwened {
-//    @Id
-//    @Column(name = "nft_owned_id")
-//    private Long id;
     @Id
-    @OneToOne
-    @JoinColumn(name = "nft_id")
-    private NFT nft_owned_id;
+    @Column(name = "nft_owned_id")
+    private Long id;
 
     @JsonIgnore
-    @ManyToOne()
-    @JoinColumn(name = "account_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "nft_owned_id", referencedColumnName = "nft_id")
+    private NFT nft;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
 
     @JsonIgnore
-    @ManyToOne()
-    @JoinColumn(name = "collection_id")
+    @Column(name = "account_id")
+    private Long account_id;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "collection_id", insertable = false, updatable = false)
     private Collection collection;
+
+    @JsonIgnore
+    @Column(name = "collection_id")
+    private Long collection_id;
 }

@@ -23,8 +23,8 @@ public class RegisterConnectWallet {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
 //    @CrossOrigin(origins = "http://localhost:3000")

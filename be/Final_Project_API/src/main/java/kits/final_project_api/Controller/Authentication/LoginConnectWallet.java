@@ -22,9 +22,7 @@ public class LoginConnectWallet {
 
     @Autowired
     private AccountService accountService;
-
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
 
     @PostMapping("/{address_wallet}")
     public ResponseEntity<RegisterResponseDto> login(@Valid @PathVariable String address_wallet,

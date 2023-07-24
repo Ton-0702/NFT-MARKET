@@ -375,7 +375,7 @@ export const ConnectWalletPage = () => {
                     content="Wallet Connect"
                     textColor="white"
                     fontSize="22px"
-                    fontWeight="600"
+                    fontWeight="600"   
                   ></Button>
                   <Button
                     borderRadius="20px"

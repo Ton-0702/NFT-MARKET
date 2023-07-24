@@ -23,13 +23,6 @@ public class UserControllerAuthentication {
         String rawCookie = token;
 
         if(rawCookie != null) {
-//            String[] rawCookieParams = rawCookie.split(";");
-//            Map<String, String> hd = new HashMap<>();
-//            for (String rawCookieNameAndValue : rawCookieParams) {
-//                String[] rawCookieNameAndValuePair = rawCookieNameAndValue.split("=");
-//                hd.put(rawCookieNameAndValuePair[0], rawCookieNameAndValuePair[1]);
-//            }
-//            System.out.println("TOKEN: " + hd.get("token"));
             Account user = accountService.findByToken(rawCookie);
             System.out.println("USERRR: " + user);
             List<Map<String, Object>> result = new ArrayList<>();

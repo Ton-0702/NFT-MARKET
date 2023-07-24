@@ -10,7 +10,7 @@ import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
 
 const Header = () => {
-  const [tokenUser, setToken] = useState(null);
+  const [tokenUser, setToken] = useState(null);   
 
   const token = Cookies.get("token");
   console.log("hello token: ", token);

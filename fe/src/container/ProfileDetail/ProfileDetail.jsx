@@ -38,7 +38,7 @@ const ProfileDetailStyled = styled.div`
     display: flex;
   }
 
-  .progressbar li {
+  .progressbar li {   
     position: relative;
     list-style: none;
     width: 33.33%;
