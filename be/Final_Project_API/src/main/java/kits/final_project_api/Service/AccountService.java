@@ -22,5 +22,5 @@ public interface AccountService {
 
     Account findByEmail(String email);
 
-    Account updateAssetById(Long account_id, Double price);
+    void updateAssetById(Long account_id, Double price);
 }

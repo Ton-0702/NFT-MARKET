@@ -67,21 +67,23 @@ public class TransactionServiceImpl implements TransactionService {
             List<Map<String, Object>> listHistory = getHistoryTransactionHighestBid(nft_id);
             Object account_id_obj = listHistory.get(0).get("account_id");
             Integer account_id_int = (Integer) account_id_obj;
-            Long account_id = account_id_int.longValue();
+            Long account_id = account_id_int.longValue(); //lấy account_id của người thắng bid
             NFT info_nft = nftService.getReferenceById(nft_id);
             System.out.println("+++++++++++++++ Info NFT: " + info_nft.getAccount_id() + account_id);
-            Long account_nft_id = info_nft.getNft_id().longValue();
-            nftOwenedService.CreateNftOwned(account_nft_id, account_id, null);
+            Long account_nft_id = info_nft.getAccount_id().longValue(); // lấy account_id của người sở hữu NFT
             Double price_nft = info_nft.getPrice();
             Object highest_bid_obj = listHistory.get(0).get("highest_bid");
-            Double highest_bid = (Double) highest_bid_obj;
+            Double highest_bid = (Double) highest_bid_obj; //Lấy số tiền bid thắng của người thắng bid
+            System.out.println("++++++++++ Highest bid: " + highest_bid);
             if(highest_bid > price_nft){
                 Account account_nft = accountService.getReferenceById(account_nft_id);
-                Double assetSeller = (Double) account_nft.getPrice();
+                Double assetSeller = (Double) account_nft.getPrice(); //Lấy tài sản đang có của người sở hữu NFT
                 Account account_bid_win = accountService.getReferenceById(account_id);
-                Double assetBuyer = (Double) account_bid_win.getPrice();
-                accountService.updateAssetById(account_nft_id ,assetSeller + highest_bid);
-                accountService.updateAssetById(account_id, assetBuyer - highest_bid);
+                Double assetBuyer = (Double) account_bid_win.getPrice(); //Lấy tài sản đang có của người thắng bid
+                System.out.println("++++++++++++++++ assetSeller: " + assetSeller + "++++++++++++++ assetBuyer: " + assetBuyer);
+                nftOwenedService.CreateNftOwned(account_nft_id, account_id, null); //Tạo NFT Owned
+                accountService.updateAssetById(account_nft_id ,assetSeller + highest_bid); //cập nhật tài sản hiện tại của người sở hữu NFT
+                accountService.updateAssetById(account_id, assetBuyer - highest_bid); //cập nhật tài sản hiện tại của người thắng bid
             }
         } catch (Exception e) {
             System.out.println("++++++++++++++++++++++++Error: " + e);
