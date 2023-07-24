@@ -21,4 +21,6 @@ public interface AccountService {
     Account findByAddressWallet(String wallet);
 
     Account findByEmail(String email);
+
+    Account updateAssetById(Long account_id, Double price);
 }
