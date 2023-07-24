@@ -4,34 +4,47 @@ import jakarta.servlet.http.HttpServletRequest;
 import kits.final_project_api.Entity.Account;
 import kits.final_project_api.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
+@RequestMapping("api")
 public class UserControllerAuthentication {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/session-address-wallet")
-    public Account sessionUser(HttpServletRequest request){
-        String rawCookie = request.getHeader("Cookie");
+    @GetMapping("/session-address-wallet/{token}")
+    public List<Map<String, Object>> sessionUser(HttpServletRequest request, @PathVariable String token){
+        String rawCookie = token;
+
         if(rawCookie != null) {
-            String[] rawCookieParams = rawCookie.split(";");
-            Map<String, String> hd = new HashMap<>();
-            for (String rawCookieNameAndValue : rawCookieParams) {
-                String[] rawCookieNameAndValuePair = rawCookieNameAndValue.split("=");
-                hd.put(rawCookieNameAndValuePair[0], rawCookieNameAndValuePair[1]);
-            }
-            System.out.println("TOKEN: " + hd.get("token"));
-            Account user = accountService.findByToken(hd.get("token"));
+            Account user = accountService.findByToken(rawCookie);
             System.out.println("USERRR: " + user);
+            List<Map<String, Object>> result = new ArrayList<>();
+            Map<String, Object> newMap = new HashMap<>();
             if (user != null) {
-                return user;
+
+                newMap.put("account_id", user.getAccountId());
+                newMap.put("address_wallet", user.getAddress_wallet());
+                newMap.put("username", user.getUsername());
+                newMap.put("email", user.getEmail());
+                newMap.put("avatar", user.getAvatar());
+                newMap.put("background", user.getBackground());
+                newMap.put("biography", user.getBiography());
+                result.add(newMap);
+                return result;
             }
         }
         return  null;
     }
+
+//    @GetMapping("/session/address-wallet/Ơ")
+//    public String getAddressWallet(){
+//        String address_wallet = accountService.findByAddressWallet()
+//    }
 }

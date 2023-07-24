@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {SignUpButton} from '../Button/SignUpButton';
-
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import {ReactComponent as MarketIcon} from '../../assets/header-imgs/market.svg';
 import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
@@ -13,6 +15,38 @@ import {useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
 
 const Header = () => {
+  const [tokenUser, setToken] = useState(null);   
+
+  const token = Cookies.get("token");
+  console.log("hello token: ", token);
+  useEffect(() => {
+    function getUser() {
+      try {
+        function getTokenByUser(){
+          return axios.get('http://localhost:8080/api/session-address-wallet/'+token);
+        }
+        Promise.all([
+          getTokenByUser(),
+        ]).then((res) => {
+          console.log("what is res: ",res);
+          const tokenUserData = res[0].data;
+          setToken(tokenUserData);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
+  // console.log("tokenUser: ",tokenUser[0].address_wallet);
+  let address_wallet = "";
+  if(tokenUser === '' || tokenUser === null){
+    address_wallet = "";
+  }else{
+    address_wallet = tokenUser[0].address_wallet.substring(0,3) + '...' + tokenUser[0].address_wallet.substring((tokenUser[0].address_wallet).length -3);
+  }
+  
+
   const {toggleDarkMode} = useSettingsStore();
   const light = useSettingsStore((state) => state.light);
 
@@ -49,6 +83,7 @@ const Header = () => {
   };
 
   const navigate = useNavigate();
+
   return (
     <HeaderStyled>
       <header className="header">
@@ -73,10 +108,14 @@ const Header = () => {
                   <span>Rankings</span>
                 </a>
               </div>
+
+              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
+
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
               <SignUpButton width={'200px'}></SignUpButton>
+
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">

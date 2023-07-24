@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "SELECT * FROM account AS a WHERE a.username = :username LIMIT 1", nativeQuery = true)
@@ -23,6 +26,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT * FROM account AS a WHERE a.token = :token ", nativeQuery = true)
     Account findByToken(@Param("token") String token);
+
+    @Query(value = "SELECT * FROM account AS a WHERE a.token = :token ", nativeQuery = true)
+    List<Map<String, Object>> findByTokenList(@Param("token") String token);
 
     @Query(value = "SELECT * FROM account AS a WHERE a.address_wallet = :wallet ", nativeQuery = true)
     Account findByAddressWallet(String wallet);
