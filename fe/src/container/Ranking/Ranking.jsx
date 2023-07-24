@@ -4,9 +4,11 @@ import {colors} from '../../Global';
 import {PrimaryLayout} from 'components/Layout';
 import ReactPaginate from 'react-paginate';
 
-// import {data} from './DataRanking';
+import {dataOfThisMonthFake} from './DataRanking';
+import {dataOfThisWeekFake} from './DataRanking';
 import axios from 'axios';
 import {useSettingsStore} from 'store/store';
+console.log('dataOfThisMonth:', dataOfThisMonthFake);
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
@@ -20,12 +22,12 @@ const Ranking = ({title}) => {
   const [totalPage, setTotalPage] = useState();
   const [page, setPage] = useState(1);
 
-  console.log('data: ', {
-    dataTodayTopCreator: dataTodayTopCreator,
-    dataThisWeekTopCreator: dataThisWeekTopCreator,
-    dataThisMonthTopCreator: dataThisMonthTopCreator,
-    dataAlltimeTopCreator: dataAlltimeTopCreator,
-  });
+  // console.log('data: ', {
+  //   dataTodayTopCreator: dataTodayTopCreator,
+  //   dataThisWeekTopCreator: dataThisWeekTopCreator,
+  //   dataThisMonthTopCreator: dataThisMonthTopCreator,
+  //   dataAlltimeTopCreator: dataAlltimeTopCreator,
+  // });
   useEffect(() => {
     function getAllTopCreator() {
       try {
@@ -86,7 +88,7 @@ const Ranking = ({title}) => {
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
-    console.log(event.selected + 1);
+    // console.log(event.selected + 1);
     setPage(newPage);
   };
 
@@ -185,7 +187,7 @@ const Ranking = ({title}) => {
                               <Fragment key={index}>
                                 <DataTableRanking
                                   index={index + 1}
-                                  src={item.img}
+                                  src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
@@ -194,6 +196,44 @@ const Ranking = ({title}) => {
                               </Fragment>
                             );
                           })}
+                        {/* This Week */}
+                        {selectedClass === '7day' &&
+                          dataOfThisWeekFake &&
+                          dataOfThisWeekFake.length > 0 &&
+                          dataOfThisWeekFake.map((item, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <DataTableRanking
+                                  index={index + 1}
+                                  src={item.avatar}
+                                  username={item.username}
+                                  change={item.change}
+                                  sold={item.nfts_sold}
+                                  volume={item.volume}
+                                ></DataTableRanking>
+                              </Fragment>
+                            );
+                          })}
+                        {/* This Month */}
+                        {selectedClass === '30day' &&
+                          dataOfThisMonthFake &&
+                          dataOfThisMonthFake.length > 0 &&
+                          dataOfThisMonthFake
+                            .slice(10, 20)
+                            .map((item, index) => {
+                              return (
+                                <Fragment key={index}>
+                                  <DataTableRanking
+                                    index={index + 1}
+                                    src={item.avatar}
+                                    username={item.username}
+                                    change={item.change}
+                                    sold={item.nfts_sold}
+                                    volume={item.volume}
+                                  ></DataTableRanking>
+                                </Fragment>
+                              );
+                            })}
 
                         {/* Alltime */}
                         {selectedClass === 'alltime' &&
@@ -204,7 +244,7 @@ const Ranking = ({title}) => {
                               <Fragment key={index}>
                                 <DataTableRanking
                                   index={index + 1}
-                                  src={item.img}
+                                  src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
@@ -215,6 +255,8 @@ const Ranking = ({title}) => {
                           })}
                       </tbody>
                     </table>
+
+                    {/* checking no data --> show 'There are no auctions'  */}
                     {/* today */}
                     {selectedClass === 'today' &&
                       dataTodayTopCreator &&
@@ -225,16 +267,16 @@ const Ranking = ({title}) => {
                       )}
                     {/* this week */}
                     {selectedClass === '7day' &&
-                      dataThisWeekTopCreator &&
-                      dataThisWeekTopCreator.length === 0 && (
+                      dataOfThisWeekFake &&
+                      dataOfThisWeekFake.length === 0 && (
                         <div className="no-auction">
                           There are no auctions going on this week
                         </div>
                       )}
                     {/* this month */}
                     {selectedClass === '30day' &&
-                      dataThisMonthTopCreator &&
-                      dataThisMonthTopCreator.length === 0 && (
+                      dataOfThisMonthFake &&
+                      dataOfThisMonthFake.length === 0 && (
                         <div className="no-auction">
                           There are no auctions going on this month
                         </div>
@@ -445,7 +487,9 @@ const RankingStyled = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: ${colors.background};
+    /* background-color: ${colors.background}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.backgroundColor3 : colors.background};
     font-weight: 500;
     /* color: ${colors.borderColor}; */
     color: ${(prop) => (prop.light ? colors.blackColor : colors.borderColor)};

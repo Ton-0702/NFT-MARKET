@@ -5,7 +5,6 @@ import {useSettingsStore} from 'store/store';
 
 const PrimaryLayout = ({children}) => {
   const light = useSettingsStore((state) => state.light);
-  console.log(light);
   return (
     <div>
       <Header></Header>
