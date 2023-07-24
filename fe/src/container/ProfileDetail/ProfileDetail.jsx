@@ -9,6 +9,7 @@ import {useNavigate} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import profile_image from "../../assets/profile_detail/profile_image.png";
 
+
 const ProfileDetailStyled = styled.div`
   display: flex;
   align-items: center;
@@ -65,7 +66,7 @@ const ProfileDetailStyled = styled.div`
   }
 
   .progressbar li:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 50%;
     height: 1px;
@@ -80,7 +81,7 @@ const ProfileDetailStyled = styled.div`
 
   .progressbar li.active:before {
     background: rgb(71, 30, 84);
-    content: "✔";
+    content: '✔';
     color: #ffffff;
   }
 
@@ -232,7 +233,7 @@ const ProfileDetailStyled = styled.div`
     form
     .profile_detail_form_item
     .profile_image_input
-    input[type="file"] {
+    input[type='file'] {
     display: none;
   }
 
@@ -268,7 +269,7 @@ const ProfileDetailStyled = styled.div`
     form
     .profile_detail_form_item
     .profile_background_image_input
-    input[type="file"] {
+    input[type='file'] {
     display: none;
   }
 
@@ -376,9 +377,9 @@ const ProfileDetail = () => {
       <ProfileDetailStyled>
         <div className="container_profile_detail">
           <div className="profile_detail">
-            <ul class="progressbar">
-              <li class="active">Step 1</li>
-              <li class="active">Step 2</li>
+            <ul className="progressbar">
+              <li className="active">Step 1</li>
+              <li className="active">Step 2</li>
               <li>Step 3</li>
             </ul>
             <h2>Profile Details</h2>
@@ -436,33 +437,33 @@ const ProfileDetail = () => {
                     </p>
                     <div className="social_connect">
                       <div className="social_connect_left">
-                        <i class="fa-brands fa-twitter"></i>
+                        <i className="fa-brands fa-twitter"></i>
                         <span>Twitter</span>
                       </div>
                       <div className="social_connect_right">
                         <Button
-                          content={"Connect"}
-                          bgColor={"rgb(71, 30, 84)"}
-                          borderRadius={"12px"}
+                          content={'Connect'}
+                          bgColor={'rgb(71, 30, 84)'}
+                          borderRadius={'12px'}
                           textColor={colors.whiteColor}
-                          padding={"11px 24px"}
-                          fontWeight={"600"}
+                          padding={'11px 24px'}
+                          fontWeight={'600'}
                         ></Button>
                       </div>
                     </div>
                     <div className="social_connect">
                       <div className="social_connect_left">
-                        <i class="fa-brands fa-instagram"></i>
+                        <i className="fa-brands fa-instagram"></i>
                         <span>Instagram</span>
                       </div>
                       <div className="social_connect_right">
                         <Button
-                          content={"Connect"}
-                          bgColor={"rgb(71, 30, 84)"}
-                          borderRadius={"12px"}
+                          content={'Connect'}
+                          bgColor={'rgb(71, 30, 84)'}
+                          borderRadius={'12px'}
                           textColor={colors.whiteColor}
-                          padding={"11px 24px"}
-                          fontWeight={"600"}
+                          padding={'11px 24px'}
+                          fontWeight={'600'}
                         ></Button>
                       </div>
                     </div>
@@ -470,7 +471,7 @@ const ProfileDetail = () => {
                   <div className="profile_detail_form_item">
                     <label htmlFor="link">Link</label>
                     <div className="link_input">
-                      <i class="fa-solid fa-earth-americas"></i>
+                      <i className="fa-solid fa-earth-americas"></i>
                       <input
                         type="url"
                         name="link"
@@ -515,9 +516,10 @@ const ProfileDetail = () => {
                       ></input>
                     </label>
                     <Button
-                      content={"Save"}
-                      bgColor={"rgb(71, 30, 84)"}
+                      content={'Save'}
+                      bgColor={'rgb(71, 30, 84)'}
                       textColor={colors.whiteColor}
+
                       padding={"10px 0px"}
                       jutifyContent={"center"}
                       borderRadius={"12px"}

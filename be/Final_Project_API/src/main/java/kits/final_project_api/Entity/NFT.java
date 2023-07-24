@@ -18,7 +18,7 @@ public class NFT {
     @Id
     @Column(name = "nft_id")// tao primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long nft_id;
 
     @Column(name = "nft_name", columnDefinition = "TEXT")
     private String nft_name;
@@ -41,19 +41,6 @@ public class NFT {
     @Column(name = "date_end_bid", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP()")
     private String date_end_bid;
 
-    @Override
-    public String toString() {
-        return "NFT{" +
-                "nft_id='" + id + '\'' +
-                ", nftName=" + nft_name +
-                ", image='" + image + '\'' +
-                ", description='" + description + '\'' +
-                ", date_create='" + date_create + '\'' +
-                ", date_start_bid='" + date_start_bid + '\'' +
-                ", date_end_bid='" + date_end_bid + '\'' +
-                '}';
-    }
-
 //    @Column(name = "account_id", columnDefinition = "INT")
 //    private Integer account_id;
 
@@ -65,12 +52,17 @@ public class NFT {
 //    @OneToOne
 //    @PrimaryKeyJoinColumn
 //    private NFTOwened nftOwened;
-    @Getter
-    @Setter
+    @JsonIgnore
+    @OneToOne(mappedBy = "nft")
+    private NFTOwened nft_Owened;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", insertable = false, updatable = false)
     private Account account;
+
+    @Column(name = "account_id")
+    private Long account_id;
 
     @JsonIgnore
     @OneToMany(mappedBy = "nft", cascade = CascadeType.ALL)

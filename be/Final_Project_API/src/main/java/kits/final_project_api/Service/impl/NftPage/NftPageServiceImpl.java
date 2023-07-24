@@ -1,6 +1,7 @@
 package kits.final_project_api.Service.impl.NftPage;
 
 import kits.final_project_api.Repository.NftPage.NftPageRepository;
+import kits.final_project_api.Service.AccountService;
 import kits.final_project_api.Service.InterfaceNftPage.NftPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,27 +39,15 @@ public class NftPageServiceImpl implements NftPageService {
         return nftPageRepository.getDateCreate(id);
     }
 
-    @Override
-    public List<Map<String, Object>> getNftInfoByName(String name) {
-        List<Map<String, Object>> nftInfo = nftPageRepository.getNftInfoByName(name);
-        List<Map<String, Object>> result = new ArrayList<>();
-        // Map<String, Object> newMap = new HashMap<>();
-        System.out.println("nftInfo " + nftInfo);
-        // newMap.put("nft_id", nftInfo.get(Integer.parseInt("nft_id")));
-        // newMap.put("nft_name", nftInfo.get("nft_name"));
-        for (Map<String, Object> map1 : nftInfo) {
-            Map<String, Object> newMap = new HashMap<>();
-            newMap.put("nft_name", map1.get("nft_name"));
-            result.add(newMap);
-        }
 
-        // result.add(newMap);
-        return result;
+    @Override
+    public List<Map<String, Object>> getTransactionInfo() {
+        return nftPageRepository.getTransactionInfo();
     }
 
     @Override
-    public List<Map<String, Object>> getTransaction_Info(Integer id) {
-        return null;
+    public List<Map<String, Object>> getNftAndAccountInfo() {
+        return nftPageRepository.getNftAndAccountInfo();
     }
 
     @Override
@@ -99,9 +88,83 @@ public class NftPageServiceImpl implements NftPageService {
         return result;
     }
 
-    // @Override
-    // public List<Map<String, Object>> getAccountAndNft_Info(Integer id){
-    // return null
-    // }
+    @Override
+    public List<Map<String, Object>> getAllNftInfo() {
+        List<Map<String, Object>> getNftAndUserInfo = nftPageRepository.getNftAndAccountInfo();
+        List<Map<String, Object>> getTransactionInfo = nftPageRepository.getTransactionInfo();
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map<String, Object> map1 : getNftAndUserInfo) {
+            for (Map<String, Object> map2 : getTransactionInfo) {
 
+
+                if (map1.get("nft_id").equals(map2.get("nft_id"))) {
+//
+//                System.out.println("m1.get(n.nft_id): " + map1.get("nft_id") + "   " + "m2.get(cc.nft_id): " + map2.get("nft_id"));
+
+                    Map<String, Object> newMap = new HashMap<>();
+                    newMap.put("nft_id", map1.get("nft_id"));
+                    newMap.put("nft_name", map1.get("nft_name"));
+                    newMap.put("image", map1.get("image"));
+                    newMap.put("price", map1.get("price"));
+                    newMap.put("username", map1.get("username"));
+                    newMap.put("avatar", map1.get("avatar"));
+
+                    newMap.put("highest_bid", map2.get("highest_bid"));
+                    result.add(newMap);
+                }
+            }
+
+        }
+
+
+        System.out.println(result);
+        return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> getNftInfoByName(String name) {
+        List<Map<String, Object>> getNftAndUserInfo = nftPageRepository.getNftInfoByName(name);
+        List<Map<String, Object>> getTransactionInfo = nftPageRepository.getTransactionInfo();
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Map<String, Object> map1 : getNftAndUserInfo) {
+            for (Map<String, Object> map2 : getTransactionInfo) {
+
+
+                if (map1.get("nft_id").equals(map2.get("nft_id"))) {
+//
+//                System.out.println("m1.get(n.nft_id): " + map1.get("nft_id") + "   " + "m2.get(cc.nft_id): " + map2.get("nft_id"));
+
+                    Map<String, Object> newMap = new HashMap<>();
+                    newMap.put("nft_id", map1.get("nft_id"));
+                    newMap.put("nft_name", map1.get("nft_name"));
+                    newMap.put("image", map1.get("image"));
+                    newMap.put("price", map1.get("price"));
+                    newMap.put("username", map1.get("username"));
+                    newMap.put("avatar", map1.get("avatar"));
+
+                    newMap.put("highest_bid", map2.get("highest_bid"));
+                    result.add(newMap);
+                }
+            }
+
+        }
+
+
+        System.out.println(result);
+        return result;
+    }
+
+    @Override
+    public List<Map<String, Object>> getTotalNftAndCollection() {
+        String totalNFT = nftPageRepository.getTotalNFT();
+        String totalCollection = nftPageRepository.getTotalCollection();
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> newMap = new HashMap<>();
+        newMap.put("total_nft", totalNFT);
+        newMap.put("total_collection", totalCollection);
+        result.add(newMap);
+        System.out.println(result);
+        return result;
+    }
 }

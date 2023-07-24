@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import {colors} from '../../Global';
 import {ReactComponent as EmailIcon} from '../../assets/footer-imgs/email-icon.svg';
 
-export const InputFooter = ({type, placeholder, text}) => {
+export const InputFooter = ({type, placeholder, text, light}) => {
   return (
-    <InputFooterStyled>
+    <InputFooterStyled light={light}>
       <div className="input-wrapper">
         <input
           className="input input-footer"
@@ -37,7 +37,10 @@ const InputFooterStyled = styled.div`
     width: 100%;
     border-radius: 20px;
     border: none;
-    background-color: ${colors.whiteColor};
+    /* background-color: ${colors.whiteColor}; */
+    background-color: ${(prop) =>
+      prop.light ? colors.borderColor : colors.whiteColor};
+
     font-weight: 400;
     outline: none;
     border-radius: 20px;

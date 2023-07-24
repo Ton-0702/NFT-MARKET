@@ -37,3 +37,4 @@ public class NFTOwened {
     @Column(name = "collection_id")
     private Long collection_id;
 }
+

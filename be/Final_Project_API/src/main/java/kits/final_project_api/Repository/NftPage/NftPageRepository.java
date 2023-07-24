@@ -26,4 +26,32 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
     @Query(value = "Select date_create from nft where nft_id=:id", nativeQuery = true)
     String getDateCreate(Integer id);
 
+    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar\n" +
+            "FROM nft AS n\n" +
+            "INNER JOIN account AS acc ON n.account_id = acc.account_id\n" +
+            "WHERE n.nft_name LIKE %:name%\n" +
+            "ORDER BY n.nft_id DESC\n"
+            , nativeQuery = true)
+    List<Map<String, Object>> getNftInfoByName(String name);
+
+    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar\n" +
+            "FROM nft AS n\n" +
+            "INNER JOIN account AS acc ON n.account_id = acc.account_id\n" +
+            "ORDER BY n.nft_id DESC\n" +
+            "LIMIT 12", nativeQuery = true)
+    List<Map<String, Object>> getNftAndAccountInfo();
+
+    @Query(value = "SELECT nft_id,MAX(highest_bid) AS highest_bid\n" +
+            "FROM transaction_bid\n" +
+            "GROUP BY nft_id;", nativeQuery = true)
+    List<Map<String, Object>> getTransactionInfo();
+
+
+    @Query(value = "select count(*) as totalNFT\n" +
+            "from nft",nativeQuery = true)
+    String getTotalNFT();
+
+    @Query(value = "select count(*) as totalCollection\n" +
+            "from collection",nativeQuery = true)
+    String getTotalCollection();
 }
