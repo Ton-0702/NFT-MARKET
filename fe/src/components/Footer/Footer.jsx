@@ -1,25 +1,25 @@
-import React from "react";
-import styled from "styled-components";
-import { LogoItem } from "../Header";
-import { colors } from "../../Global";
-import { InputFooter } from "../Input/InputFooter";
+import React from 'react';
+import styled from 'styled-components';
+import {LogoItem} from '../Header';
+import {colors} from '../../Global';
+import {InputFooter} from '../Input/InputFooter';
 
-import { ReactComponent as DiscordIcon } from "../../assets/footer-imgs/Discord-icon.svg";
-import { ReactComponent as YoutubeIcon } from "../../assets/footer-imgs/Youtube-icon.svg";
-import { ReactComponent as TwitterIcon } from "../../assets/footer-imgs/Twitter-icon.svg";
-import { ReactComponent as InstagramIcon } from "../../assets/footer-imgs/Instagram-icon.svg";
+import {ReactComponent as DiscordIcon} from '../../assets/footer-imgs/Discord-icon.svg';
+import {ReactComponent as YoutubeIcon} from '../../assets/footer-imgs/Youtube-icon.svg';
+import {ReactComponent as TwitterIcon} from '../../assets/footer-imgs/Twitter-icon.svg';
+import {ReactComponent as InstagramIcon} from '../../assets/footer-imgs/Instagram-icon.svg';
 // import {ReactComponent as EmailIcon} from '../../assets/footer-imgs/email-icon.svg';
 
-const Footer = () => {
+const Footer = ({light}) => {
   return (
-    <FooterStyled>
+    <FooterStyled id="footer" light={light}>
       <footer className="footer">
         {/* <LogoItem></LogoItem> */}
         <div className="footer-wrap">
           <div className="footer-top">
             <div className="footer-market-place">
               <div className="market-place-title">
-                <LogoItem></LogoItem>
+                <LogoItem light={light}></LogoItem>
               </div>
               <div className="market-place-text">
                 NFT marketplace UI created with Anima for Figma.
@@ -46,6 +46,7 @@ const Footer = () => {
                 Get exclusive promotions & updates straight to your inbox.
               </div>
               <InputFooter
+                light={light}
                 placeholder="Enter Your Email Address"
                 type="email"
               ></InputFooter>
@@ -86,7 +87,8 @@ const FooterStyled = styled.div`
     width: 30%;
     display: flex;
     flex-direction: column;
-    color: ${colors.textColor1};
+    /* color: ${colors.textColor1}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.textColor1)};
   }
   .market-place-title {
     margin-bottom: 28px;
@@ -114,7 +116,8 @@ const FooterStyled = styled.div`
     width: 20%;
     display: flex;
     flex-direction: column;
-    color: ${colors.textColor1};
+    /* color: ${colors.textColor1}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.textColor1)};
     cursor: default;
   }
   .explore-title {
@@ -122,7 +125,8 @@ const FooterStyled = styled.div`
     font-weight: 700;
     line-height: 35.2px;
     /* margin-bottom: 28px; */
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.primaryColor : colors.textColor1)};
   }
   .explore-list {
     max-width: 133px;
@@ -140,12 +144,15 @@ const FooterStyled = styled.div`
     width: 40%;
     display: flex;
     flex-direction: column;
-    color: ${colors.textColor1};
+    /* color: ${colors.textColor1}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.textColor1)};
   }
   .join-title {
     font-size: 22px;
     font-weight: 700;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.primaryColor : colors.textColor1)};
+
     line-height: 35.2px;
     margin-bottom: 22px;
     cursor: default;
@@ -163,7 +170,9 @@ const FooterStyled = styled.div`
   }
   .copyright {
     margin-top: 20px;
-    color: ${colors.textColor1};
+    /* color: ${colors.textColor1}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.textColor1)};
+
     font-weight: 400;
     font-size: 12px;
     line-height: 13.2px;

@@ -11,6 +11,7 @@ import kits.final_project_api.Service.Utils.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,16 +24,16 @@ public class RegisterConnectWallet {
     @Autowired
     private AccountService accountService;
 
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
-    public ResponseEntity<RegisterResponseDto> resgisterCreateAccount(@Valid @RequestBody AccountCreateConnectWalletDTO accountCreateConnectWalletDTO, HttpServletResponse response){
+    public ResponseEntity<RegisterResponseDto> registerCreateAccount(@Valid @RequestBody AccountCreateConnectWalletDTO accountCreateConnectWalletDTO, HttpServletResponse response){
         Account account_create = new Account();
 //        account_create.setUsername(accountCreateDTO.getUsername());
 //        account_create.setEmail(accountCreateDTO.getEmail());
 //        account_create.setPassword(accountCreateDTO.getPassword());
-//        account_create.setAddress_wallet(accountCreateConnectWalletDTO.getAddress_wallet());
+        account_create.setAddress_wallet(accountCreateConnectWalletDTO.getAddress_wallet());
 
         // kiểm tra có trùng address wallet không
         Account foundAccountAddressWallet = accountService.findByAddressWallet(accountCreateConnectWalletDTO.getAddress_wallet());

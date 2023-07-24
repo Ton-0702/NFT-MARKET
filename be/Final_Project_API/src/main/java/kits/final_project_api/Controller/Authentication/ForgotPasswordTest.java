@@ -1,22 +1,15 @@
 package kits.final_project_api.Controller.Authentication;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-import kits.final_project_api.Entity.Account;
-import kits.final_project_api.Model.CreateAccount.RegisterRequestDto;
-import kits.final_project_api.Model.Response.RegisterResponseDto;
 import kits.final_project_api.Service.AccountService;
 import kits.final_project_api.Service.Utils.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("api/reset-password")
-public class ForgotPassword {
+public class ForgotPasswordTest {
 
     @Autowired
     private UtilsService utilsService;

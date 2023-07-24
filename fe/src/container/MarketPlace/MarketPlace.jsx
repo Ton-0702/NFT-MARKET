@@ -323,58 +323,6 @@ const MarketPlace = () => {
               paddingLeft={'20px'}
             ></Input>
           </div>
-          {/* <div className="market-place-body">
-            <div className="market-place-filter">
-              <ul className="market-place-filter-list">
-                <li className="market-place-filter-item active">
-                  <span className="market-place-filter-item__desktop">
-                    Today
-                  </span>
-                  <span className="market-place-filter-item__mobile">1d</span>
-                </li>
-                <li className="market-place-filter-item">
-                  <span className="market-place-filter-item__desktop">
-                    This Week
-                  </span>
-                  <span className="market-place-filter-item__mobile">7d</span>
-                </li>
-                <li className="market-place-filter-item">
-                  <span className="market-place-filter-item__desktop">
-                    This Month
-                  </span>
-                  <span className="market-place-filter-item__mobile">30d</span>
-                </li>
-                <li className="market-place-filter-item">All Time</li>
-              </ul>
-              <div className="market-place-table">
-                <div className="market-place-table-wrap">
-                  <table className="table">
-                    <tr className="market-place-row-header">
-                      <th className="table-header-item">
-                        <span className="header-item-stt">#</span>
-                      </th>
-                      <th className="table-header-item header-item-artist">
-                        Artist
-                      </th>
-                      <th className="table-header-item table-header-change">
-                        Change
-                      </th>
-                      <th className="table-header-item table-header-sold">
-                        NFTs Sold
-                      </th>
-                      <th className="table-header-item table-header-volume">
-                        Volume
-                      </th>
-                    </tr>
-                    <tbody className="table-body">
-            
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
           <div className="body-market-place">
             <div className="market-place-body">
               <div className="container">
@@ -433,7 +381,10 @@ const MarketPlace = () => {
                 <div className="market-place-body-grid">
                   {CreatedMarketPlaceData
                     ? CreatedMarketPlaceData.map((e, index) => (
-                        <div className="body-market-place-body-grid-item">
+                        <div
+                          className="body-market-place-body-grid-item"
+                          key={index}
+                        >
                           <Card
                             title={e.title}
                             img_product={e.img}
