@@ -186,12 +186,12 @@ public class NftController {
         return nftDetailPage;
     }
 
-//     @GetMapping("/search-nft/{name}")
-//     @ResponseBody
-//     public List<Map<String, Object>> getNftInfoByName(@PathVariable String name) {
-//         List<Map<String, Object>> nftInfo = nftPageServiceImpl.getNftInfoByName(name);
-//         return nftInfo;
-//     }
+    @GetMapping("/search-nft/{name}")
+    @ResponseBody
+    public List<Map<String, Object>> getNftInfoByName(@PathVariable String name) {
+        List<Map<String, Object>> nftInfo = nftPageServiceImpl.getNftInfoByName(name);
+        return nftInfo;
+    }
 
     @GetMapping("/nft-all")
     @ResponseBody
