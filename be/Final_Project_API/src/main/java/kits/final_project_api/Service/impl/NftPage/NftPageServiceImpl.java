@@ -57,8 +57,13 @@ public class NftPageServiceImpl implements NftPageService {
     }
 
     @Override
-    public List<Map<String, Object>> getTransaction_Info(Integer id) {
-        return null;
+    public List<Map<String, Object>> getTransactionInfo() {
+        return nftPageRepository.getTransactionInfo();
+    }
+
+    @Override
+    public List<Map<String, Object>> getNftAndAccountInfo() {
+        return nftPageRepository.getNftAndAccountInfo();
     }
 
     @Override
@@ -99,9 +104,51 @@ public class NftPageServiceImpl implements NftPageService {
         return result;
     }
 
-    // @Override
-    // public List<Map<String, Object>> getAccountAndNft_Info(Integer id){
-    // return null
-    // }
+    @Override
+    public List<Map<String, Object>> getAllNftInfo() {
+        List<Map<String, Object>> getNftAndUserInfo = nftPageRepository.getNftAndAccountInfo();
+        List<Map<String, Object>> getTransactionInfo = nftPageRepository.getTransactionInfo();
+        List<Map<String, Object>> result = new ArrayList<>();
+//        Map<String, Object> newMap = new HashMap<>();
+//        System.out.println();
+//        Map<String, Object> newMap = new HashMap<>();
+        for (Map<String, Object> map1 : getNftAndUserInfo) {
+            for (Map<String, Object> map2 : getTransactionInfo) {
+
+
+                if (map1.get("nft_id").equals(map2.get("nft_id"))) {
+//
+//                System.out.println("m1.get(n.nft_id): " + map1.get("nft_id") + "   " + "m2.get(cc.nft_id): " + map2.get("nft_id"));
+
+                        Map<String, Object> newMap = new HashMap<>();
+                        newMap.put("nft_id", map1.get("nft_id"));
+                        newMap.put("nft_name", map1.get("nft_name"));
+                        newMap.put("image", map1.get("image"));
+                        newMap.put("price", map1.get("price"));
+                        newMap.put("username", map1.get("username"));
+                        newMap.put("avatar", map1.get("avatar"));
+
+//                      String countS=count.toString();
+
+                        newMap.put("highest_bid", map2.get("highest_bid"));
+                        result.add(newMap);
+                    }
+
+
+
+
+//                if (map1.get("nft_id").equals(map2.get("nft_id"))) {
+//
+//                }
+
+
+            }
+
+        }
+
+
+        System.out.println(result);
+        return result;
+    }
 
 }
