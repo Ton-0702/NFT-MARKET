@@ -6,7 +6,11 @@ import { Button } from "components/Button";
 import mask from "../../assets/ConnectWalletPage/Metamask.svg";
 import coin from "../../assets/ConnectWalletPage/Coinbase.svg";
 import wallet from "../../assets/ConnectWalletPage/WalletConnect.svg";
+import axios from "axios";
 import { colors } from "Global";
+import  { useNavigate, Routes  } from 'react-router-dom'
+import Cookies from 'universal-cookie';
+
 const StyledConnectWalletPage = styled.div`
   :root {
     /* --color-1: #c0dbea; */
@@ -282,18 +286,53 @@ export const ConnectWalletPage = () => {
   const [metamaskAddress, setMetamaskAddress] = useState(
     localStorage.getItem("metamask-address")
   );
+
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (localStorage.getItem("metamask-address")) {
       EthereumInstance.getEthereumAccounts();
     }
+    
   }, []);
   const connectMetamask = async (setMetamaskAddress) => {
+    // if ()
     if (localStorage.getItem("metamask-address")) {
-      EthereumInstance.getEthereumAccounts();
+      console.log("Metamask: OK");
+      const account = EthereumInstance.getEthereumAccounts();
+      console.log("accountMEtaMask: ",account[0]);
+      axios
+      .post(`http://localhost:8080/api/connect-wallet/${account[0]}`)
+      .then(function (response) {
+        
+        console.log("phan hoi thanh cong: ",response.data.data);
+        const cookies = new Cookies();
+        cookies.set("token", response.data.data);
+        // navigate("/login-success");
+        navigate("/",  { state: {
+          address_wallet: account[0]
+          } });
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+
+      // navigate("/",  { state: {
+      //   address_wallet: account[0]
+      //   } });
     } else {
       const account = await EthereumInstance.connectMetaMaskWallet();
-      console.log(account);
+      console.log("account: ",account);
       setMetamaskAddress(account);
+
+      if (account != null){
+        setTimeout(() => {
+          navigate("/profile-details",  { state: {
+            address_wallet: account[0]
+            } });
+        }, 2000);
+      }
+      // <Navigate to="/profile-details" />
     }
   };
   return (
@@ -336,7 +375,7 @@ export const ConnectWalletPage = () => {
                     content="Wallet Connect"
                     textColor="white"
                     fontSize="22px"
-                    fontWeight="600"
+                    fontWeight="600"   
                   ></Button>
                   <Button
                     borderRadius="20px"

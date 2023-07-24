@@ -35,6 +35,23 @@ public class AuthenticationInterceptor implements WebMvcConfigurer {
 //                });
 //        return http.build();
 //    }
+
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//
+//        registry
+//                // Enable cross-origin request handling for the specified path pattern.
+//                // Exact path mapping URIs (such as "/admin") are supported as well as Ant-style path patterns (such as "/admin/**").
+//                .addMapping("/*")
+//                .allowedOrigins("*")
+//                // .allowedOriginPatterns("")
+//                .allowCredentials(false)
+//                .allowedHeaders("*")
+//                .exposedHeaders("*")
+////                .maxAge(60 *30)
+//                .allowedMethods("*")
+//        ;
+//    }
 }
 
 

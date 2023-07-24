@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
-
+import  { useNavigate, Routes  } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 
 const metamaskURL =
   'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
@@ -54,7 +55,11 @@ class Ethereum {
     }
     try {
         const rs = await this.getEthereum.request({ method: 'eth_requestAccounts' });
+        // console.log("rs: ", rs);
+        localStorage.setItem("metamask-address", rs);
         return rs;
+       
+        
     } catch (error) {
       console.log(error);
     }

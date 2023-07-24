@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -53,6 +54,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findByToken(String token) {
         return accountRepository.findByToken(token);
+    }
+
+    @Override
+    public List<Map<String, Object>> findByTokenList(String token) {
+        return accountRepository.findByTokenList(token);
     }
 
     @Override
