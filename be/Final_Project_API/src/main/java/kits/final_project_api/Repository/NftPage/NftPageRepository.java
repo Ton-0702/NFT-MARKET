@@ -26,10 +26,12 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
     @Query(value = "select * from nft where nft_name like %:name% limit 100", nativeQuery = true)
     List<Map<String, Object>> getNftInfoByName(String name);
 
-    @Query(value = "select  n.nft_name, n.image, n.price, acc.username, acc.avatar from nft as n inner join account as acc on n.account_id = acc.account_id ",nativeQuery = true)
+    @Query(value = "select n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar from nft as n inner join account as acc on n.account_id = acc.account_id limit 12", nativeQuery = true)
     List<Map<String, Object>> getNftAndAccountInfo();
 
-    @Query(value = "select * from transaction_bid where nft_id:=id",nativeQuery = true)
-    List<Map<String, Object>> getTransactionInfo(Integer id);
+    @Query(value = "SELECT nft_id,MAX(highest_bid) AS highest_bid\n" +
+            "FROM transaction_bid\n" +
+            "GROUP BY nft_id;", nativeQuery = true)
+    List<Map<String, Object>> getTransactionInfo();
 
 }
