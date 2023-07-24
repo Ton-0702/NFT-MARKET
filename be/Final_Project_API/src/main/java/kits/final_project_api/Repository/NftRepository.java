@@ -35,9 +35,4 @@ public interface NftRepository extends JpaRepository<NFT, Long> {
     // date_start_bid,
     // @Param("date_end_bid") String date_end_bid,@Param("account_id") Integer
     // account_id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE nft n SET n.account_id = :account_id WHERE n.nft_id = :nft_id", nativeQuery = true)
-    void updateNFTOwner(@Param("nft_id") Long nft_id, @Param("account_id") Long account_id);
 }
