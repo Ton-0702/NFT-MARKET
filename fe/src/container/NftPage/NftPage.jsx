@@ -414,6 +414,9 @@ export {NftPage};
 
 const NftPageStyled = styled.div`
   background-color: ${colors.background};
+  .nft-page-wrap {
+    padding-bottom: 22px;
+  }
   .banner {
     width: 100%;
     height: 560px;
