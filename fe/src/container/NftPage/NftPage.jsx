@@ -181,13 +181,13 @@ const NftPage = () => {
   const createTransactionBid = (inputValue) => {
     // http://localhost:8080/transaction/create
     console.log('inputValue: ', inputValue);
+    const formData = new FormData();
+    formData.append('nft_id', nft_id);
+    formData.append('account_id', 3);
+    formData.append('highest_bid', inputValue);
     async function postTransactionBid() {
       axios
-        .post(`http://localhost:8080/transaction/create`, {
-          nft_id: nft_id,
-          account_id: 3,
-          highest_bid: inputValue,
-        })
+        .post(`http://localhost:8080/transaction/create`, formData)
         .then(function (response) {
           console.log(response);
         })
