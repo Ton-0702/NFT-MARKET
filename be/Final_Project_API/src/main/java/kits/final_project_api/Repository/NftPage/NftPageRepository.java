@@ -20,9 +20,6 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
     @Query(value = "select * from classify_category as cc inner join categories as c on cc.categories_id=c.categories_id where cc.nft_id=:id", nativeQuery = true)
     List<Map<String, Object>> getClassifyAndCategory_Info(Integer id);
 
-    @Query(value = "select * from nft where nft_name like %:name% limit 100", nativeQuery = true)
-    List<Map<String, Object>> getNftInfoByName(String name);
-
     @Query(value = "Select date_create from nft where nft_id=:id", nativeQuery = true)
     String getDateCreate(Integer id);
 

@@ -343,13 +343,13 @@ export const ConnectWalletPage = () => {
             <div className="wallet__left">
               <div className="wallet-content">
                 {address ||
-                  (metamaskAddress && (
+                  metamaskAddress && (
                     <ul className="progressbar">
                       <li className="active">Step 1</li>
                       <li>Step 2</li>
                       <li>Step 3</li>
                     </ul>
-                  ))}
+                  )}
                 <h2 className="wallet-title">Connect Wallet</h2>
                 <p>
                   Choose a wallet you want to connect. There are several wallet
