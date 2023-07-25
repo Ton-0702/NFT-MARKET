@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {SignUpButton} from '../Button/SignUpButton';
-import {useEffect, useState} from 'react';
+// import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {ReactComponent as MarketIcon} from '../../assets/header-imgs/market.svg';
@@ -109,12 +109,12 @@ const Header = () => {
                 </a>
               </div>
 
-              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
+              
 
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
-              <SignUpButton width={'200px'}></SignUpButton>
+              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
 
             </nav>
             {/* nav Tablet */}
