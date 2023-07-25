@@ -81,10 +81,14 @@ public class TransactionServiceImpl implements TransactionService {
             Double assetBuyer = (Double) account_bid_win.getPrice(); // Lấy tài sản đang có của người thắng bid
             if (assetBuyer > highest_bid) {
                 if (highest_bid > price_nft) {
-                    System.out.println("++++++++++++++++ assetSeller: " + assetSeller + "++++++++++++++ assetBuyer: " + assetBuyer);
+                    System.out.println("++++++++++++++++ assetSeller: " + assetSeller + "++++++++++++++ assetBuyer: "
+                            + assetBuyer);
                     nftOwenedService.CreateNftOwned(account_nft_id, account_id, null); // Tạo NFT Owned
-                    accountService.updateAssetById(account_nft_id, assetSeller + highest_bid); // cập nhật tài sản hiện tại của người sở hữu NFT
-                    accountService.updateAssetById(account_id, assetBuyer - highest_bid); // cập nhật tài sản hiện tại của người thắng bid
+                    accountService.updateAssetById(account_nft_id, assetSeller + highest_bid); // cập nhật tài sản hiện
+                                                                                               // tại của người sở hữu
+                                                                                               // NFT
+                    accountService.updateAssetById(account_id, assetBuyer - highest_bid); // cập nhật tài sản hiện tại
+                                                                                          // của người thắng bid
                 }
             }
         } catch (Exception e) {
