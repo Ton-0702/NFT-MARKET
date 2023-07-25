@@ -842,10 +842,12 @@ const HomePage = () => {
   const [overall, setOverall] = useState([]);
   const [trendingCollection, setTrendingCollection] = useState();
   const [newTrending, setNewTrending] = useState();
+  const [topCreatorID, setTopCreatorID] = useState();
 
   const navigate = useNavigate();
 
   console.log('newTrending: ', newTrending);
+  console.log('TopCreator: ', topCreator);
 
   useEffect(() => {
     function getAllTopCreator() {
@@ -990,7 +992,7 @@ const HomePage = () => {
               {topCreator
                 ? topCreator.map((e, index) => {
                     return (
-                      <div className="top_creator_item" key={index}>
+                      <div className="top_creator_item" id={e.account_id} onClick={setTopCreatorID(e.account_id)}>
                         <Card
                           number_id={index}
                           type="TopCreatorHomePage"
