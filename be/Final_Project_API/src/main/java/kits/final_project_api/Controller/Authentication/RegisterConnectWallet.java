@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "api/register/connect-wallet", method = RequestMethod.POST)
 public class RegisterConnectWallet {
     @Autowired
@@ -27,7 +27,6 @@ public class RegisterConnectWallet {
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
-//    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<RegisterResponseDto> registerCreateAccount(@Valid @RequestParam(value = "address_wallet") String address_wallet,
                                                                      @RequestParam(value = "username") String username,
                                                                      @RequestParam(value = "bio") String bio, @RequestParam(value = "email") String email,
