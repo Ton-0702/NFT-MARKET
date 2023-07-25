@@ -75,7 +75,7 @@ const auctionData = [
 ];
 
 const NftPage = () => {
-  let TIME = 15;
+  let TIME = 2000;
   const [count, setCount] = useState(TIME); // seconds
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -86,10 +86,13 @@ const NftPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [transactions, setTransactions] = useState([] || null);
 
+  const [nftId, setNftId] = useState();
+  // console.log('transactions: ', transactions);
+
   // console.log('count: ', count);
 
   useEffect(() => {
-    // http://localhost:8080/nfts/nft-detail-page/1
+    // get detail Page
     async function getDetail() {
       try {
         const response = await axios.get(
@@ -97,6 +100,9 @@ const NftPage = () => {
         );
         console.log(response.data[0]);
         setDataNftPage(response.data[0]);
+        // console.log(response.data[0].nft_id);
+
+        setNftId(response.data[0].nft_id);
       } catch (error) {
         console.error(error);
       }
@@ -104,6 +110,25 @@ const NftPage = () => {
     getDetail();
   }, []);
 
+  // history Transaction
+  useEffect(() => {
+    async function historyTransaction() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/transaction/history/${nftId}`
+        );
+        // console.log(response);
+        const data = response.data;
+        console.log('dataTransaction: ', data);
+        setTransactions(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    historyTransaction();
+  }, [nftId]);
+
+  // CountDown
   useEffect(() => {
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
@@ -124,6 +149,7 @@ const NftPage = () => {
     }
   }, [count, hour, minute, second]);
 
+  // secondsToTime
   const secondsToTime = (secs) => {
     var hours = Math.floor(secs / (60 * 60));
     var divisor_for_minutes = secs % (60 * 60);
@@ -139,8 +165,38 @@ const NftPage = () => {
   };
 
   if (!dataNftPage) return null;
-  const {nft_name, categories_name, date_create, description, price, username} =
-    dataNftPage;
+  const {
+    nft_name,
+    categories_name,
+    date_create,
+    description,
+    price,
+    username,
+    nft_id,
+  } = dataNftPage;
+  // get userName
+  // get account id;
+
+  // create transaction bid
+  const createTransactionBid = (inputValue) => {
+    // http://localhost:8080/transaction/create
+    console.log('inputValue: ', inputValue);
+    async function postTransactionBid() {
+      axios
+        .post(`http://localhost:8080/transaction/create`, {
+          nft_id: nft_id,
+          account_id: 3,
+          highest_bid: inputValue,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    postTransactionBid();
+  };
 
   // handleClickPlaceBid
   const handleClickPlaceBid = () => {
@@ -172,14 +228,15 @@ const NftPage = () => {
           date: today,
           avatar: 'a',
           currentTime: currentTime,
-          bids_price: inputNumber,
+          highest_bid: inputNumber,
         };
+        createTransactionBid(inputNumber);
         // sort data, likely Unshift method
         setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
         setInputValue('');
       }
       if (transactions.length > 0) {
-        const highestBidsPrice = transactions[0].bids_price;
+        const highestBidsPrice = transactions[0].highest_bid;
         console.log('highestBidsPrice: ', highestBidsPrice);
         if (inputNumber > highestBidsPrice) {
           dataBids = {
@@ -187,8 +244,9 @@ const NftPage = () => {
             date: today,
             avatar: 'a',
             currentTime: currentTime,
-            bids_price: inputNumber,
+            highest_bid: inputNumber,
           };
+          createTransactionBid(inputNumber);
           // sort data, likely Unshift method
           setTransactions((prevTransactions) => [
             dataBids,
@@ -392,7 +450,7 @@ const NftPage = () => {
                             </td>
                             <td className="auction__table-body-data">
                               <span className="body-data-amount">
-                                {item.bids_price}
+                                {item.highest_bid}
                               </span>{' '}
                               ETH
                             </td>
