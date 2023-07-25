@@ -8,7 +8,7 @@ import {dataOfThisMonthFake} from './DataRanking';
 import {dataOfThisWeekFake} from './DataRanking';
 import axios from 'axios';
 import {useSettingsStore} from 'store/store';
-console.log('dataOfThisMonth:', dataOfThisMonthFake);
+// console.log('dataOfThisMonth:', dataOfThisMonthFake);
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
@@ -81,10 +81,6 @@ const Ranking = ({title}) => {
   };
 
   // pagination
-
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newPage = event.selected + 1;
@@ -323,6 +319,7 @@ const RankingStyled = styled.div`
   padding-bottom: 10px;
   background-color: ${(prop) =>
     prop.light ? colors.whiteColor : colors.background};
+
   .ranking-content {
     margin-bottom: 20px;
   }
@@ -345,7 +342,8 @@ const RankingStyled = styled.div`
     font-size: 22px;
     font-weight: 400;
     line-height: 35.2px;
-    color: ${colors.whiteColor};
+    /* color: ${colors.whiteColor}; */
+    color: ${(prop) => (prop.light ? colors.blackColor : colors.whiteColor)};
   }
   /* ranking-filter-list */
 
