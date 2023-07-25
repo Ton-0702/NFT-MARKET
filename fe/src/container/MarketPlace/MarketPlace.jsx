@@ -416,13 +416,12 @@ const MarketPlace = () => {
                           key={index}
                         >
                           <Card
-                            title={e.title}
-                            img_product={e.img}
+                            title={e.nft_name}
+                            img_product={e.image}
                             price={e.price}
                             highest_bid={e.highest_bid}
-                            img_artist={e.img_artist}
-                            name_artist={e.name_artist}
-                            total_sales={e.total_sales}
+                            img_artist={e.avatar}
+                            name_artist={e.username}
                             bgColor={colors.background}
                             borderRadius={"20px"}
                           ></Card>
