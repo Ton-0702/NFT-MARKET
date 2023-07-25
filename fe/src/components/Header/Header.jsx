@@ -15,20 +15,20 @@ import {useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
 
 const Header = () => {
-  const [tokenUser, setToken] = useState(null);   
+  const [tokenUser, setToken] = useState(null);
 
-  const token = Cookies.get("token");
-  console.log("hello token: ", token);
+  const token = Cookies.get('token');
+  // console.log("hello token: ", token);
   useEffect(() => {
     function getUser() {
       try {
-        function getTokenByUser(){
-          return axios.get('http://localhost:8080/api/session-address-wallet/'+token);
+        function getTokenByUser() {
+          return axios.get(
+            'http://localhost:8080/api/session-address-wallet/' + token
+          );
         }
-        Promise.all([
-          getTokenByUser(),
-        ]).then((res) => {
-          console.log("what is res: ",res);
+        Promise.all([getTokenByUser()]).then((res) => {
+          // console.log('what is res: ', res);
           const tokenUserData = res[0].data;
           setToken(tokenUserData);
         });
@@ -39,13 +39,17 @@ const Header = () => {
     getUser();
   }, []);
   // console.log("tokenUser: ",tokenUser[0].address_wallet);
-  let address_wallet = "";
-  if(tokenUser === '' || tokenUser === null){
-    address_wallet = "";
-  }else{
-    address_wallet = tokenUser[0].address_wallet.substring(0,3) + '...' + tokenUser[0].address_wallet.substring((tokenUser[0].address_wallet).length -3);
+  let address_wallet = '';
+  if (tokenUser === '' || tokenUser === null) {
+    address_wallet = '';
+  } else {
+    address_wallet =
+      tokenUser[0].address_wallet.substring(0, 3) +
+      '...' +
+      tokenUser[0].address_wallet.substring(
+        tokenUser[0].address_wallet.length - 3
+      );
   }
-  
 
   const {toggleDarkMode} = useSettingsStore();
   const light = useSettingsStore((state) => state.light);
@@ -109,13 +113,10 @@ const Header = () => {
                 </a>
               </div>
 
-              
-
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
-              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
-
+              <SignUpButton width={'200px'}>{address_wallet}</SignUpButton>
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">

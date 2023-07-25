@@ -8,7 +8,7 @@ import {dataOfThisMonthFake} from './DataRanking';
 import {dataOfThisWeekFake} from './DataRanking';
 import axios from 'axios';
 import {useSettingsStore} from 'store/store';
-console.log('dataOfThisMonth:', dataOfThisMonthFake);
+// console.log('dataOfThisMonth:', dataOfThisMonthFake);
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
