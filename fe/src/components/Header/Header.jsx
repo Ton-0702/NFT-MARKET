@@ -13,22 +13,43 @@ import {useNavigate} from 'react-router-dom';
 // import Switch from 'react-switch';
 import {useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
+import { Button } from 'components/Button';
 
 const Header = () => {
-  const [tokenUser, setToken] = useState(null);
+  const [tokenUser, setToken] = useState(null);   
 
-  const token = Cookies.get('token');
-  // console.log("hello token: ", token);
+  const token = Cookies.get("token");
+  console.log("hello token: ", token);
+
+  const handleLogoutForm = (e) => {
+    console.log("token logout: ", token);
+    // e.preventDefault();
+    axios
+      .post(`http://localhost:8080/api/logout/${token}`)
+      .then(function (response) {
+        
+        console.log("phan hoi thanh cong logout: ",response.data.data);
+        // const cookies = new Cookies();
+        // cookies.set("token logout", response.data.data);
+        localStorage.removeItem("metamask-address")
+        Cookies.remove("token")
+        navigate("/");
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+  };
+
   useEffect(() => {
     function getUser() {
       try {
-        function getTokenByUser() {
-          return axios.get(
-            'http://localhost:8080/api/session-address-wallet/' + token
-          );
+        function getTokenByUser(){
+          return axios.get('http://localhost:8080/api/session-address-wallet/'+token);
         }
-        Promise.all([getTokenByUser()]).then((res) => {
-          // console.log('what is res: ', res);
+        Promise.all([
+          getTokenByUser(),
+        ]).then((res) => {
+          // console.log("what is res: ",res);
           const tokenUserData = res[0].data;
           setToken(tokenUserData);
         });
@@ -39,17 +60,13 @@ const Header = () => {
     getUser();
   }, []);
   // console.log("tokenUser: ",tokenUser[0].address_wallet);
-  let address_wallet = '';
-  if (tokenUser === '' || tokenUser === null) {
-    address_wallet = '';
-  } else {
-    address_wallet =
-      tokenUser[0].address_wallet.substring(0, 3) +
-      '...' +
-      tokenUser[0].address_wallet.substring(
-        tokenUser[0].address_wallet.length - 3
-      );
+  let address_wallet = "";
+  if(tokenUser === '' || tokenUser === null){
+    address_wallet = "";
+  }else{
+    address_wallet = tokenUser[0].address_wallet.substring(0,3) + '...' + tokenUser[0].address_wallet.substring((tokenUser[0].address_wallet).length -3);
   }
+  
 
   const {toggleDarkMode} = useSettingsStore();
   const light = useSettingsStore((state) => state.light);
@@ -88,6 +105,8 @@ const Header = () => {
 
   const navigate = useNavigate();
 
+  // Logout Metamask
+
   return (
     <HeaderStyled>
       <header className="header">
@@ -113,10 +132,19 @@ const Header = () => {
                 </a>
               </div>
 
+              
+
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
-              <SignUpButton width={'200px'}>{address_wallet}</SignUpButton>
+              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
+
+              <div className="nav-item">
+                <a href="/" onClick={handleLogoutForm} className="nav-item-link">
+                  <span>Log out</span>
+                </a>
+              </div>
+
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">
@@ -148,11 +176,13 @@ const Header = () => {
                     <span>Rankings</span>
                   </a>
                 </div>
+
                 <div className="nav-mobile-item">
-                  <a href="/logout" className="nav-mobile-item-link">
+                  <Button onClick={handleLogoutForm} className="nav-mobile-item-link">
                     <span>Log Out</span>
-                  </a>
+                  </Button>
                 </div>
+
                 <div className="switch-darkMode">
                   <DarkMode onChange={toggleDarkMode}></DarkMode>
                   {/* <button onClick={toggleDarkMode}>ToggleDarkMode</button> */}

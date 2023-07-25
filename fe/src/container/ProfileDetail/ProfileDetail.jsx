@@ -3,10 +3,12 @@ import { colors } from "Global";
 import { PrimaryLayout } from "components/Layout";
 import { Button } from "components/Button";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import Cookiesjs from "js-cookie";
 import profile_image from "../../assets/profile_detail/profile_image.png";
 
 
@@ -323,6 +325,28 @@ const ProfileDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {address_wallet} = location.state;
+
+  const account = localStorage.getItem("metamask-address")
+
+  useEffect(() => {
+    axios
+      .post(`http://localhost:8080/api/connect-wallet/${account}`)
+      .then(function (response) {
+        
+        console.log("phan hoi thanh cong login: ",response);
+        const cookies = new Cookies();
+        cookies.set("token", response.data.data);
+        // navigate("/login-success");
+        navigate("/",  { state: {
+          address_wallet: account
+          } });
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+  })
+
+
   // const address_wallet_detail = address_wallet[0]
   console.log("heeloo: ",address_wallet);
   const [formValue, setFormValue] = useState({
@@ -333,6 +357,7 @@ const ProfileDetail = () => {
     profile_image: document.getElementById("profile_image"),
     profile_background_image: document.getElementById("profile_background_image"),
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
