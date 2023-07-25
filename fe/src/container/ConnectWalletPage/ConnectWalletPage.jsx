@@ -8,7 +8,7 @@ import coin from "../../assets/ConnectWalletPage/Coinbase.svg";
 import wallet from "../../assets/ConnectWalletPage/WalletConnect.svg";
 import axios from "axios";
 import { colors } from "Global";
-import  { useNavigate, Routes  } from 'react-router-dom'
+import  { useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 
 const StyledConnectWalletPage = styled.div`
@@ -298,28 +298,26 @@ export const ConnectWalletPage = () => {
   const connectMetamask = async (setMetamaskAddress) => {
     // if ()
     if (localStorage.getItem("metamask-address")) {
-      console.log("Metamask: OK");
-      const account = EthereumInstance.getEthereumAccounts();
-      console.log("accountMEtaMask: ",account[0]);
+      EthereumInstance.getEthereumAccounts();
+      const account = localStorage.getItem("metamask-address")
+      console.log("accountMEtaMask: ",account);
+
       axios
-      .post(`http://localhost:8080/api/connect-wallet/${account[0]}`)
+      .post(`http://localhost:8080/api/connect-wallet/${account}`)
       .then(function (response) {
         
-        console.log("phan hoi thanh cong: ",response.data.data);
+        console.log("phan hoi thanh cong login: ",response);
         const cookies = new Cookies();
         cookies.set("token", response.data.data);
         // navigate("/login-success");
         navigate("/",  { state: {
-          address_wallet: account[0]
+          address_wallet: account
           } });
       })
       .catch(function (error) {
         console.log(error.response.data);
       });
 
-      // navigate("/",  { state: {
-      //   address_wallet: account[0]
-      //   } });
     } else {
       const account = await EthereumInstance.connectMetaMaskWallet();
       console.log("account: ",account);

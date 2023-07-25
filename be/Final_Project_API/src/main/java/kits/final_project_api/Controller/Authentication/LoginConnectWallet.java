@@ -49,7 +49,7 @@ public class LoginConnectWallet {
                 cookie.setMaxAge(3600);
                 response.addCookie(cookie);
 
-                return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("Login Successfully", "",
+                return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("Login Successfully", newToken,
                         "", ""));
 //            } else {
 //                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new RegisterResponseDto("Wrong address wallet", "", "", "Address_Wallet_INVALID"));

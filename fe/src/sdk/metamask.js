@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
-import  { useNavigate, Routes  } from 'react-router-dom'
-import { Route } from 'react-router-dom';
+// import  { useNavigate, Routes  } from 'react-router-dom'
+// import { Route } from 'react-router-dom';
 
 const metamaskURL =
   'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
@@ -114,7 +114,7 @@ class Ethereum {
         const address = this.toChecksumAddress(accounts[0]);
         console.log("test: " + address);
         localStorage.setItem('address', address);
-        const balance = await this.getProvider.getBalance(address);
+        // const balance = await this.getProvider.getBalance(address);
       }
     } catch (error) {
       console.log(error);
