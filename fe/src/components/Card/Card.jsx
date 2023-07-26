@@ -11,7 +11,7 @@ const CardStyled = styled.div`
   border-radius: ${(props) => props.borderRadius};
 
   .header_card {
-    height: 80%;
+    height: 300px;
   }
 
   .header_card img {
@@ -128,7 +128,12 @@ const CardTrendingCollectionStyled = styled.div`
     grid-row-start: 1;
     grid-row-end: 3;
     width: unset;
-    height: unset;
+    height: 400px;
+  }
+
+  .header_card .list_image .list_image_item{
+    width: 100px;
+    height: 100px;
   }
 
   .header_card .list_image .list_image_item img {
@@ -175,6 +180,12 @@ const CardTrendingCollectionStyled = styled.div`
     display: flex;
     column-gap: 10px;
     align-items: center;
+  }
+
+  .body_card .title_card .info_artist img{
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
   }
 
   .body_card .title_card .info_artist span {
