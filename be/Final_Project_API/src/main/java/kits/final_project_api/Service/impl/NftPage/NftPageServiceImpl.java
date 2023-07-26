@@ -99,7 +99,6 @@ public class NftPageServiceImpl implements NftPageService {
                 if (map1.get("nft_id").equals(map2.get("nft_id"))) {
 //
 //                System.out.println("m1.get(n.nft_id): " + map1.get("nft_id") + "   " + "m2.get(cc.nft_id): " + map2.get("nft_id"));
-
                     Map<String, Object> newMap = new HashMap<>();
                     newMap.put("nft_id", map1.get("nft_id"));
                     newMap.put("nft_name", map1.get("nft_name"));
@@ -178,6 +177,7 @@ public class NftPageServiceImpl implements NftPageService {
 
                 // System.out.println("map1.get(account_id): " + map1.get("account_id") + "   " + "map2.get(account_id): " + map2.get("account_id"));
                 // System.out.println("map1.get(nft_id): " + map1.get("nft_id") + "   " + "map2.get(nft_id): " + map2.get("nft_id"));
+
 
                 // if (map1.get("nft_id").equals(map2.get("nft_id"))) {
 //

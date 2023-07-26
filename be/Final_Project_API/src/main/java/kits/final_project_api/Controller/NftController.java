@@ -207,11 +207,11 @@ public class NftController {
         return totalNftAndCollection;
     }
 
-    @GetMapping("/owned-nft/{id}")
+    @GetMapping("/created-nft/{id}")
     @ResponseBody
-    public List<Map<String, Object>> getNftUserOwned(@PathVariable Integer id) {
-        List<Map<String, Object>> getNftUserOwned = nftPageServiceImpl.getTotalNftInfoByID(id);
-        return getNftUserOwned;
+    public List<Map<String, Object>> getNftUserCreated(@PathVariable Integer id) {
+        List<Map<String, Object>> getNftUserCreated = nftPageServiceImpl.getTotalNftInfoByID(id);
+        return getNftUserCreated;
     }
 
 }

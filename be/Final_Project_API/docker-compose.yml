@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=nft
+      - MYSQL_ROOT_PASSWORD=toan123
+    expose:
+      - 3307
+  nft_market:
+    image: nft-market:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql

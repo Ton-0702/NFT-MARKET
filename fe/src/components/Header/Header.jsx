@@ -10,22 +10,23 @@ import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
 import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
 import {useNavigate} from 'react-router-dom';
-// import Switch from 'react-switch';
-import {useSettingsStore} from 'store/store';
+
+import {useCurrentUserStore, useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
-import {Button} from 'components/Button';
 
 const Header = () => {
   const [tokenUser, setToken] = useState(null);
   const [showSubHeader, setShowSubHeader] = useState(false);
   const token = Cookies.get('token');
-  // console.log('hello token: ', token);
+  console.log('hello token: ', token);
+  const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
 
+  // console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
 
-  // console.log('tokenUser:', tokenUser[0]);
+  // console.log('tokenUser:', tokenUser);
 
   const handleLogoutForm = (e) => {
     console.log('token logout: ', token);
@@ -36,13 +37,16 @@ const Header = () => {
         console.log('phan hoi thanh cong logout: ', response.data.data);
         // const cookies = new Cookies();
         // cookies.set("token logout", response.data.data);
-        localStorage.removeItem('metamask-address');
-        Cookies.remove('token');
-        navigate('/');
+        // localStorage.removeItem('metamask-address');
+        // Cookies.remove('token');
+        // navigate('/');
       })
       .catch(function (error) {
         console.log(error.response.data);
       });
+    localStorage.removeItem('metamask-address');
+    Cookies.remove('token');
+    navigate('/');
   };
 
   useEffect(() => {
@@ -56,8 +60,10 @@ const Header = () => {
         Promise.all([getTokenByUser()]).then((res) => {
           // console.log("what is res: ",res);
           const tokenUserData = res[0].data;
-          // console.log('tokenUserData: ', tokenUserData);
+          const dataUser = res[0].data[0];
+          console.log('tokenUserData: ', tokenUserData);
           setToken(tokenUserData);
+          addCurrentUser(dataUser);
         });
       } catch (error) {
         console.error(error);
@@ -65,7 +71,7 @@ const Header = () => {
     }
     getUser();
   }, []);
-  // console.log("tokenUser: ",tokenUser[0].address_wallet);
+
   let address_wallet = '';
   if (tokenUser === '' || tokenUser === null) {
     address_wallet = '';
@@ -157,7 +163,7 @@ const Header = () => {
                   {address_wallet}
                 </SignUpButton>
 
-                {showSubHeader && (
+                {showSubHeader && token && (
                   <div className="sub-header">
                     <ul className="sub-header-list">
                       <li className="sub-header-items">
@@ -196,33 +202,29 @@ const Header = () => {
                 </div>
 
                 <div className="nav-mobile-item">
-                  <a href="/user-page" className="nav-mobile-item-link">
-                    <span>username</span>
+                  <a href="/create-nft" className="nav-mobile-item-link">
+                    <span>Create NFT</span>
                   </a>
                 </div>
                 <div className="nav-mobile-item">
-                  <a href="market-place" className="nav-mobile-item-link">
+                  <a href="/market-place" className="nav-mobile-item-link">
                     <span>Marketplace</span>
                   </a>
                 </div>
                 <div className="nav-mobile-item">
-                  <a href="ranking" className="nav-mobile-item-link">
+                  <a href="/ranking" className="nav-mobile-item-link">
                     <span>Rankings</span>
                   </a>
                 </div>
 
-                <div className="nav-mobile-item">
-                  <Button
-                    onClick={handleLogoutForm}
-                    className="nav-mobile-item-link"
-                  >
+                <div className="nav-mobile-item" onClick={handleLogoutForm}>
+                  <a href="/" className="nav-mobile-item-link">
                     <span>Log Out</span>
-                  </Button>
+                  </a>
                 </div>
 
                 <div className="switch-darkMode">
                   <DarkMode onChange={toggleDarkMode}></DarkMode>
-                  {/* <button onClick={toggleDarkMode}>ToggleDarkMode</button> */}
                 </div>
               </NavMobileStyled>
             </nav>

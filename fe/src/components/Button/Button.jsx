@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const ButtonStyled = styled.div`
-  width: ${(props) => (props.width ? props.width : "unset")};
+  width: ${(props) => (props.width ? props.width : 'unset')};
   button {
-    width: ${(props) => (props.width ? props.width : "unset")};
+    width: ${(props) => (props.width ? props.width : 'unset')};
     display: flex;
     padding: ${(props) => props.padding};
     justify-content: ${(props) =>
@@ -33,7 +33,6 @@ const Button = ({
   border,
   percent,
   fontSize,
-  content,
   img,
   borderRadius,
   fontWeight,
@@ -42,6 +41,10 @@ const Button = ({
   onSubmit,
   onClick,
   jutifyContent,
+  value,
+  className,
+  content,
+  children,
 }) => {
   if (type === 'large') {
     return <ButtonLargeStyled></ButtonLargeStyled>;
@@ -62,12 +65,16 @@ const Button = ({
         fontWeight={fontWeight}
         padding={padding}
         onsubmit={onSubmit}
+        content={content}
         onClick={onClick}
         jutifyContent={jutifyContent}
+        value={value}
+        className={className}
       >
         <button onSubmit={onSubmit} onClick={onClick}>
           {img && <img src={img} alt="" />}
-          <span>{content}</span>
+          {content}
+          {children}
         </button>
       </ButtonStyled>
     );
