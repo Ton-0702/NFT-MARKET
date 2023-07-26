@@ -29,6 +29,7 @@ function App() {
       <Route path="/login-success" element={<LoginSuccessPage />} />
       <Route path="/create-nft" element={<CreateNFTPage />} />
       <Route path="/upload" element={<UploadFileToCloud />} />
+      <Route path="/nft-detail-page/:nftId" element={<NftPage />} />
     </Routes>
   );
 }

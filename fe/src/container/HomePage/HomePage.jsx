@@ -846,14 +846,14 @@ const HomePage = () => {
   const [trendingCollection, setTrendingCollection] = useState();
   const [newTrending, setNewTrending] = useState();
   const [topCreatorID, setTopCreatorID] = useState();
-
+  const [nftId, setNftId] = useState();
   const navigate = useNavigate();
 
   console.log("TrendingCollection: ", trendingCollection);
   console.log("newTrending: ", newTrending);
   console.log("TopCreator: ", topCreator);
   console.log("TopCreatorId: ", topCreatorID);
-
+  console.log("nftId: ", nftId);
   useEffect(() => {
     function getAllTopCreator() {
       try {
@@ -901,12 +901,26 @@ const HomePage = () => {
       .get(`http://localhost:8080/api/artist/${artistId}`)
       .then((res) => {
         setTopCreatorID(res.data);
-        navigate(
-          `/artist/${artistId}`,
-          {
-            state: {dataArtist: res.data[0]}
-          }
-        )
+        navigate(`/artist/${artistId}`, {
+          state: { dataArtist: res.data[0] },
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const handleClickNFT = (nftId) => {
+    console.log("nftID: " + nftId);
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+
+      .then((res) => {
+        setNftId(res.data);
+        console.log(res.data);
+
+        navigate(`/nft-detail-page/${nftId}`, {
+          state: { dataNft: res.data[0] },
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -1080,8 +1094,13 @@ const HomePage = () => {
             <div className="body_discover_more">
               {newTrending
                 ? newTrending.map((e, index) => (
-                    <div className="body_discover_more_item" key={index}>
+                    <div
+                      className="body_discover_more_item"
+                      key={e.nft_id}
+                      onClick={() => handleClickNFT(e.nft_id)}
+                    >
                       <Card
+                        number_id={index}
                         type="DiscoverMore"
                         title={e.nft_name}
                         img_product={e.image}
