@@ -24,7 +24,7 @@ function App() {
       <Route path="/sign-in" element={<SignInPage />} />
       <Route path="/nft-page" element={<NftPage />} />
       <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-      <Route path="/artist" element={<ArtistPage />} />
+      <Route path="/artist/:artistId" element={<ArtistPage />} />
       <Route path="/profile-details" element={<ProfileDetail />} />
       <Route path="/login-success" element={<LoginSuccessPage />} />
       <Route path="/create-nft" element={<CreateNFTPage />} />

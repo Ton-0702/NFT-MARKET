@@ -25,4 +25,5 @@ public interface NftPageService {
 
     List<Map<String, Object>> getTotalNftAndCollection();
 
+    List<Map<String, Object>> getTotalNftInfoByID(Integer id);
 }

@@ -374,6 +374,7 @@ const ProfileDetail = () => {
     formData.append("username", formValue.username);
     formData.append("bio", formValue.bio);
     formData.append("email", formValue.email);
+    formData.append("price", formValue.price);
     formData.append("image", formValue.profile_image);
     formData.append("background", formValue.profile_background_image);
     console.log("formData:", formData.get("email"));
@@ -451,6 +452,17 @@ const ProfileDetail = () => {
                       id="email"
                       placeholder="Enter email"
                       value={formValue.email}
+                      onChange={handleChange}
+                    ></input>
+                  </div>
+                  <div className="profile_detail_form_item">
+                    <label htmlFor="price">Asset</label>
+                    <input
+                      type="number"
+                      name="price"
+                      id="price"
+                      placeholder="Enter price"
+                      value={formValue.price}
                       onChange={handleChange}
                     ></input>
                   </div>

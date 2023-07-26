@@ -1,101 +1,101 @@
-import styled from 'styled-components';
-import {colors} from '../../Global';
-import {PrimaryLayout} from 'components/Layout';
-import {Button} from 'components/Button';
-import {Card} from 'components/Card';
+import styled from "styled-components";
+import { colors } from "../../Global";
+import { PrimaryLayout } from "components/Layout";
+import { Button } from "components/Button";
+import { Card } from "components/Card";
 
-import globe from '../../assets/Artist/Links/Globe.svg';
-import discord from '../../assets/Artist/Links/DiscordLogo.svg';
-import youtube from '../../assets/Artist/Links/YoutubeLogo.svg';
-import twitter from '../../assets/Artist/Links/TwitterLogo.svg';
-import insta from '../../assets/Artist/Links/InstagramLogo.svg';
-import background1 from '../../assets/Artist/background_img.png';
-import avatar1 from '../../assets/Artist/avatar1.png';
-import button1 from '../../assets/Artist/Button1.svg';
-import button2 from '../../assets/Artist/Button2.svg';
-import cate5a from '../../assets/HomePage/Categories/cate5a.png';
-import {useState} from 'react';
-import {useCurrentUserStore} from 'store/store';
+import globe from "../../assets/Artist/Links/Globe.svg";
+import discord from "../../assets/Artist/Links/DiscordLogo.svg";
+import youtube from "../../assets/Artist/Links/YoutubeLogo.svg";
+import twitter from "../../assets/Artist/Links/TwitterLogo.svg";
+import insta from "../../assets/Artist/Links/InstagramLogo.svg";
+import background1 from "../../assets/Artist/background_img.png";
+import avatar1 from "../../assets/Artist/avatar1.png";
+import button1 from "../../assets/Artist/Button1.svg";
+import button2 from "../../assets/Artist/Button2.svg";
+import cate5a from "../../assets/HomePage/Categories/cate5a.png";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const CreatedArtistData = [
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
@@ -181,7 +181,7 @@ const ArtistStyled = styled.div`
 
   .header_artist .infor_artist .body_infor_artist .statistical span {
     color: ${colors.whiteColor};
-    font-family: 'Work Sans';
+    font-family: "Work Sans";
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -263,7 +263,7 @@ const ArtistStyled = styled.div`
   }
 
   .artist-filter-item::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 2px;
@@ -287,7 +287,7 @@ const ArtistStyled = styled.div`
   .artist-filter-item_count {
     font-size: 16px;
     font-style: normal;
-    font-family: 'Space Mono';
+    font-family: "Space Mono";
     font-weight: 400;
     line-height: 140%;
     padding: 5px 10px;
@@ -374,34 +374,18 @@ const ArtistStyled = styled.div`
 `;
 
 const ArtistPage = () => {
-  const user = useCurrentUserStore((state) => state.currentUser);
-  console.log('user: ', typeof user);
-
-  // const [copyAddressWallet, setCopyAddressWallet] = useState('');
-
-  const [selectedClass, setSelectedClass] = useState('created');
-
-  if (!user) return null;
-
-  // let wallet = '';
-  // if (user.address_wallet) {
-  //   let substring;
-  //   console.log('hieu');
-  // }
-
-  const handleClickCopy = (e) => {
-    const value = e.target;
-    console.log(value);
-  };
-
+  const location = useLocation();
+  const { dataArtist } = location.state;
+  const [selectedClass, setSelectedClass] = useState("created");
+  console.log(dataArtist);
   const handleClickActiveClass = (activeClass) => {
-    if (activeClass === 'created') {
+    if (activeClass === "created") {
       setSelectedClass(activeClass);
     }
-    if (activeClass === 'owned') {
+    if (activeClass === "owned") {
       setSelectedClass(activeClass);
     }
-    if (activeClass === 'collection') {
+    if (activeClass === "collection") {
       setSelectedClass(activeClass);
     }
   };
@@ -409,93 +393,89 @@ const ArtistPage = () => {
     <PrimaryLayout>
       <ArtistStyled>
         <div className="img_background"></div>
-        <div className="header_artist">
-          <div className="container">
-            <div className="infor_artist">
-              <div className="avatar">
-                <img src={avatar1} alt="" />
-              </div>
-              <div className="body_infor_artist">
-                <div className="header_body_infor_artist">
-                  <h2>{user.username || 'Animakid'} </h2>
-                  <div className="body_infor_artist_button">
-                    <Button
-                      onClick={handleClickCopy}
-                      img={button1}
-                      // bgColor={'#A259FF'}
-                      border={'1px solid #3B3B3B'}
-                      bgColor={'#2B2B2B'}
-                      borderRadius={'20px'}
-                      padding={'15px 30px'}
-                      jutifyContent={'center'}
-                      textColor={colors.whiteColor}
-                      content={'0xc0E3...B79C'}
-                      fontSize={'16px'}
-                      fontWeight={'600'}
-                      value={user.address_wallet}
-                      className="address-wallet"
-                    >
-                      {user.address_wallet}
-                    </Button>
-                    <Button
-                      img={button2}
-                      bgColor={'unset'}
-                      border={'2px solid #A259FF'}
-                      borderRadius={'20px'}
-                      jutifyContent={'center'}
-                      padding={'15px 30px'}
-                      textColor={colors.whiteColor}
-                      content={'Follow'}
-                      fontSize={'16px'}
-                      fontWeight={'600'}
-                    >
-                      Follow
-                    </Button>
+        {/* {dataArtist
+          ? dataArtist.map((e, index) => ( */}
+              <div className="header_artist">
+                <div className="container">
+                  <div className="infor_artist">
+                    <div className="avatar">
+                      <img src={dataArtist.avatar} alt="" />
+                    </div>
+                    <div className="body_infor_artist">
+                      <div className="header_body_infor_artist">
+                        <h2>{dataArtist.username}</h2>
+                        <div className="body_infor_artist_button">
+                          <Button
+                            img={button1}
+                            bgColor={"#A259FF"}
+                            borderRadius={"20px"}
+                            padding={"15px 30px"}
+                            jutifyContent={"center"}
+                            textColor={colors.whiteColor}
+                            content={"0xc0E3...B79C"}
+                            fontSize={"16px"}
+                            fontWeight={"600"}
+                          ></Button>
+                          <Button
+                            img={button2}
+                            bgColor={"unset"}
+                            border={"2px solid #A259FF"}
+                            borderRadius={"20px"}
+                            jutifyContent={"center"}
+                            padding={"15px 30px"}
+                            textColor={colors.whiteColor}
+                            content={"Follow"}
+                            fontSize={"16px"}
+                            fontWeight={"600"}
+                          ></Button>
+                        </div>
+                      </div>
+                      <div className="statistical">
+                        <div className="statistical_left">
+                          <h4>{dataArtist.volume}+</h4>
+                          <span>Volume</span>
+                        </div>
+                        <div className="statistical_middle">
+                          <h4>{dataArtist.nfts_sold}+</h4>
+                          <span>NFTs Sold</span>
+                        </div>
+                        <div className="statistical_left">
+                          <h4>3000+</h4>
+                          <span>Followers</span>
+                        </div>
+                      </div>
+                      <div className="bio">
+                        <h5>Bio</h5>
+                        <p>{dataArtist.biography}</p>
+                      </div>
+                      <div className="links">
+                        <h5>Links</h5>
+                        <ul>
+                          <li>
+                            <img src={globe} alt="" />
+                          </li>
+                          <li>
+                            <img src={discord} alt="" />
+                          </li>
+                          <li>
+                            <img src={youtube} alt="" />
+                          </li>
+                          <li>
+                            <img src={twitter} alt="" />
+                          </li>
+                          <li>
+                            <img src={insta} alt="" />
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="body_infor_artist_right"></div>
                   </div>
-                </div>
-                <div className="statistical">
-                  <div className="statistical_left">
-                    <h4>250k+</h4>
-                    <span>Volume</span>
-                  </div>
-                  <div className="statistical_middle">
-                    <h4>50+</h4>
-                    <span>NFTs Sold</span>
-                  </div>
-                  <div className="statistical_left">
-                    <h4>3000+</h4>
-                    <span>Followers</span>
-                  </div>
-                </div>
-                <div className="bio">
-                  <h5>Bio</h5>
-                  <p>The internet's friendliest designer kid.</p>
-                </div>
-                <div className="links">
-                  <h5>Links</h5>
-                  <ul>
-                    <li>
-                      <img src={globe} alt="" />
-                    </li>
-                    <li>
-                      <img src={discord} alt="" />
-                    </li>
-                    <li>
-                      <img src={youtube} alt="" />
-                    </li>
-                    <li>
-                      <img src={twitter} alt="" />
-                    </li>
-                    <li>
-                      <img src={insta} alt="" />
-                    </li>
-                  </ul>
                 </div>
               </div>
-              <div className="body_infor_artist_right"></div>
-            </div>
-          </div>
-        </div>
+            {/* ))
+          : null} */}
+
         <div className="body_artist">
           <div className="artist-body">
             <div className="container">
@@ -503,33 +483,33 @@ const ArtistPage = () => {
                 <ul className="artist-filter-list">
                   <li
                     className={
-                      selectedClass === 'created'
-                        ? 'artist-filter-item active'
-                        : 'artist-filter-item '
+                      selectedClass === "created"
+                        ? "artist-filter-item active"
+                        : "artist-filter-item "
                     }
-                    onClick={() => handleClickActiveClass('created')}
+                    onClick={() => handleClickActiveClass("created")}
                   >
                     <span className="artist-filter-item_title">Created</span>
                     <span className="artist-filter-item_count">302</span>
                   </li>
                   <li
                     className={
-                      selectedClass === 'owned'
-                        ? 'artist-filter-item active'
-                        : 'artist-filter-item '
+                      selectedClass === "owned"
+                        ? "artist-filter-item active"
+                        : "artist-filter-item "
                     }
-                    onClick={() => handleClickActiveClass('owned')}
+                    onClick={() => handleClickActiveClass("owned")}
                   >
                     <span className="artist-filter-item_title">Owned</span>
                     <span className="artist-filter-item_count">67</span>
                   </li>
                   <li
                     className={
-                      selectedClass === 'collection'
-                        ? 'artist-filter-item active'
-                        : 'artist-filter-item '
+                      selectedClass === "collection"
+                        ? "artist-filter-item active"
+                        : "artist-filter-item "
                     }
-                    onClick={() => handleClickActiveClass('collection')}
+                    onClick={() => handleClickActiveClass("collection")}
                   >
                     <span className="artist-filter-item_title">Collection</span>
                     <span className="artist-filter-item_count">4</span>
@@ -556,7 +536,7 @@ const ArtistPage = () => {
                           name_artist={e.name_artist}
                           total_sales={e.total_sales}
                           bgColor={colors.background}
-                          borderRadius={'20px'}
+                          borderRadius={"20px"}
                         ></Card>
                       </div>
                     ))

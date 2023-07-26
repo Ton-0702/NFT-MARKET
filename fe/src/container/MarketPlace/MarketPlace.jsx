@@ -205,8 +205,9 @@ const MarketPlaceStyled = styled.div`
   .market-place-body-list .market-place-body-grid {
     padding: 80px 40px;
     display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 30px;
+    grid-template-columns: 30% 30% 30%;
+    gap: 3%;
+    justify-content: space-between;
   }
 
   // Large devices (desktops, less than 1200px)
@@ -246,6 +247,7 @@ const MarketPlaceStyled = styled.div`
 
     .market-place-body-list .market-place-body-grid {
       grid-template-columns: auto;
+      gap: 50px;
     }
 
     .header-market-place
@@ -328,7 +330,7 @@ const MarketPlace = () => {
     const { value } = e.target;
     console.log(value);
     // setResultSearch((prevState) => ({ ...prevState, [name]: value }));
-    setResultSearch(value)
+    setResultSearch(value);
   };
   // const handleClickSearch = () => {getResultSearch()};
   return (
@@ -416,13 +418,12 @@ const MarketPlace = () => {
                           key={index}
                         >
                           <Card
-                            title={e.title}
-                            img_product={e.img}
+                            title={e.nft_name}
+                            img_product={e.image}
                             price={e.price}
                             highest_bid={e.highest_bid}
-                            img_artist={e.img_artist}
-                            name_artist={e.name_artist}
-                            total_sales={e.total_sales}
+                            img_artist={e.avatar}
+                            name_artist={e.username}
                             bgColor={colors.background}
                             borderRadius={"20px"}
                           ></Card>

@@ -137,10 +137,10 @@ const Input = ({
             id=""
             onChange={onChange}
           />
-          <i
+          {/* <i
             className="fa-solid fa-magnifying-glass"
-            onClick={onClick}
-          ></i>
+            // onClick={onClick}
+          ></i> */}
         </form>
       </SearchInput>
     );
