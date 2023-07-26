@@ -53,7 +53,7 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
     String getTotalCollection();
 
 
-    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price,n.account_id, acc.username, acc.avatar FROM nft AS n INNER JOIN account AS acc ON n.account_id = acc.account_id where acc.account_id=:id group by n.nft_name", nativeQuery = true)
+    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price,n.account_id, acc.username, acc.avatar FROM nft AS n INNER JOIN account AS acc ON n.account_id = acc.account_id where acc.account_id=:id group by nft_id", nativeQuery = true)
     List<Map<String, Object>> getNftAndAccountInfoById(Integer id);
 
     @Query(value = "SELECT nft_id,account_id,MAX(highest_bid) AS highest_bid FROM transaction_bid where account_id=:id GROUP BY nft_id", nativeQuery = true)
