@@ -116,6 +116,28 @@ const NftPage = () => {
     getDetail();
   }, []);
 
+  // get day and time end bid
+
+  useEffect(() => {
+    // http://localhost:8080/nfts/date-start-end-bid/1
+    async function timeEndBid() {
+      try {
+        if (nftId) {
+          const response = await axios.get(
+            `http://localhost:8080/nfts/date-start-end-bid/1/${nftId}`
+          );
+          // console.log(response);
+          const data = response.data;
+          console.log('timeEndBid: ', data);
+          // setTransactions(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    timeEndBid();
+  }, [nftId]);
+
   // history Transaction
   useEffect(() => {
     async function historyTransaction() {
