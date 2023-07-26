@@ -64,6 +64,7 @@ public class NftPageServiceImpl implements NftPageService {
 
 
 //                if (map1.get("nft_id").equals(map2.get("nft_id"))) {
+            newMap.put("account_id", map1.get("account_id"));
             newMap.put("nft_id", map1.get("nft_id"));
             newMap.put("nft_name", map1.get("nft_name"));
             newMap.put("image", map1.get("image"));
