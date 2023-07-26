@@ -43,6 +43,7 @@ const Button = ({
   jutifyContent,
   value,
   className,
+  content,
   children,
 }) => {
   if (type === 'large') {
@@ -64,6 +65,7 @@ const Button = ({
         fontWeight={fontWeight}
         padding={padding}
         onsubmit={onSubmit}
+        content={content}
         onClick={onClick}
         jutifyContent={jutifyContent}
         value={value}
@@ -71,6 +73,7 @@ const Button = ({
       >
         <button onSubmit={onSubmit} onClick={onClick}>
           {img && <img src={img} alt="" />}
+          {content}
           {children}
         </button>
       </ButtonStyled>
