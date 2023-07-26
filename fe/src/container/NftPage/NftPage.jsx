@@ -1,28 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import styled from 'styled-components';
-import {PrimaryLayout} from 'components/Layout';
-import banner from '../../assets/Nft-page-imgs/Banner.jpeg';
-import avatar from '../../assets/HomePage/Avatar1.svg';
-import globe from '../../assets/Nft-page-imgs/Globe.png';
-import {colors} from 'Global';
-import { useLocation } from 'react-router-dom';
-import avatar1 from '../../assets/ranking-imgs/avatar.svg';
-import avatar2 from '../../assets/ranking-imgs/avatar2.svg';
-import avatar3 from '../../assets/ranking-imgs/avatar3.svg';
-import avatar4 from '../../assets/ranking-imgs/avatar4.svg';
-import avatar5 from '../../assets/ranking-imgs/avatar5.svg';
-import avatar6 from '../../assets/ranking-imgs/avatar6.svg';
-import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import {useCurrentUserStore} from 'store/store';
-
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { PrimaryLayout } from "components/Layout";
+import banner from "../../assets/Nft-page-imgs/Banner.jpeg";
+import avatar from "../../assets/HomePage/Avatar1.svg";
+import globe from "../../assets/Nft-page-imgs/Globe.png";
+import { colors } from "Global";
+import { useLocation } from "react-router-dom";
+import avatar1 from "../../assets/ranking-imgs/avatar.svg";
+import avatar2 from "../../assets/ranking-imgs/avatar2.svg";
+import avatar3 from "../../assets/ranking-imgs/avatar3.svg";
+import avatar4 from "../../assets/ranking-imgs/avatar4.svg";
+import avatar5 from "../../assets/ranking-imgs/avatar5.svg";
+import avatar6 from "../../assets/ranking-imgs/avatar6.svg";
+import avatar7 from "../../assets/ranking-imgs/avatar7.svg";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useCurrentUserStore } from "store/store";
+import { Card } from "components/Card";
+import { redirect, useNavigate } from "react-router-dom";
 
 const auctionData = [
   {
     id: 1,
     img: avatar1,
-    username: 'Jaydon Ekstrom Bothman',
+    username: "Jaydon Ekstrom Bothman",
     change: 1.4,
     sold: 602,
     volume: 12.4,
@@ -30,7 +31,7 @@ const auctionData = [
   {
     id: 2,
     img: avatar2,
-    username: 'Ruben Carder',
+    username: "Ruben Carder",
     change: 1.3,
     sold: 480,
     volume: 10.2,
@@ -38,7 +39,7 @@ const auctionData = [
   {
     id: 3,
     img: avatar3,
-    username: 'Alfredo Septimus',
+    username: "Alfredo Septimus",
     change: 1.2,
     sold: 600,
     volume: 12.2,
@@ -46,7 +47,7 @@ const auctionData = [
   {
     id: 4,
     img: avatar4,
-    username: 'Davis Franci',
+    username: "Davis Franci",
     change: 1.2,
     sold: 400,
     volume: 11.2,
@@ -54,7 +55,7 @@ const auctionData = [
   {
     id: 5,
     img: avatar5,
-    username: 'Livia Rosser',
+    username: "Livia Rosser",
     change: 1.3,
     sold: 480,
     volume: 10.2,
@@ -62,7 +63,7 @@ const auctionData = [
   {
     id: 6,
     img: avatar6,
-    username: 'Kianna Donin',
+    username: "Kianna Donin",
     change: 1.3,
     sold: 480,
     volume: 10.2,
@@ -70,7 +71,7 @@ const auctionData = [
   {
     id: 7,
     img: avatar7,
-    username: 'Phillip Lipshutz',
+    username: "Phillip Lipshutz",
     change: 1.3,
     sold: 489,
     volume: 9.2,
@@ -86,7 +87,7 @@ const NftPage = () => {
 
   const [dataNftPage, setDataNftPage] = useState();
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [transactions, setTransactions] = useState([] || null);
   // console.log('transactions: ', transactions);
   const [nftId, setNftId] = useState();
@@ -96,7 +97,11 @@ const NftPage = () => {
   // console.log('token: ', token);
 
   const location = useLocation();
-  const {dataNft} = location.state;
+  const { dataNft } = location.state;
+  const [selectedClass, setSelectedClass] = useState("created");
+  const [listDataNFT, setListDataNFT] = useState();
+  const [dataNFTID, setDataNFTID] = useState();
+  const navigate = useNavigate();
   console.log(dataNft);
 
   const currentUser = useCurrentUserStore((state) => state.currentUser);
@@ -105,7 +110,6 @@ const NftPage = () => {
     // get detail Page
     async function getDetail() {
       try {
-        
         const response = await axios.get(
           `http://localhost:8080/nfts/nft-detail-page/${dataNft.nft_id}`
         );
@@ -114,13 +118,26 @@ const NftPage = () => {
         const nftId = response.data[0].nft_id;
         // const nft_name=response.data[0].nft_name;
         // console.log("nft name: ",nft_name);
-        console.log('nftId: ', nftId);
+        console.log("nftId: ", nftId);
 
         setNftId(nftId);
       } catch (error) {
         console.error(error);
       }
     }
+
+    function getListNFTById() {
+      axios
+        .get(`http://localhost:8080/nfts/created-nft/${dataNft.account_id}`)
+        .then((res) => {
+          console.log(res.data);
+          setListDataNFT(res.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    getListNFTById();
     getDetail();
   }, []);
 
@@ -134,7 +151,7 @@ const NftPage = () => {
           );
           // console.log(response);
           const data = response.data;
-          console.log('dataTransaction: ', data);
+          console.log("dataTransaction: ", data);
           setTransactions(data);
         }
       } catch (error) {
@@ -143,6 +160,32 @@ const NftPage = () => {
     }
     historyTransaction();
   }, [nftId]);
+
+  const handleClickActiveClass = (activeClass) => {
+    if (activeClass === "created") {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === "owned") {
+      setSelectedClass(activeClass);
+    }
+    if (activeClass === "collection") {
+      setSelectedClass(activeClass);
+    }
+  };
+
+  const handleClick = (nftID) => {
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .then((res) => {
+        navigate(`/nft-detail-page/${nftID}`, {
+          state: { dataNft: res.data[0] },
+        });
+        window.scrollTo(0, 0);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   // getUser
   // useEffect(() => {
@@ -183,7 +226,7 @@ const NftPage = () => {
 
       return () => clearInterval(secondsLeft);
     } else {
-      console.log('TimeOut');
+      console.log("TimeOut");
     }
   }, [count, hour, minute, second]);
 
@@ -219,13 +262,13 @@ const NftPage = () => {
 
   // create transaction bid
   const createTransactionBid = (inputValue) => {
-    const {account_id} = currentUser;
+    const { account_id } = currentUser;
     // http://localhost:8080/transaction/create
-    console.log('inputValue: ', inputValue);
+    console.log("inputValue: ", inputValue);
     const formData = new FormData();
-    formData.append('nft_id', nft_id);
-    formData.append('account_id', account_id);
-    formData.append('highest_bid', inputValue);
+    formData.append("nft_id", nft_id);
+    formData.append("account_id", account_id);
+    formData.append("highest_bid", inputValue);
     async function postTransactionBid() {
       axios
         .post(`http://localhost:8080/transaction/create`, formData)
@@ -243,13 +286,13 @@ const NftPage = () => {
   const handleClickPlaceBid = () => {
     let dataBids;
     if (!currentUser) {
-      alert('you need to LogIn');
+      alert("you need to LogIn");
       return null;
     }
-    const {username} = currentUser;
+    const { username } = currentUser;
     const today = new Date();
     const currentTime =
-      today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     // console.log('clicked');
     const inputNumber = Number(inputValue);
     // 1. get info username
@@ -263,8 +306,8 @@ const NftPage = () => {
     // }
 
     if (!inputNumber) {
-      console.log('Invalid Value');
-      alert('Invalid Value');
+      console.log("Invalid Value");
+      alert("Invalid Value");
     } else if (inputNumber < price) {
       alert(`Must be greater than ${price} ETH`);
     } else {
@@ -272,23 +315,23 @@ const NftPage = () => {
         dataBids = {
           username: username,
           date: today,
-          avatar: 'a',
+          avatar: "a",
           currentTime: currentTime,
           highest_bid: inputNumber,
         };
         createTransactionBid(inputNumber);
         // sort data, likely Unshift method
         setTransactions((prevTransactions) => [dataBids, ...prevTransactions]);
-        setInputValue('');
+        setInputValue("");
       }
       if (transactions.length > 0) {
         const highestBidsPrice = transactions[0].highest_bid;
-        console.log('highestBidsPrice: ', highestBidsPrice);
+        console.log("highestBidsPrice: ", highestBidsPrice);
         if (inputNumber > highestBidsPrice) {
           dataBids = {
             username: username,
             date: today,
-            avatar: 'a',
+            avatar: "a",
             currentTime: currentTime,
             highest_bid: inputNumber,
           };
@@ -298,10 +341,10 @@ const NftPage = () => {
             dataBids,
             ...prevTransactions,
           ]);
-          setInputValue('');
+          setInputValue("");
         } else {
           alert(`Can not bids !!! the highest bid is ${highestBidsPrice} ETH`);
-          console.log('can not add bids');
+          console.log("can not add bids");
         }
       }
     }
@@ -313,7 +356,7 @@ const NftPage = () => {
   };
 
   const handleInputChange = (e) => {
-    const {value} = e.target;
+    const { value } = e.target;
     setInputValue(value);
   };
 
@@ -321,13 +364,13 @@ const NftPage = () => {
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
-          <img src={dataNft.image} alt="" className='banner'/>
+          <img src={dataNft.image} alt="" className="banner" />
           <div className="container nft-page-content">
             <div className="content-left">
               <div className="content-left-wrap">
                 <div className="content-top">
-                  <div className="artist-name">{nft_name}</div>
-                  <span className="date-creating">Minted on {date_create}</span>
+                  <div className="artist-name">{dataNft.nft_name}</div>
+                  <span className="date-creating">Minted on {dataNft.date_create}</span>
                 </div>
                 <div className="content-created">
                   <div className="content-created-item">
@@ -335,22 +378,22 @@ const NftPage = () => {
                     <div className="created-detail">
                       <img src={dataNft.avatar} alt="" />
                       <span className="create-by">
-                        {username || 'Orbitian'}
+                        {username || "Orbitian"}
                       </span>
                     </div>
                   </div>
                   <div className="content-created-item">
                     <div className="create-by-title">Price NFT</div>
                     <div className="created-detail">
-                      <span className="price-nft">{price} ETH</span>
+                      <span className="price-nft">{dataNft.price} ETH</span>
                     </div>
                   </div>
                 </div>
                 <div className="content-desc">
                   <div className="desc-title">Description</div>
                   <span className="desc">
-                    {description
-                      ? description
+                    {dataNft.description
+                      ? dataNft.description
                       : `The Orbitians is a collection of 10,000 unique NFTs on the
                     Ethereum blockchain,There are all sorts of beings in the NFT
                     Universe. The most advanced and friendly of the bunch are
@@ -408,22 +451,22 @@ const NftPage = () => {
                   <div className="card-time">
                     <div className="hour">
                       <div className="hour-counting">
-                        {hour < 10 ? '0' + hour : hour}
+                        {hour < 10 ? "0" + hour : hour}
                       </div>
                       <div className="card-time-detail">Hours</div>
                     </div>
                     <div className="colon">:</div>
                     <div className="minute">
                       <div className="minute-counting">
-                        {' '}
-                        {minute < 10 ? '0' + minute : minute}
+                        {" "}
+                        {minute < 10 ? "0" + minute : minute}
                       </div>
                       <div className="card-time-detail">Minutes</div>
                     </div>
                     <div className="colon">:</div>
                     <div className="seconds">
                       <div className="seconds-counting">
-                        {second < 10 ? '0' + second : second}
+                        {second < 10 ? "0" + second : second}
                       </div>
 
                       <div className="card-time-detail">Seconds</div>
@@ -497,7 +540,7 @@ const NftPage = () => {
                             <td className="auction__table-body-data">
                               <span className="body-data-amount">
                                 {item.highest_bid}
-                              </span>{' '}
+                              </span>{" "}
                               ETH
                             </td>
                           </tr>
@@ -508,13 +551,89 @@ const NftPage = () => {
               </div>
             </div>
           </div>
+          <div className="body_artist">
+            <div className="artist-body">
+              <div className="container">
+                <div className="artist-filter">
+                  <ul className="artist-filter-list">
+                    <li
+                      className={
+                        selectedClass === "created"
+                          ? "artist-filter-item active"
+                          : "artist-filter-item "
+                      }
+                      onClick={() => handleClickActiveClass("created")}
+                    >
+                      <span className="artist-filter-item_title">Created</span>
+                      <span className="artist-filter-item_count">302</span>
+                    </li>
+                    <li
+                      className={
+                        selectedClass === "owned"
+                          ? "artist-filter-item active"
+                          : "artist-filter-item "
+                      }
+                      onClick={() => handleClickActiveClass("owned")}
+                    >
+                      <span className="artist-filter-item_title">Owned</span>
+                      <span className="artist-filter-item_count">67</span>
+                    </li>
+                    <li
+                      className={
+                        selectedClass === "collection"
+                          ? "artist-filter-item active"
+                          : "artist-filter-item "
+                      }
+                      onClick={() => handleClickActiveClass("collection")}
+                    >
+                      <span className="artist-filter-item_title">
+                        Collection
+                      </span>
+                      <span className="artist-filter-item_count">4</span>
+                    </li>
+                  </ul>
+                  <div className="artist-table">
+                    <div className="artist-table-wrap"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="artist-body-list">
+              <div className="container">
+                <div className="artist-body-grid">
+                  {listDataNFT
+                    ? listDataNFT.map((e, index) => (
+                        <div
+                          className="body-artist-body-grid-item"
+                          id={e.nft_id}
+                          onClick={() => {
+                            handleClick(e.nft_id);
+                          }}
+                        >
+                          <Card
+                            title={e.nft_name}
+                            img_product={e.image}
+                            price={e.price}
+                            highest_bid="1.63"
+                            img_artist={e.avatar}
+                            name_artist={e.username}
+                            bgColor={colors.background}
+                            borderRadius={"20px"}
+                          ></Card>
+                        </div>
+                      ))
+                    : null}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </NftPageStyled>
     </PrimaryLayout>
   );
 };
 
-export {NftPage};
+export { NftPage };
 
 const NftPageStyled = styled.div`
   background-color: ${colors.background};
@@ -523,7 +642,7 @@ const NftPageStyled = styled.div`
     overflow-y: auto;
   }
 
-  .nft-page-wrap .banner{
+  .nft-page-wrap .banner {
     width: 100%;
     max-height: 560px;
     object-fit: fill;
@@ -561,7 +680,7 @@ const NftPageStyled = styled.div`
   .desc-title,
   .detail-title,
   .tags-tittle {
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     color: ${colors.borderColor};
     font-size: 22px;
     font-weight: 700;
@@ -729,7 +848,7 @@ const NftPageStyled = styled.div`
     outline: none;
   }
 
-  input[type='number'] {
+  input[type="number"] {
     /* Firefox */
     -moz-appearance: textfield;
   }
@@ -789,7 +908,7 @@ const NftPageStyled = styled.div`
   strong {
     z-index: 2;
     /* font-family: 'Avalors Personal Use'; */
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     font-size: 16px;
     letter-spacing: 2px;
     color: #ffffff;
@@ -846,7 +965,7 @@ const NftPageStyled = styled.div`
   }
 
   #stars::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -10rem;
     left: -100rem;
@@ -861,7 +980,7 @@ const NftPageStyled = styled.div`
   }
 
   #stars::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -50%;
@@ -962,7 +1081,7 @@ const NftPageStyled = styled.div`
   }
   .auction__table-header-data {
     color: ${colors.textColor1};
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     font-weight: 600;
   }
   .auction__table-header-data,
@@ -1133,6 +1252,143 @@ const NftPageStyled = styled.div`
     }
     .content-tags {
       margin-top: 20px;
+    }
+  }
+
+  .artist-filter-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    overflow: auto;
+  }
+  .artist-filter-item {
+    position: relative;
+    width: 100%;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 60px;
+    text-align: center;
+    height: 60px;
+    color: ${colors.borderColor};
+    padding: 0 10px;
+  }
+
+  .artist-filter-item::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    background-color: ${colors.borderColor};
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .artist-filter-item_title {
+    text-align: center;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    text-transform: capitalize;
+    margin-right: 16px;
+  }
+
+  .artist-filter-item_count {
+    font-size: 16px;
+    font-style: normal;
+    font-family: "Space Mono";
+    font-weight: 400;
+    line-height: 140%;
+    padding: 5px 10px;
+    background-color: ${colors.backgroundColor2};
+    border-radius: 20px;
+  }
+
+  .active {
+    color: ${colors.whiteColor};
+  }
+  .active::after {
+    transform: scaleX(1);
+  }
+
+  .active .artist-filter-item_count {
+    background-color: ${colors.borderColor};
+  }
+
+  .artist-body {
+    margin-top: 50px;
+    border-top: 1px solid rgb(59, 59, 59);
+  }
+
+  .artist-body-list {
+    background-color: ${colors.backgroundColor2};
+  }
+
+  .artist-body-list .artist-body-grid {
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 30px;
+  }
+
+  // Large devices (desktops, less than 1200px)
+  @media (max-width: 1199.98px) {
+  }
+  // Medium devices (tablets, less than 992px)
+  @media (max-width: 991.98px) {
+    .artist-body-list .artist-body-grid {
+      grid-template-columns: auto auto;
+    }
+  }
+
+  // Small devices (landscape phones, less than 768px)
+  @media (max-width: 767.98px) {
+    .header_artist .infor_artist .body_infor_artist .header_body_infor_artist {
+      gap: 30px;
+      flex-direction: column;
+    }
+  }
+
+  //
+  @media (max-width: 575.98px) {
+    .artist-body-list .artist-body-grid {
+      grid-template-columns: auto;
+    }
+
+    .header_artist .infor_artist .body_infor_artist .statistical {
+      justify-content: space-between;
+      gap: unset;
+    }
+
+    .header_artist
+      .infor_artist
+      .body_infor_artist
+      .header_body_infor_artist
+      .body_infor_artist_button {
+      flex-direction: column;
+    }
+
+    .header_artist
+      .infor_artist
+      .body_infor_artist
+      .header_body_infor_artist
+      .body_infor_artist_button
+      button {
+      width: 100%;
+    }
+
+    .header_artist .infor_artist .body_infor_artist .statistical h4 {
+      font-size: 22px;
+    }
+
+    .header_artist .infor_artist .body_infor_artist .statistical span {
+      font-size: 16px;
     }
   }
 `;

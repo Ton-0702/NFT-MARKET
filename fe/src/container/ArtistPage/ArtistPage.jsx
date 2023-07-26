@@ -17,6 +17,7 @@ import cate5a from "../../assets/HomePage/Categories/cate5a.png";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
 
 const CreatedArtistData = [
   {
@@ -380,12 +381,14 @@ const ArtistPage = () => {
   const [selectedClass, setSelectedClass] = useState("created");
   const [listDataNFT, setListDataNFT] = useState();
   const [dataNFTID, setDataNFTID] = useState();
-  console.log(listDataNFT);
+  const navigate = useNavigate();
+
+  console.log(dataArtist.account_id);
 
   useEffect(() => {
-    function getAllTopCreator() {
+    function getListNFTById() {
       axios
-        .get(`http://localhost:8080/nfts/owned-nft/7`)
+        .get(`http://localhost:8080/nfts/created-nft/${dataArtist.account_id}`)
         .then((res) => {
           console.log(res.data);
           setListDataNFT(res.data);
@@ -394,7 +397,7 @@ const ArtistPage = () => {
           console.log(error);
         });
     }
-    getAllTopCreator();
+    getListNFTById();
   }, []);
 
   const handleClickActiveClass = (activeClass) => {
@@ -413,9 +416,8 @@ const ArtistPage = () => {
     axios
       .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
       .then((res) => {
-        console.log(nftID);
-        navigate(`/artist/${artistId}`, {
-          state: { dataArtist: res.data[0] },
+        navigate(`/nft-detail-page/${nftID}`, {
+          state: { dataNft: res.data[0] },
         });
         window.scrollTo(0, 0);
       })
@@ -463,44 +465,6 @@ const ArtistPage = () => {
                       fontWeight={'600'}
                     ></Button>
                   </div>
-                </div>
-                <div className="statistical">
-                  <div className="statistical_left">
-                    <h4>{dataArtist.volume || 0}+</h4>
-                    <span>Volume</span>
-                  </div>
-                  <div className="statistical_middle">
-                    <h4>{dataArtist.nfts_sold}+</h4>
-                    <span>NFTs Sold</span>
-                  </div>
-                  <div className="statistical_left">
-                    <h4>{dataArtist.followers || 0}</h4>
-                    <span>Followers</span>
-                  </div>
-                </div>
-                <div className="bio">
-                  <h5>Bio</h5>
-                  <p>{dataArtist.biography}</p>
-                </div>
-                <div className="links">
-                  <h5>Links</h5>
-                  <ul>
-                    <li>
-                      <img src={globe} alt="" />
-                    </li>
-                    <li>
-                      <img src={discord} alt="" />
-                    </li>
-                    <li>
-                      <img src={youtube} alt="" />
-                    </li>
-                    <li>
-                      <img src={twitter} alt="" />
-                    </li>
-                    <li>
-                      <img src={insta} alt="" />
-                    </li>
-                  </ul>
                 </div>
                 <div className="statistical">
                   <div className="statistical_left">

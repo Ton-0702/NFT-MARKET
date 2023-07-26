@@ -13,7 +13,7 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
 //    @Query(value = "Select date_end_bid from nft where nft_id=:id",nativeQuery = true)
 //    String getDateEndBid(Integer id);
 
-    @Query(value = "select n.nft_id,n.nft_name, n.image, n.date_create, n.price, n.description, acc.username,acc.avatar " +
+    @Query(value = "select n.account_id,n.nft_id,n.nft_name, n.image, n.date_create, n.price, n.description, acc.username,acc.avatar " +
             "from nft as n inner join account as acc on n.account_id=acc.account_id where n.nft_id=:id ", nativeQuery = true)
     List<Map<String, Object>> getNftAndUser_Info(Integer id);
 

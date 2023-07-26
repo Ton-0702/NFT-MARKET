@@ -28,6 +28,14 @@ public class NftOwenedServiceImpl implements NftOwenedService {
         return nftOwenedRepository.saveAndFlush(entity);
     }
 
+
+    @Override
+    public void CreateNftOwned(Long nft_id, Long account_id, Long collection_id) {
+        // TODO Auto-generated method stub
+        System.out.println("++++++++++++++++++NFTID: "+nft_id);
+        nftOwenedRepository.CreateNftOwned(nft_id, account_id, collection_id);
+    }
+
     // @Override
     // public void createNftOwned(Long account_owned_id, Long account_id, Long collection_id) {
     //     NFTOwened createNftOwned = new NFTOwened();
@@ -37,14 +45,14 @@ public class NftOwenedServiceImpl implements NftOwenedService {
     //     nftOwenedRepository.save(createNftOwned);
     // }
 
-    @Override
-    public void CreateNftOwned(Long nft_id, Long account_id, Long collection_id) {
-        NFTOwened createNftOwned = new NFTOwened();
-        createNftOwned.setId(nft_id);
-        createNftOwned.setAccount_id(account_id);
-        createNftOwned.setCollection_id(collection_id);
-        nftOwenedRepository.save(createNftOwned);
-    }
+    // @Override
+    // public void CreateNftOwned(Long nft_id, Long account_id, Long collection_id) {
+    //     NFTOwened createNftOwned = new NFTOwened();
+    //     createNftOwned.setId(nft_id);
+    //     createNftOwned.setAccount_id(account_id);
+    //     createNftOwned.setCollection_id(collection_id);
+    //     nftOwenedRepository.save(createNftOwned);
+    // }
 
     // @Override
     // public void CreateNftOwned(Long nft_id, Long account_id, Integer collection_id) {
