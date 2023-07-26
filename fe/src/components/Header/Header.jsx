@@ -13,27 +13,32 @@ import {useNavigate} from 'react-router-dom';
 // import Switch from 'react-switch';
 import {useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
-import { Button } from 'components/Button';
+import {Button} from 'components/Button';
 
 const Header = () => {
-  const [tokenUser, setToken] = useState(null);   
+  const [tokenUser, setToken] = useState(null);
+  const [showSubHeader, setShowSubHeader] = useState(false);
+  const token = Cookies.get('token');
+  // console.log('hello token: ', token);
 
-  const token = Cookies.get("token");
-  console.log("hello token: ", token);
+  const toggleClick = () => {
+    setShowSubHeader(!showSubHeader);
+  };
+
+  // console.log('tokenUser:', tokenUser[0]);
 
   const handleLogoutForm = (e) => {
-    console.log("token logout: ", token);
+    console.log('token logout: ', token);
     // e.preventDefault();
     axios
       .post(`http://localhost:8080/api/logout/${token}`)
       .then(function (response) {
-        
-        console.log("phan hoi thanh cong logout: ",response.data.data);
+        console.log('phan hoi thanh cong logout: ', response.data.data);
         // const cookies = new Cookies();
         // cookies.set("token logout", response.data.data);
-        localStorage.removeItem("metamask-address")
-        Cookies.remove("token")
-        navigate("/");
+        localStorage.removeItem('metamask-address');
+        Cookies.remove('token');
+        navigate('/');
       })
       .catch(function (error) {
         console.log(error.response.data);
@@ -43,14 +48,15 @@ const Header = () => {
   useEffect(() => {
     function getUser() {
       try {
-        function getTokenByUser(){
-          return axios.get('http://localhost:8080/api/session-address-wallet/'+token);
+        function getTokenByUser() {
+          return axios.get(
+            'http://localhost:8080/api/session-address-wallet/' + token
+          );
         }
-        Promise.all([
-          getTokenByUser(),
-        ]).then((res) => {
+        Promise.all([getTokenByUser()]).then((res) => {
           // console.log("what is res: ",res);
           const tokenUserData = res[0].data;
+          // console.log('tokenUserData: ', tokenUserData);
           setToken(tokenUserData);
         });
       } catch (error) {
@@ -60,13 +66,17 @@ const Header = () => {
     getUser();
   }, []);
   // console.log("tokenUser: ",tokenUser[0].address_wallet);
-  let address_wallet = "";
-  if(tokenUser === '' || tokenUser === null){
-    address_wallet = "";
-  }else{
-    address_wallet = tokenUser[0].address_wallet.substring(0,3) + '...' + tokenUser[0].address_wallet.substring((tokenUser[0].address_wallet).length -3);
+  let address_wallet = '';
+  if (tokenUser === '' || tokenUser === null) {
+    address_wallet = '';
+  } else {
+    address_wallet =
+      tokenUser[0].address_wallet.substring(0, 3) +
+      '...' +
+      tokenUser[0].address_wallet.substring(
+        tokenUser[0].address_wallet.length - 3
+      );
   }
-  
 
   const {toggleDarkMode} = useSettingsStore();
   const light = useSettingsStore((state) => state.light);
@@ -132,19 +142,43 @@ const Header = () => {
                 </a>
               </div>
 
-              
-
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
-              <SignUpButton width={"200px"}>{address_wallet}</SignUpButton>
+              <div className="header-connect-btn">
+                <SignUpButton
+                  className="signUp-btn"
+                  onClick={() => {
+                    console.log('clicked');
+                    toggleClick();
+                  }}
+                  width={'200px'}
+                >
+                  {address_wallet}
+                </SignUpButton>
 
-              <div className="nav-item">
-                <a href="/" onClick={handleLogoutForm} className="nav-item-link">
-                  <span>Log out</span>
-                </a>
+                {showSubHeader && (
+                  <div className="sub-header">
+                    <ul className="sub-header-list">
+                      <li className="sub-header-items">
+                        <a href="/create-nft" className="sub-header-item-link">
+                          <span>Create NFT</span>
+                        </a>
+                      </li>
+
+                      <li className="sub-header-items">
+                        <a
+                          href="/"
+                          onClick={handleLogoutForm}
+                          className="sub-header-item-link"
+                        >
+                          <span>Log out</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
-
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">
@@ -178,7 +212,10 @@ const Header = () => {
                 </div>
 
                 <div className="nav-mobile-item">
-                  <Button onClick={handleLogoutForm} className="nav-mobile-item-link">
+                  <Button
+                    onClick={handleLogoutForm}
+                    className="nav-mobile-item-link"
+                  >
                     <span>Log Out</span>
                   </Button>
                 </div>
@@ -290,6 +327,45 @@ const HeaderStyled = styled.div`
     text-decoration: none;
     padding: 10px;
     cursor: pointer;
+  }
+
+  // sub-header
+  .header-connect-btn {
+    position: relative;
+  }
+  ul li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+  }
+  .sub-header {
+    position: absolute;
+    top: 80px;
+    right: 0px;
+    background-color: ${colors.backgroundColor2};
+    width: 200px;
+    height: 150px;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    transition: all 0.3s linear;
+    opacity: 1;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  .sub-header .sub-header-item-link {
+    width: 100%;
+    display: inline-block;
+    color: ${colors.whiteColor};
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+  }
+  .sub-header-items {
+    padding: 10px 0;
+    margin: 4px 0;
+  }
+  .sub-header-items:hover .sub-header-item-link {
+    color: ${colors.primaryColor};
   }
 
   /* overlay */

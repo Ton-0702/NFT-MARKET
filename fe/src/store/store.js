@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {devtools, persist} from 'zustand/middleware';
 
+// settingStore
 let settingsStore = (set) => ({
   light: false,
   toggleDarkMode: () => {
