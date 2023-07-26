@@ -6,7 +6,9 @@ import {Card} from 'components/Card';
 
 import avatar1 from '../../assets/Artist/avatar1.png';
 import cate5a from '../../assets/HomePage/Categories/cate5a.png';
-import {useState} from 'react';
+
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
 const CreatedMarketPlaceData = [
   {
@@ -203,8 +205,9 @@ const MarketPlaceStyled = styled.div`
   .market-place-body-list .market-place-body-grid {
     padding: 80px 40px;
     display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 30px;
+    grid-template-columns: 30% 30% 30%;
+    gap: 3%;
+    justify-content: space-between;
   }
 
   // Large devices (desktops, less than 1200px)
@@ -244,6 +247,7 @@ const MarketPlaceStyled = styled.div`
 
     .market-place-body-list .market-place-body-grid {
       grid-template-columns: auto;
+      gap: 50px;
     }
 
     .header-market-place
@@ -291,7 +295,25 @@ const MarketPlaceStyled = styled.div`
 
 const MarketPlace = () => {
   const [selectedClass, setSelectedClass] = useState('created');
+  const [resultSearch, setResultSearch] = useState();
+  const [DataMarketPlacePage, setDataMarketPlacePage] = useState();
 
+  useEffect(() => {
+    // http://localhost:8080/nfts/nft-detail-page/1
+    async function getResultSearch() {
+      // console.log('oke');
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/nfts/search-nft/${resultSearch}`
+        );
+        console.log(response.data);
+        setDataMarketPlacePage(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getResultSearch();
+  }, [resultSearch]);
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === 'created') {
       setSelectedClass(activeClass);
@@ -303,6 +325,14 @@ const MarketPlace = () => {
       setSelectedClass(activeClass);
     }
   };
+
+  const handleChange = (e) => {
+    const {value} = e.target;
+    // console.log(value);
+    // setResultSearch((prevState) => ({ ...prevState, [name]: value }));
+    setResultSearch(value);
+  };
+  // const handleClickSearch = () => {getResultSearch()};
   return (
     <PrimaryLayout>
       <MarketPlaceStyled>
@@ -321,6 +351,8 @@ const MarketPlace = () => {
               type={'search'}
               placeHolder={'Search your favourite NFTs'}
               paddingLeft={'20px'}
+              onChange={handleChange}
+              // onClick={handleClickSearch}
             ></Input>
           </div>
           <div className="body-market-place">
@@ -379,20 +411,19 @@ const MarketPlace = () => {
             <div className="market-place-body-list">
               <div className="container">
                 <div className="market-place-body-grid">
-                  {CreatedMarketPlaceData
-                    ? CreatedMarketPlaceData.map((e, index) => (
+                  {DataMarketPlacePage
+                    ? DataMarketPlacePage.map((e, index) => (
                         <div
                           className="body-market-place-body-grid-item"
                           key={index}
                         >
                           <Card
-                            title={e.title}
-                            img_product={e.img}
+                            title={e.nft_name}
+                            img_product={e.image}
                             price={e.price}
-                            highest_bid={e.price}
-                            img_artist={e.img_artist}
-                            name_artist={e.name_artist}
-                            total_sales={e.total_sales}
+                            highest_bid={e.highest_bid}
+                            img_artist={e.avatar}
+                            name_artist={e.username}
                             bgColor={colors.background}
                             borderRadius={'20px'}
                           ></Card>

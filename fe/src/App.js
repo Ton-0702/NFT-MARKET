@@ -12,6 +12,7 @@ import { ArtistPage } from "container/ArtistPage";
 import { ProfileDetail } from "container/ProfileDetail";
 import { LoginSuccessPage } from "container/LoginSuccessPage";
 import { CreateNFTPage } from "container/CreateNFT";
+import UploadFileToCloud from "components/UploadFile/UploadFileToCloud";
 
 function App() {
   return (
@@ -23,10 +24,12 @@ function App() {
       <Route path="/sign-in" element={<SignInPage />} />
       <Route path="/nft-page" element={<NftPage />} />
       <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-      <Route path="/artist" element={<ArtistPage />} />
       <Route path="/profile-details" element={<ProfileDetail />} />
       <Route path="/login-success" element={<LoginSuccessPage />} />
       <Route path="/create-nft" element={<CreateNFTPage />} />
+      <Route path="/upload" element={<UploadFileToCloud />} />
+      <Route path="/nft-detail-page/:nftId" element={<NftPage />} />
+      <Route path="/artist/:artistId" element={<ArtistPage />} />
     </Routes>
   );
 }

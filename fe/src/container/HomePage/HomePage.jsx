@@ -1,137 +1,137 @@
-import styled from 'styled-components';
-import axios from 'axios';
+import styled from "styled-components";
+import axios from "axios";
 
-import {Card} from 'components/Card';
-import {Button} from 'components/Button';
-import {PrimaryLayout} from 'components/Layout';
-import {InputFooter} from 'components/Input';
+import { Card } from "components/Card";
+import { Button } from "components/Button";
+import { PrimaryLayout } from "components/Layout";
+import { InputFooter } from "components/Input";
 
-import rocketIcon from '../../assets/HomePage/RocketIcon.svg';
-import rocketIcon2 from '../../assets/HomePage/RocketIcon2.svg';
-import banner1 from '../../assets/HomePage/Banner1.svg';
-import avatar1 from '../../assets/HomePage/Avatar1.svg';
-import trending1 from '../../assets/HomePage/Trending1.svg';
-import trending2 from '../../assets/HomePage/Trending2.svg';
-import trending3 from '../../assets/HomePage/Trending3.svg';
-import trending4 from '../../assets/HomePage/Trending4.svg';
-import trending5 from '../../assets/HomePage/Trending5.svg';
-import topCreator1 from '../../assets/HomePage/TopCreator/TopCreator1.png';
-import cate1a from '../../assets/HomePage/Categories/cate1a.png';
-import cate1b from '../../assets/HomePage/Categories/cate1b.svg';
-import cate2a from '../../assets/HomePage/Categories/cate2a.png';
-import cate2b from '../../assets/HomePage/Categories/cate2b.svg';
-import cate3a from '../../assets/HomePage/Categories/cate3a.png';
-import cate3b from '../../assets/HomePage/Categories/cate3b.svg';
-import cate5a from '../../assets/HomePage/Categories/cate5a.png';
-import cate5b from '../../assets/HomePage/Categories/cate5b.svg';
-import cate6a from '../../assets/HomePage/Categories/cate6a.png';
-import cate6b from '../../assets/HomePage/Categories/cate6b.svg';
-import cate7a from '../../assets/HomePage/Categories/cate7a.png';
-import cate7b from '../../assets/HomePage/Categories/cate7b.svg';
-import discoverButton from '../../assets/HomePage/DiscoverMore/Eye.svg';
-import mushroom from '../../assets/HomePage/DiscoverMore/NFT_Mushroom.svg';
-import how_it_work1 from '../../assets/HomePage/HowItWorks/HowItWork1.svg';
-import how_it_work2 from '../../assets/HomePage/HowItWorks/HowItWork2.svg';
-import how_it_work3 from '../../assets/HomePage/HowItWorks/HowItWork3.svg';
-import getNoti from '../../assets/HomePage/GetNoti/Photo.png';
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import rocketIcon from "../../assets/HomePage/RocketIcon.svg";
+import rocketIcon2 from "../../assets/HomePage/RocketIcon2.svg";
+import banner1 from "../../assets/HomePage/Banner1.svg";
+import avatar1 from "../../assets/HomePage/Avatar1.svg";
+import trending1 from "../../assets/HomePage/Trending1.svg";
+import trending2 from "../../assets/HomePage/Trending2.svg";
+import trending3 from "../../assets/HomePage/Trending3.svg";
+import trending4 from "../../assets/HomePage/Trending4.svg";
+import trending5 from "../../assets/HomePage/Trending5.svg";
+import topCreator1 from "../../assets/HomePage/TopCreator/TopCreator1.png";
+import cate1a from "../../assets/HomePage/Categories/cate1a.png";
+import cate1b from "../../assets/HomePage/Categories/cate1b.svg";
+import cate2a from "../../assets/HomePage/Categories/cate2a.png";
+import cate2b from "../../assets/HomePage/Categories/cate2b.svg";
+import cate3a from "../../assets/HomePage/Categories/cate3a.png";
+import cate3b from "../../assets/HomePage/Categories/cate3b.svg";
+import cate5a from "../../assets/HomePage/Categories/cate5a.png";
+import cate5b from "../../assets/HomePage/Categories/cate5b.svg";
+import cate6a from "../../assets/HomePage/Categories/cate6a.png";
+import cate6b from "../../assets/HomePage/Categories/cate6b.svg";
+import cate7a from "../../assets/HomePage/Categories/cate7a.png";
+import cate7b from "../../assets/HomePage/Categories/cate7b.svg";
+import discoverButton from "../../assets/HomePage/DiscoverMore/Eye.svg";
+import mushroom from "../../assets/HomePage/DiscoverMore/NFT_Mushroom.svg";
+import how_it_work1 from "../../assets/HomePage/HowItWorks/HowItWork1.svg";
+import how_it_work2 from "../../assets/HomePage/HowItWorks/HowItWork2.svg";
+import how_it_work3 from "../../assets/HomePage/HowItWorks/HowItWork3.svg";
+import getNoti from "../../assets/HomePage/GetNoti/Photo.png";
+import { useEffect, useState } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 
 const trendingCollectionData = [
   {
     img_product: [trending1, trending2, trending3],
     img_artist: avatar1,
-    name_artist: 'MrFox',
-    title: 'DSGN Animals',
-    type: 'TrendingCollection',
+    name_artist: "MrFox",
+    title: "DSGN Animals",
+    type: "TrendingCollection",
   },
   {
     img_product: [trending1, trending2, trending3, trending4],
     img_artist: avatar1,
-    name_artist: 'MrFox',
-    title: 'DSGN Animals',
-    type: 'TrendingCollection',
+    name_artist: "MrFox",
+    title: "DSGN Animals",
+    type: "TrendingCollection",
   },
   {
     img_product: [trending1, trending2, trending3, trending4, trending5],
     img_artist: avatar1,
-    name_artist: 'MrFox',
-    title: 'DSGN Animals',
-    type: 'TrendingCollection',
+    name_artist: "MrFox",
+    title: "DSGN Animals",
+    type: "TrendingCollection",
   },
 ];
 
 const topCreatorData = [
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
   {
-    type: 'TopCreatorHomePage',
+    type: "TopCreatorHomePage",
     img_artist: topCreator1,
-    name_artist: 'Keepitreal',
+    name_artist: "Keepitreal",
     total_sales: 34.53,
   },
 ];
@@ -140,66 +140,66 @@ const CategoriesData = [
   {
     background_img: cate1a,
     img: cate1b,
-    title: 'Art',
-    type: 'CategoriesHomePage',
+    title: "Art",
+    type: "CategoriesHomePage",
   },
   {
     background_img: cate2a,
     img: cate2b,
-    title: 'Collectibles',
-    type: 'CategoriesHomePage',
+    title: "Collectibles",
+    type: "CategoriesHomePage",
   },
   {
     background_img: cate3a,
     img: cate3b,
-    title: 'Music',
-    type: 'CategoriesHomePage',
+    title: "Music",
+    type: "CategoriesHomePage",
   },
   {
     background_img: cate5a,
     img: cate5b,
-    title: 'Video',
-    type: 'CategoriesHomePage',
+    title: "Video",
+    type: "CategoriesHomePage",
   },
   {
     background_img: cate6a,
     img: cate6b,
-    title: 'Utility',
-    type: 'CategoriesHomePage',
+    title: "Utility",
+    type: "CategoriesHomePage",
   },
   {
     background_img: cate7a,
     img: cate7b,
-    title: 'Sport',
-    type: 'CategoriesHomePage',
+    title: "Sport",
+    type: "CategoriesHomePage",
   },
 ];
 
 const DiscoverMoreData = [
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: 'DiscoverMore',
-    title: 'Distant Galaxy',
+    type: "DiscoverMore",
+    title: "Distant Galaxy",
     img: cate5a,
     img_artist: avatar1,
-    name_artist: 'MoonDancer',
+    name_artist: "MoonDancer",
     price: 1.63,
     highest_bid: 0.33,
   },
@@ -484,6 +484,10 @@ const TopCreatorStyled = styled.div`
     gap: 30px;
   }
 
+  .body_top_creator .top_creator_item {
+    cursor: pointer;
+  }
+
   @media (max-width: 991.98px) {
     .body_top_creator {
       grid-template-columns: auto auto;
@@ -595,13 +599,20 @@ const DiscoverMoreStyled = styled.div`
 
   .body_discover_more {
     display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 30px;
+    grid-template-columns: 30% 30% 30%;
+    gap: 3%;
+    justify-content: space-between;
+  }
+
+  .body_discover_more .body_discover_more_item {
+    cursor: pointer;
   }
 
   @media (max-width: 991.98px) {
     .body_discover_more {
-      grid-template-columns: auto auto;
+      grid-template-columns: 49% 49%;
+      gap: 2%;
+      justify-content: space-between;
     }
 
     .body_discover_more_item:nth-child(n + 3) {
@@ -842,11 +853,15 @@ const HomePage = () => {
   const [overall, setOverall] = useState([]);
   const [trendingCollection, setTrendingCollection] = useState();
   const [newTrending, setNewTrending] = useState();
-
+  const [topCreatorID, setTopCreatorID] = useState();
+  const [nftId, setNftId] = useState();
   const navigate = useNavigate();
 
-  console.log('newTrending: ', newTrending);
-
+  console.log("TrendingCollection: ", trendingCollection);
+  console.log("newTrending: ", newTrending);
+  console.log("TopCreator: ", topCreator);
+  console.log("TopCreatorId: ", topCreatorID);
+  console.log("nftId: ", nftId);
   useEffect(() => {
     function getAllTopCreator() {
       try {
@@ -862,7 +877,7 @@ const HomePage = () => {
           return axios.get(`http://localhost:8080/api/home/top-creator`);
         }
         function getNewTrending() {
-          return axios.get('http://localhost:8080/api/home/trending-nft');
+          return axios.get("http://localhost:8080/api/home/trending-nft");
         }
         Promise.all([
           getTopCreator(),
@@ -889,6 +904,37 @@ const HomePage = () => {
     getAllTopCreator();
   }, []);
 
+  const handleClick = (artistId) => {
+    axios
+      .get(`http://localhost:8080/api/artist/${artistId}`)
+      .then((res) => {
+        setTopCreatorID(res.data);
+        navigate(`/artist/${artistId}`, {
+          state: { dataArtist: res.data[0] },
+        });
+        window.scrollTo(0, 0);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const handleClickNFT = (nftId) => {
+    console.log("nftID: " + nftId);
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+
+      .then((res) => {
+        setNftId(res.data);
+        console.log(res.data);
+        navigate(`/nft-detail-page/${nftId}`, {
+          state: { dataNft: res.data[0] },
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <PrimaryLayout>
       <HomePageStyled>
@@ -902,38 +948,40 @@ const HomePage = () => {
               </p>
               <Button
                 img={rocketIcon}
-                content={'Get Started'}
-                borderRadius={'20px'}
-                bgColor={'#A259FF'}
-                textColor={'#FFF'}
-                fontSize={'16px'}
-                fontWeight={'600'}
-                padding={'22.5px 50px'}
-                jutifyContent={'center'}
+                content={"Get Started"}
+                borderRadius={"20px"}
+                bgColor={"#A259FF"}
+                textColor={"#FFF"}
+                fontSize={"16px"}
+                fontWeight={"600"}
+                padding={"22.5px 50px"}
+                jutifyContent={"center"}
               ></Button>
               <div className="statistical">
                 <div className="statistical_left">
-                  <h4>{overall.total_sales}k+</h4>
+                  <h4>{overall.total_sales}K+</h4>
                   <span>Total Sale</span>
                 </div>
                 <div className="statistical_middle">
-                  <h4>{overall.auctions}k+</h4>
+                  <h4>{overall.auctions}+</h4>
                   <span>Auctions</span>
                 </div>
                 <div className="statistical_right">
-                  <h4>{overall.artists}k+</h4>
+                  <h4>{overall.artists}+</h4>
                   <span>Artists</span>
                 </div>
               </div>
             </div>
             <div className="banner_right">
               <Card
-                title={'Space Walking'}
+                title={"Space Walking"}
                 img_product={banner1}
-                bgColor={'#3B3B3B'}
-                borderRadius={'20px'}
+                bgColor={"#3B3B3B"}
+                borderRadius={"20px"}
                 img_artist={avatar1}
-                name_artist={'Animakid'}
+                name_artist={"Animakid"}
+                price={"12"}
+                highest_bid={"26.04"}
               ></Card>
             </div>
           </div>
@@ -974,15 +1022,18 @@ const HomePage = () => {
               </div>
               <div className="header_top_creator_right">
                 <Button
-                  onClick={() => navigate('/ranking')}
-                  bgColor={'none'}
-                  border={'1px solid #A259FF'}
-                  content={'View Rankings'}
-                  borderRadius={'20px'}
-                  textColor={'#fff'}
+                  onClick={() => {
+                    navigate("/ranking");
+                    window.scrollTo(0, 0);
+                  }}
+                  bgColor={"none"}
+                  border={"1px solid #A259FF"}
+                  content={"View Rankings"}
+                  borderRadius={"20px"}
+                  textColor={"#fff"}
                   img={rocketIcon2}
-                  padding={'22.5px 50px'}
-                  jutifyContent={'center'}
+                  padding={"22.5px 50px"}
+                  jutifyContent={"center"}
                 ></Button>
               </div>
             </div>
@@ -990,7 +1041,11 @@ const HomePage = () => {
               {topCreator
                 ? topCreator.map((e, index) => {
                     return (
-                      <div className="top_creator_item" key={index}>
+                      <div
+                        className="top_creator_item"
+                        key={e.account_id}
+                        onClick={() => handleClick(e.account_id)}
+                      >
                         <Card
                           number_id={index}
                           type="TopCreatorHomePage"
@@ -1036,32 +1091,37 @@ const HomePage = () => {
               </div>
               <div className="header_discover_more_right">
                 <Button
-                  bgColor={'none'}
-                  border={'1px solid #A259FF'}
-                  content={'See All'}
-                  borderRadius={'20px'}
-                  textColor={'#fff'}
+                  bgColor={"none"}
+                  border={"1px solid #A259FF"}
+                  content={"See All"}
+                  borderRadius={"20px"}
+                  textColor={"#fff"}
                   img={discoverButton}
-                  padding={'22.5px 50px'}
-                  jutifyContent={'center'}
+                  padding={"22.5px 50px"}
+                  jutifyContent={"center"}
                 ></Button>
               </div>
             </div>
             <div className="body_discover_more">
               {newTrending
                 ? newTrending.map((e, index) => (
-                    <div className="body_discover_more_item" key={index}>
+                    <div
+                      className="body_discover_more_item"
+                      key={e.nft_id}
+                      onClick={() => handleClickNFT(e.nft_id)}
+                    >
                       <Card
+                        number_id={index}
                         type="DiscoverMore"
                         title={e.nft_name}
                         img_product={e.image}
                         price={e.price}
                         highest_bid={e.highest_bid}
-                        img_artist={e.img_artist}
+                        img_artist={e.avatar}
                         name_artist={e.username}
                         total_sales={e.total_sales}
-                        bgColor={'#3B3B3B'}
-                        borderRadius={'20px'}
+                        bgColor={"#3B3B3B"}
+                        borderRadius={"20px"}
                       ></Card>
                     </div>
                   ))

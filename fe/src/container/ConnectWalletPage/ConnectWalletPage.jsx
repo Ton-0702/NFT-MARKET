@@ -6,7 +6,11 @@ import { Button } from "components/Button";
 import mask from "../../assets/ConnectWalletPage/Metamask.svg";
 import coin from "../../assets/ConnectWalletPage/Coinbase.svg";
 import wallet from "../../assets/ConnectWalletPage/WalletConnect.svg";
+import axios from "axios";
 import { colors } from "Global";
+import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+
 const StyledConnectWalletPage = styled.div`
   :root {
     /* --color-1: #c0dbea; */
@@ -54,11 +58,6 @@ const StyledConnectWalletPage = styled.div`
     background-color: #fff;
   }
 
-  .wallet__left,
-  .wallet__right {
-    width: 50%;
-  }
-
   /* Login Left */
   .wallet__left {
     display: flex;
@@ -66,6 +65,7 @@ const StyledConnectWalletPage = styled.div`
     align-items: center;
     row-gap: 30px;
     padding: 20px;
+    width: 45%;
   }
 
   .progressbar {
@@ -125,6 +125,7 @@ const StyledConnectWalletPage = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
   }
 
   .wallet-title {
@@ -144,10 +145,11 @@ const StyledConnectWalletPage = styled.div`
   .wallet__right {
     display: flex;
     justify-content: flex-end;
+    width: 55%;
   }
 
   .wallet__right img {
-    width: 90%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 2rem;
@@ -282,18 +284,52 @@ export const ConnectWalletPage = () => {
   const [metamaskAddress, setMetamaskAddress] = useState(
     localStorage.getItem("metamask-address")
   );
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem("metamask-address")) {
       EthereumInstance.getEthereumAccounts();
     }
   }, []);
   const connectMetamask = async (setMetamaskAddress) => {
+    // if ()
     if (localStorage.getItem("metamask-address")) {
       EthereumInstance.getEthereumAccounts();
+      const account = localStorage.getItem("metamask-address");
+      console.log("accountMEtaMask: ", account);
+
+      axios
+        .post(`http://localhost:8080/api/connect-wallet/${account}`)
+        .then(function (response) {
+          console.log("phan hoi thanh cong login: ", response);
+          const cookies = new Cookies();
+          cookies.set("token", response.data.data);
+          // navigate("/login-success");
+          navigate("/", {
+            state: {
+              address_wallet: account,
+            },
+          });
+        })
+        .catch(function (error) {
+          console.log(error.response.data);
+        });
     } else {
       const account = await EthereumInstance.connectMetaMaskWallet();
-      console.log(account);
+      console.log("account: ", account);
       setMetamaskAddress(account);
+
+      if (account != null) {
+        setTimeout(() => {
+          navigate("/profile-details", {
+            state: {
+              address_wallet: account[0],
+            },
+          });
+        }, 2000);
+      }
+      // <Navigate to="/profile-details" />
     }
   };
   return (
@@ -321,7 +357,7 @@ export const ConnectWalletPage = () => {
                     borderRadius="20px"
                     img={mask}
                     bgColor="#3B3B3B"
-                    padding="36px 80px"
+                    padding="30px 80px"
                     content="Metamask"
                     textColor="white"
                     fontSize="22px"
@@ -352,7 +388,10 @@ export const ConnectWalletPage = () => {
               </div>
             </div>
             <div className="wallet__right">
-              <img src={background} alt="" />
+              <img
+                src="https://drive.google.com/uc?export=view&id=1N3obHIHu9uCzTzyYp_-kUFCbwLciJbap"
+                alt=""
+              />
             </div>
           </div>
         </div>

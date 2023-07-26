@@ -2,17 +2,88 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {colors} from '../../Global';
 import {SignUpButton} from '../Button/SignUpButton';
-
+// import {useEffect, useState} from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import {ReactComponent as MarketIcon} from '../../assets/header-imgs/market.svg';
 import {ReactComponent as Logo} from '../../assets/header-imgs/logo.svg';
 import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.svg';
 import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
 import {useNavigate} from 'react-router-dom';
-// import Switch from 'react-switch';
-import {useSettingsStore} from 'store/store';
+
+import {useCurrentUserStore, useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
 
 const Header = () => {
+  const [tokenUser, setToken] = useState(null);
+  const [showSubHeader, setShowSubHeader] = useState(false);
+  const token = Cookies.get('token');
+  console.log('hello token: ', token);
+  const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
+
+  // console.log('currentUser: ', currentUser);
+  const toggleClick = () => {
+    setShowSubHeader(!showSubHeader);
+  };
+
+  // console.log('tokenUser:', tokenUser);
+
+  const handleLogoutForm = (e) => {
+    console.log('token logout: ', token);
+    // e.preventDefault();
+    axios
+      .post(`http://localhost:8080/api/logout/${token}`)
+      .then(function (response) {
+        console.log('phan hoi thanh cong logout: ', response.data.data);
+        // const cookies = new Cookies();
+        // cookies.set("token logout", response.data.data);
+        // localStorage.removeItem('metamask-address');
+        // Cookies.remove('token');
+        // navigate('/');
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+    localStorage.removeItem('metamask-address');
+    Cookies.remove('token');
+    navigate('/');
+  };
+
+  useEffect(() => {
+    function getUser() {
+      try {
+        function getTokenByUser() {
+          return axios.get(
+            'http://localhost:8080/api/session-address-wallet/' + token
+          );
+        }
+        Promise.all([getTokenByUser()]).then((res) => {
+          // console.log("what is res: ",res);
+          const tokenUserData = res[0].data;
+          const dataUser = res[0].data[0];
+          console.log('tokenUserData: ', tokenUserData);
+          setToken(tokenUserData);
+          addCurrentUser(dataUser);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
+
+  let address_wallet = '';
+  if (tokenUser === '' || tokenUser === null) {
+    address_wallet = '';
+  } else {
+    address_wallet =
+      tokenUser[0].address_wallet.substring(0, 3) +
+      '...' +
+      tokenUser[0].address_wallet.substring(
+        tokenUser[0].address_wallet.length - 3
+      );
+  }
+
   const {toggleDarkMode} = useSettingsStore();
   const light = useSettingsStore((state) => state.light);
 
@@ -49,6 +120,9 @@ const Header = () => {
   };
 
   const navigate = useNavigate();
+
+  // Logout Metamask
+
   return (
     <HeaderStyled>
       <header className="header">
@@ -63,20 +137,54 @@ const Header = () => {
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
-                <a href="market-place" className="nav-item-link">
+                <a href="/market-place" className="nav-item-link">
                   <span>Marketplace</span>
                 </a>
               </div>
 
               <div className="nav-item">
-                <a href="ranking" className="nav-item-link">
+                <a href="/ranking" className="nav-item-link">
                   <span>Rankings</span>
                 </a>
               </div>
+
               <div className="nav-item">
                 <DarkMode onChange={toggleDarkMode}></DarkMode>
               </div>
-              <SignUpButton width={'200px'}></SignUpButton>
+              <div className="header-connect-btn">
+                <SignUpButton
+                  className="signUp-btn"
+                  onClick={() => {
+                    console.log('clicked');
+                    toggleClick();
+                  }}
+                  width={'200px'}
+                >
+                  {address_wallet}
+                </SignUpButton>
+
+                {showSubHeader && token && (
+                  <div className="sub-header">
+                    <ul className="sub-header-list">
+                      <li className="sub-header-items">
+                        <a href="/create-nft" className="sub-header-item-link">
+                          <span>Create NFT</span>
+                        </a>
+                      </li>
+
+                      <li className="sub-header-items">
+                        <a
+                          href="/"
+                          onClick={handleLogoutForm}
+                          className="sub-header-item-link"
+                        >
+                          <span>Log out</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </nav>
             {/* nav Tablet */}
             <nav className="tablet-mobile-nav">
@@ -94,28 +202,29 @@ const Header = () => {
                 </div>
 
                 <div className="nav-mobile-item">
-                  <a href="/user-page" className="nav-mobile-item-link">
-                    <span>username</span>
+                  <a href="/create-nft" className="nav-mobile-item-link">
+                    <span>Create NFT</span>
                   </a>
                 </div>
                 <div className="nav-mobile-item">
-                  <a href="market-place" className="nav-mobile-item-link">
+                  <a href="/market-place" className="nav-mobile-item-link">
                     <span>Marketplace</span>
                   </a>
                 </div>
                 <div className="nav-mobile-item">
-                  <a href="ranking" className="nav-mobile-item-link">
+                  <a href="/ranking" className="nav-mobile-item-link">
                     <span>Rankings</span>
                   </a>
                 </div>
-                <div className="nav-mobile-item">
-                  <a href="/logout" className="nav-mobile-item-link">
+
+                <div className="nav-mobile-item" onClick={handleLogoutForm}>
+                  <a href="/" className="nav-mobile-item-link">
                     <span>Log Out</span>
                   </a>
                 </div>
+
                 <div className="switch-darkMode">
                   <DarkMode onChange={toggleDarkMode}></DarkMode>
-                  {/* <button onClick={toggleDarkMode}>ToggleDarkMode</button> */}
                 </div>
               </NavMobileStyled>
             </nav>
@@ -220,6 +329,45 @@ const HeaderStyled = styled.div`
     text-decoration: none;
     padding: 10px;
     cursor: pointer;
+  }
+
+  // sub-header
+  .header-connect-btn {
+    position: relative;
+  }
+  ul li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+  }
+  .sub-header {
+    position: absolute;
+    top: 80px;
+    right: 0px;
+    background-color: ${colors.backgroundColor2};
+    width: 200px;
+    height: 150px;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    transition: all 0.3s linear;
+    opacity: 1;
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  .sub-header .sub-header-item-link {
+    width: 100%;
+    display: inline-block;
+    color: ${colors.whiteColor};
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+  }
+  .sub-header-items {
+    padding: 10px 0;
+    margin: 4px 0;
+  }
+  .sub-header-items:hover .sub-header-item-link {
+    color: ${colors.primaryColor};
   }
 
   /* overlay */

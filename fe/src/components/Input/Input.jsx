@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import {useState} from 'react';
+import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 // const { default: styled } = require("styled-components");
 
@@ -7,7 +8,7 @@ const StyledInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.boderColor ? props.border : 'none')};
+    border: ${(props) => (props.boderColor ? props.border : "none")};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -43,7 +44,7 @@ const SearchInput = styled.div`
   input {
     color: ${(props) => props.textColor};
     background-color: ${(props) => props.bgColor};
-    border: ${(props) => (props.border ? props.border : 'none')};
+    border: ${(props) => (props.border ? props.border : "none")};
     border-radius: ${(props) => props.borderRadius};
     font-size: ${(props) => props.fontSize};
     font-weight: ${(props) => props.fontWeight};
@@ -94,19 +95,19 @@ const Input = ({
   // console.log('password:', password);
   const [passwordShown, setPasswordShown] = useState(false);
   function togglePassword() {
-    console.log('click');
+    console.log("click");
     setPasswordShown(!passwordShown);
-    const eyesClose = document.querySelector('.eyes-close');
-    const eyesOpen = document.querySelector('.eyes-open');
+    const eyesClose = document.querySelector(".eyes-close");
+    const eyesOpen = document.querySelector(".eyes-open");
     if (passwordShown === false) {
-      eyesClose.classList.add('d-none');
-      eyesOpen.classList.add('d-block');
+      eyesClose.classList.add("d-none");
+      eyesOpen.classList.add("d-block");
     } else {
-      eyesClose.classList.remove('d-none');
-      eyesOpen.classList.remove('d-block');
+      eyesClose.classList.remove("d-none");
+      eyesOpen.classList.remove("d-block");
     }
   }
-  if (type === 'search') {
+  if (type === "search") {
     return (
       <SearchInput
         textColor={textColor}
@@ -129,8 +130,17 @@ const Input = ({
         paddingLeft={paddingLeft}
       >
         <form action="">
-          <input type="search" name="search" placeholder={placeHolder} id="" />
-          <i className="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="search"
+            name="search"
+            placeholder={placeHolder}
+            id=""
+            onChange={onChange}
+          />
+          {/* <i
+            className="fa-solid fa-magnifying-glass"
+            // onClick={onClick}
+          ></i> */}
         </form>
       </SearchInput>
     );
@@ -182,4 +192,4 @@ const Input = ({
   }
 };
 
-export {Input};
+export { Input };
