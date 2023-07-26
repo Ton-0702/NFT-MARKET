@@ -1,6 +1,15 @@
 import {create} from 'zustand';
 import {devtools, persist} from 'zustand/middleware';
 
+export const useCurrentUserStore = create((set) => ({
+  currentUser: {},
+  addCurrentUser: (user) => {
+    set((state) => ({
+      currentUser: user,
+    }));
+  },
+}));
+
 // settingStore
 let settingsStore = (set) => ({
   light: false,

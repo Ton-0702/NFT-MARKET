@@ -11,7 +11,7 @@ import {ReactComponent as MenuBar} from '../../assets/header-imgs/menu-tablet.sv
 import {ReactComponent as Close} from '../../assets/header-imgs/times.svg';
 import {useNavigate} from 'react-router-dom';
 // import Switch from 'react-switch';
-import {useSettingsStore} from 'store/store';
+import {useCurrentUserStore, useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
 import {Button} from 'components/Button';
 
@@ -20,7 +20,9 @@ const Header = () => {
   const [showSubHeader, setShowSubHeader] = useState(false);
   const token = Cookies.get('token');
   // console.log('hello token: ', token);
+  const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
 
+  // console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
@@ -56,8 +58,10 @@ const Header = () => {
         Promise.all([getTokenByUser()]).then((res) => {
           // console.log("what is res: ",res);
           const tokenUserData = res[0].data;
-          // console.log('tokenUserData: ', tokenUserData);
+          const dataUser = res[0].data[0];
+          console.log('tokenUserData: ', tokenUserData);
           setToken(tokenUserData);
+          addCurrentUser(dataUser);
         });
       } catch (error) {
         console.error(error);
@@ -65,7 +69,7 @@ const Header = () => {
     }
     getUser();
   }, []);
-  // console.log("tokenUser: ",tokenUser[0].address_wallet);
+
   let address_wallet = '';
   if (tokenUser === '' || tokenUser === null) {
     address_wallet = '';
@@ -131,13 +135,13 @@ const Header = () => {
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
-                <a href="market-place" className="nav-item-link">
+                <a href="/market-place" className="nav-item-link">
                   <span>Marketplace</span>
                 </a>
               </div>
 
               <div className="nav-item">
-                <a href="ranking" className="nav-item-link">
+                <a href="/ranking" className="nav-item-link">
                   <span>Rankings</span>
                 </a>
               </div>
