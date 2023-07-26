@@ -14,6 +14,7 @@ import avatar5 from '../../assets/ranking-imgs/avatar5.svg';
 import avatar6 from '../../assets/ranking-imgs/avatar6.svg';
 import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const auctionData = [
   {
@@ -85,11 +86,13 @@ const NftPage = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [transactions, setTransactions] = useState([] || null);
-
-  const [nftId, setNftId] = useState();
   // console.log('transactions: ', transactions);
+  const [nftId, setNftId] = useState();
 
-  // console.log('count: ', count);
+  const [currentUser, setCurrentUser] = useState([] || null);
+
+  const token = Cookies.get('token');
+  // console.log('token: ', token);
 
   useEffect(() => {
     // get detail Page
@@ -100,9 +103,10 @@ const NftPage = () => {
         );
         console.log(response.data[0]);
         setDataNftPage(response.data[0]);
-        // console.log(response.data[0].nft_id);
+        const nftId = response.data[0].nft_id;
+        console.log('nftId: ', nftId);
 
-        setNftId(response.data[0].nft_id);
+        setNftId(nftId);
       } catch (error) {
         console.error(error);
       }
@@ -114,19 +118,43 @@ const NftPage = () => {
   useEffect(() => {
     async function historyTransaction() {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/transaction/history/${nftId}`
-        );
-        // console.log(response);
-        const data = response.data;
-        console.log('dataTransaction: ', data);
-        setTransactions(data);
+        if (nftId) {
+          const response = await axios.get(
+            `http://localhost:8080/transaction/history/${nftId}`
+          );
+          // console.log(response);
+          const data = response.data;
+          console.log('dataTransaction: ', data);
+          setTransactions(data);
+        }
       } catch (error) {
         console.error(error);
       }
     }
     historyTransaction();
   }, [nftId]);
+
+  // getUser
+  useEffect(() => {
+    function getUser() {
+      try {
+        function getTokenByUser() {
+          return axios.get(
+            'http://localhost:8080/api/session-address-wallet/' + token
+          );
+        }
+        Promise.all([getTokenByUser()]).then((res) => {
+          // console.log("what is res: ",res);
+          const tokenUserData = res[0].data[0];
+          console.log('tokenUserData NFT-page: ', tokenUserData);
+          setCurrentUser(tokenUserData);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
 
   // CountDown
   useEffect(() => {
@@ -174,16 +202,19 @@ const NftPage = () => {
     username,
     nft_id,
   } = dataNftPage;
+
+  // if (!currentUser) return null;
   // get userName
   // get account id;
 
   // create transaction bid
   const createTransactionBid = (inputValue) => {
+    const {account_id} = currentUser;
     // http://localhost:8080/transaction/create
     console.log('inputValue: ', inputValue);
     const formData = new FormData();
     formData.append('nft_id', nft_id);
-    formData.append('account_id', 3);
+    formData.append('account_id', account_id);
     formData.append('highest_bid', inputValue);
     async function postTransactionBid() {
       axios
@@ -201,6 +232,11 @@ const NftPage = () => {
   // handleClickPlaceBid
   const handleClickPlaceBid = () => {
     let dataBids;
+    if (!currentUser) {
+      alert('you need to LogIn');
+      return null;
+    }
+    const {username} = currentUser;
     const today = new Date();
     const currentTime =
       today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -224,7 +260,7 @@ const NftPage = () => {
     } else {
       if (transactions.length === 0) {
         dataBids = {
-          username: 'hieu',
+          username: username,
           date: today,
           avatar: 'a',
           currentTime: currentTime,
@@ -240,7 +276,7 @@ const NftPage = () => {
         console.log('highestBidsPrice: ', highestBidsPrice);
         if (inputNumber > highestBidsPrice) {
           dataBids = {
-            username: 'hieu thứ hai',
+            username: username,
             date: today,
             avatar: 'a',
             currentTime: currentTime,
@@ -474,6 +510,7 @@ const NftPageStyled = styled.div`
   background-color: ${colors.background};
   .nft-page-wrap {
     padding-bottom: 22px;
+    overflow-y: auto;
   }
   .banner {
     width: 100%;

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../../Global';
+import {colors} from '../../Global';
 import {useEffect, useState} from 'react';
-import { ReactComponent as UserIcon } from '../../assets/header-imgs/User.svg';
+import {ReactComponent as UserIcon} from '../../assets/header-imgs/User.svg';
 // import axios from 'axios';
 
-const SignUpButton = ({ width, height, children, ...rest }) => {
+const SignUpButton = ({width, height, children, ...rest}) => {
   // const [addressWallet, setAddressWallet] = useState();
   // useEffect(() => {
   //   function getUser() {
@@ -15,7 +15,7 @@ const SignUpButton = ({ width, height, children, ...rest }) => {
   //       }
   //       Promise.all([
   //         getAddressWallet(),
-  //       ]).then((res) => { 
+  //       ]).then((res) => {
   //         console.log("dafadf: ",res);
   //         const address_wallet = res[0].data;
   //         console.log("check user1: ",addressWallet);
@@ -31,20 +31,19 @@ const SignUpButton = ({ width, height, children, ...rest }) => {
   // console.log("check user: ",addressWallet);
   return (
     <SignUpBtnStyled width={width} height={height} {...rest}>
-
-      {children != "" ?
-        <a onClick={localStorage.removeItem("metamask-address")}>
+      {children !== '' ? (
+        <a onClick={localStorage.removeItem('metamask-address')}>
           <div className="signUp-btn">
             <div className="signUp-Wrap">
               <div className="signUp-icon">
                 <UserIcon></UserIcon>
               </div>
-              <div className="signUp-text">
-                {children}
-              </div>
+              <div className="signUp-text">{children}</div>
             </div>
           </div>
-        </a> : <a href="/connect-wallet">
+        </a>
+      ) : (
+        <a href="/connect-wallet">
           <div className="signUp-btn">
             <div className="signUp-Wrap">
               <div className="signUp-icon">
@@ -55,12 +54,13 @@ const SignUpButton = ({ width, height, children, ...rest }) => {
               </div>
             </div>
           </div>
-        </a>}
+        </a>
+      )}
     </SignUpBtnStyled>
   );
 };
 
-export { SignUpButton };
+export {SignUpButton};
 
 const SignUpBtnStyled = styled.div`
   a {
@@ -68,9 +68,9 @@ const SignUpBtnStyled = styled.div`
   }
   .signUp-btn {
     width: ${(props) => {
-    //   console.log(props.width);
-    return props.width ? props.width : 152 + 'px';
-  }};
+      //   console.log(props.width);
+      return props.width ? props.width : 152 + 'px';
+    }};
     height: ${(props) => (props.height ? props.height : 60 + 'px')};
     background-color: ${colors.primaryColor};
     border-radius: 20px;
@@ -93,7 +93,7 @@ const SignUpBtnStyled = styled.div`
     height: 100%;
   }
   .signUp-text {
-    span{
+    span {
       font-weight: 600;
       color: ${colors.whiteColor};
     }
