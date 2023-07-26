@@ -14,8 +14,9 @@ import avatar1 from "../../assets/Artist/avatar1.png";
 import button1 from "../../assets/Artist/Button1.svg";
 import button2 from "../../assets/Artist/Button2.svg";
 import cate5a from "../../assets/HomePage/Categories/cate5a.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const CreatedArtistData = [
   {
@@ -377,7 +378,25 @@ const ArtistPage = () => {
   const location = useLocation();
   const { dataArtist } = location.state;
   const [selectedClass, setSelectedClass] = useState("created");
-  console.log(dataArtist);
+  const [listDataNFT, setListDataNFT] = useState();
+  const [dataNFTID, setDataNFTID] = useState();
+  console.log(listDataNFT);
+
+  useEffect(() => {
+    function getAllTopCreator() {
+      axios
+        .get(`http://localhost:8080/nfts/owned-nft/7`)
+        .then((res) => {
+          console.log(res.data);
+          setListDataNFT(res.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    getAllTopCreator();
+  }, []);
+
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === "created") {
       setSelectedClass(activeClass);
@@ -389,91 +408,106 @@ const ArtistPage = () => {
       setSelectedClass(activeClass);
     }
   };
+
+  const handleClick = (nftID) => {
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .then((res) => {
+        console.log(nftID);
+        navigate(`/artist/${artistId}`, {
+          state: { dataArtist: res.data[0] },
+        });
+        window.scrollTo(0, 0);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <PrimaryLayout>
       <ArtistStyled>
         <div className="img_background"></div>
         {/* {dataArtist
           ? dataArtist.map((e, index) => ( */}
-              <div className="header_artist">
-                <div className="container">
-                  <div className="infor_artist">
-                    <div className="avatar">
-                      <img src={dataArtist.avatar} alt="" />
-                    </div>
-                    <div className="body_infor_artist">
-                      <div className="header_body_infor_artist">
-                        <h2>{dataArtist.username}</h2>
-                        <div className="body_infor_artist_button">
-                          <Button
-                            img={button1}
-                            bgColor={"#A259FF"}
-                            borderRadius={"20px"}
-                            padding={"15px 30px"}
-                            jutifyContent={"center"}
-                            textColor={colors.whiteColor}
-                            content={"0xc0E3...B79C"}
-                            fontSize={"16px"}
-                            fontWeight={"600"}
-                          ></Button>
-                          <Button
-                            img={button2}
-                            bgColor={"unset"}
-                            border={"2px solid #A259FF"}
-                            borderRadius={"20px"}
-                            jutifyContent={"center"}
-                            padding={"15px 30px"}
-                            textColor={colors.whiteColor}
-                            content={"Follow"}
-                            fontSize={"16px"}
-                            fontWeight={"600"}
-                          ></Button>
-                        </div>
-                      </div>
-                      <div className="statistical">
-                        <div className="statistical_left">
-                          <h4>{dataArtist.volume}+</h4>
-                          <span>Volume</span>
-                        </div>
-                        <div className="statistical_middle">
-                          <h4>{dataArtist.nfts_sold}+</h4>
-                          <span>NFTs Sold</span>
-                        </div>
-                        <div className="statistical_left">
-                          <h4>3000+</h4>
-                          <span>Followers</span>
-                        </div>
-                      </div>
-                      <div className="bio">
-                        <h5>Bio</h5>
-                        <p>{dataArtist.biography}</p>
-                      </div>
-                      <div className="links">
-                        <h5>Links</h5>
-                        <ul>
-                          <li>
-                            <img src={globe} alt="" />
-                          </li>
-                          <li>
-                            <img src={discord} alt="" />
-                          </li>
-                          <li>
-                            <img src={youtube} alt="" />
-                          </li>
-                          <li>
-                            <img src={twitter} alt="" />
-                          </li>
-                          <li>
-                            <img src={insta} alt="" />
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="body_infor_artist_right"></div>
+        <div className="header_artist">
+          <div className="container">
+            <div className="infor_artist">
+              <div className="avatar">
+                <img src={dataArtist.avatar} alt="" />
+              </div>
+              <div className="body_infor_artist">
+                <div className="header_body_infor_artist">
+                  <h2>{dataArtist.username}</h2>
+                  <div className="body_infor_artist_button">
+                    <Button
+                      img={button1}
+                      bgColor={"#A259FF"}
+                      borderRadius={"20px"}
+                      padding={"15px 30px"}
+                      jutifyContent={"center"}
+                      textColor={colors.whiteColor}
+                      content={"0xc0E3...B79C"}
+                      fontSize={"16px"}
+                      fontWeight={"600"}
+                    ></Button>
+                    <Button
+                      img={button2}
+                      bgColor={"unset"}
+                      border={"2px solid #A259FF"}
+                      borderRadius={"20px"}
+                      jutifyContent={"center"}
+                      padding={"15px 30px"}
+                      textColor={colors.whiteColor}
+                      content={"Follow"}
+                      fontSize={"16px"}
+                      fontWeight={"600"}
+                    ></Button>
                   </div>
                 </div>
+                <div className="statistical">
+                  <div className="statistical_left">
+                    <h4>{dataArtist.volume}+</h4>
+                    <span>Volume</span>
+                  </div>
+                  <div className="statistical_middle">
+                    <h4>{dataArtist.nfts_sold}+</h4>
+                    <span>NFTs Sold</span>
+                  </div>
+                  <div className="statistical_left">
+                    <h4>3000+</h4>
+                    <span>Followers</span>
+                  </div>
+                </div>
+                <div className="bio">
+                  <h5>Bio</h5>
+                  <p>{dataArtist.biography}</p>
+                </div>
+                <div className="links">
+                  <h5>Links</h5>
+                  <ul>
+                    <li>
+                      <img src={globe} alt="" />
+                    </li>
+                    <li>
+                      <img src={discord} alt="" />
+                    </li>
+                    <li>
+                      <img src={youtube} alt="" />
+                    </li>
+                    <li>
+                      <img src={twitter} alt="" />
+                    </li>
+                    <li>
+                      <img src={insta} alt="" />
+                    </li>
+                  </ul>
+                </div>
               </div>
-            {/* ))
+              <div className="body_infor_artist_right"></div>
+            </div>
+          </div>
+        </div>
+        {/* ))
           : null} */}
 
         <div className="body_artist">
@@ -524,17 +558,22 @@ const ArtistPage = () => {
           <div className="artist-body-list">
             <div className="container">
               <div className="artist-body-grid">
-                {CreatedArtistData
-                  ? CreatedArtistData.map((e, index) => (
-                      <div className="body-artist-body-grid-item">
+                {listDataNFT
+                  ? listDataNFT.map((e, index) => (
+                      <div
+                        className="body-artist-body-grid-item"
+                        id={e.nft_id}
+                        onClick={() => {
+                          handleClick(e.nft_id);
+                        }}
+                      >
                         <Card
-                          title={e.title}
-                          img_product={e.img}
+                          title={e.nft_name}
+                          img_product={e.image}
                           price={e.price}
-                          highest_bid={e.price}
-                          img_artist={e.img_artist}
-                          name_artist={e.name_artist}
-                          total_sales={e.total_sales}
+                          highest_bid="1.63"
+                          img_artist={e.avatar}
+                          name_artist={e.username}
                           bgColor={colors.background}
                           borderRadius={"20px"}
                         ></Card>
