@@ -118,6 +118,10 @@ public class NftController {
         System.out.println("timeRemain " + timeRemain);
         System.out.println("Số giờ giữa hai mốc thời gian là: " + hoursBetween + " giờ, " + minutesBetween + " phút, " + secondsBetween + " giây.");
 
+        Long hToS = hoursBetween * 3600;
+        Long mtoS = minutesBetween * 60;
+        Long totalS = hToS + mtoS + secondsBetween;
+        System.out.println("totalS: " + totalS);
 
         System.out.println("ldt " + ldt1);
 
@@ -179,6 +183,7 @@ public class NftController {
         dateTimeBid.put("timeEndBid", timeEndBid);
         dateTimeBid.put("dateBidRemain", daysRemainS);
         dateTimeBid.put("hoursBidRemain", timeRemain);
+        dateTimeBid.put("totalSecondRemain", String.valueOf(totalS));
         //chuyển hash map thành json để show
         ObjectMapper objectMapper = new ObjectMapper();
         String jacksonData = objectMapper.writeValueAsString(dateTimeBid);
