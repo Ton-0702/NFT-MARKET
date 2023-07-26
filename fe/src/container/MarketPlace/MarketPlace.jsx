@@ -1,94 +1,94 @@
-import { Input } from "components/Input";
-import { PrimaryLayout } from "components/Layout";
-import { colors } from "../../Global";
-import styled from "styled-components";
-import { Card } from "components/Card";
+import {Input} from 'components/Input';
+import {PrimaryLayout} from 'components/Layout';
+import {colors} from '../../Global';
+import styled from 'styled-components';
+import {Card} from 'components/Card';
 
-import avatar1 from "../../assets/Artist/avatar1.png";
-import cate5a from "../../assets/HomePage/Categories/cate5a.png";
+import avatar1 from '../../assets/Artist/avatar1.png';
+import cate5a from '../../assets/HomePage/Categories/cate5a.png';
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 
 const CreatedMarketPlaceData = [
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
   {
-    type: "DiscoverMore",
-    title: "Distant Galaxy",
+    type: 'DiscoverMore',
+    title: 'Distant Galaxy',
     img: cate5a,
     img_artist: avatar1,
-    name_artist: "MoonDancer",
+    name_artist: 'MoonDancer',
     price: 1.63,
     highest_bid: 0.33,
   },
@@ -155,7 +155,7 @@ const MarketPlaceStyled = styled.div`
   }
 
   .market-place-filter-item::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 2px;
@@ -179,7 +179,7 @@ const MarketPlaceStyled = styled.div`
   .market-place-filter-item-count {
     font-size: 16px;
     font-style: normal;
-    font-family: "Space Mono";
+    font-family: 'Space Mono';
     font-weight: 400;
     line-height: 140%;
     padding: 5px 10px;
@@ -294,14 +294,14 @@ const MarketPlaceStyled = styled.div`
 `;
 
 const MarketPlace = () => {
-  const [selectedClass, setSelectedClass] = useState("created");
+  const [selectedClass, setSelectedClass] = useState('created');
   const [resultSearch, setResultSearch] = useState();
   const [DataMarketPlacePage, setDataMarketPlacePage] = useState();
 
   useEffect(() => {
     // http://localhost:8080/nfts/nft-detail-page/1
     async function getResultSearch() {
-      console.log("oke");
+      // console.log('oke');
       try {
         const response = await axios.get(
           `http://localhost:8080/nfts/search-nft/${resultSearch}`
@@ -315,20 +315,20 @@ const MarketPlace = () => {
     getResultSearch();
   }, [resultSearch]);
   const handleClickActiveClass = (activeClass) => {
-    if (activeClass === "created") {
+    if (activeClass === 'created') {
       setSelectedClass(activeClass);
     }
-    if (activeClass === "owned") {
+    if (activeClass === 'owned') {
       setSelectedClass(activeClass);
     }
-    if (activeClass === "collection") {
+    if (activeClass === 'collection') {
       setSelectedClass(activeClass);
     }
   };
 
   const handleChange = (e) => {
-    const { value } = e.target;
-    console.log(value);
+    const {value} = e.target;
+    // console.log(value);
     // setResultSearch((prevState) => ({ ...prevState, [name]: value }));
     setResultSearch(value);
   };
@@ -341,16 +341,16 @@ const MarketPlace = () => {
             <h2>Browse Marketplace</h2>
             <p>Browse through more than 50k NFTs on the NFT Marketplace.</p>
             <Input
-              width={"100%"}
-              textColor={"#858584"}
-              bgColor={"unset"}
-              border={"1px solid #3B3B3B"}
-              borderRadius={"20px"}
-              paddingTop={"12px"}
-              paddingBottom={"12px"}
-              type={"search"}
-              placeHolder={"Search your favourite NFTs"}
-              paddingLeft={"20px"}
+              width={'100%'}
+              textColor={'#858584'}
+              bgColor={'unset'}
+              border={'1px solid #3B3B3B'}
+              borderRadius={'20px'}
+              paddingTop={'12px'}
+              paddingBottom={'12px'}
+              type={'search'}
+              placeHolder={'Search your favourite NFTs'}
+              paddingLeft={'20px'}
               onChange={handleChange}
               // onClick={handleClickSearch}
             ></Input>
@@ -362,11 +362,11 @@ const MarketPlace = () => {
                   <ul className="market-place-filter-list">
                     <li
                       className={
-                        selectedClass === "created"
-                          ? "market-place-filter-item active"
-                          : "market-place-filter-item"
+                        selectedClass === 'created'
+                          ? 'market-place-filter-item active'
+                          : 'market-place-filter-item'
                       }
-                      onClick={() => handleClickActiveClass("created")}
+                      onClick={() => handleClickActiveClass('created')}
                     >
                       <span className="market-place-filter-item-title">
                         Created
@@ -377,11 +377,11 @@ const MarketPlace = () => {
                     </li>
                     <li
                       className={
-                        selectedClass === "owned"
-                          ? "market-place-filter-item active"
-                          : "market-place-filter-item"
+                        selectedClass === 'owned'
+                          ? 'market-place-filter-item active'
+                          : 'market-place-filter-item'
                       }
-                      onClick={() => handleClickActiveClass("owned")}
+                      onClick={() => handleClickActiveClass('owned')}
                     >
                       <span className="market-place-filter-item-title">
                         Owned
@@ -390,11 +390,11 @@ const MarketPlace = () => {
                     </li>
                     <li
                       className={
-                        selectedClass === "collection"
-                          ? "market-place-filter-item active"
-                          : "market-place-filter-item"
+                        selectedClass === 'collection'
+                          ? 'market-place-filter-item active'
+                          : 'market-place-filter-item'
                       }
-                      onClick={() => handleClickActiveClass("collection")}
+                      onClick={() => handleClickActiveClass('collection')}
                     >
                       <span className="market-place-filter-item-title">
                         Collection
@@ -425,7 +425,7 @@ const MarketPlace = () => {
                             img_artist={e.avatar}
                             name_artist={e.username}
                             bgColor={colors.background}
-                            borderRadius={"20px"}
+                            borderRadius={'20px'}
                           ></Card>
                         </div>
                       ))
