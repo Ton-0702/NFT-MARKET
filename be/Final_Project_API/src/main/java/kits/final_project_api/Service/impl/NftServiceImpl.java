@@ -43,8 +43,8 @@ public class NftServiceImpl implements NftService {
     }
 
     @Override
-    public void CreateNft(@Valid String nft_name, String image, Double price, String description, String date_start_bid,
-            String date_end_bid) {
+    public void CreateNft(String nft_name, String image, Double price, String description, String date_start_bid,
+            String date_end_bid, Long account_id) {
         LocalDateTime date_current = LocalDateTime.now().minusDays(1);
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date_current_format = date_current.format(myFormatObj);
@@ -56,9 +56,10 @@ public class NftServiceImpl implements NftService {
         createNFT.setDate_create(date_current_format);
         createNFT.setDate_start_bid(date_start_bid);
         createNFT.setDate_end_bid(date_end_bid);
-        createNFT.setAccount(null);
-        nftRepository.save(createNFT);
+        createNFT.setAccount_id(account_id);
+        nftRepository.saveAndFlush(createNFT);
     }
+
 
     // public void CreateNft() {
     // }

@@ -22,6 +22,9 @@ public interface NftRepository extends JpaRepository<NFT, Long> {
     @Query(value = "SELECT * FROM nft limit 5", nativeQuery = true)
     List<Map<String, Object>> GetAll();
 
+
+    @Query(value = "SELECT * FROM nft WHERE nft_name= :nft_name", nativeQuery = true)
+    NFT getIdByNftName(String nft_name);
     // code insert into chay dc
     // @Query(value = "INSERT INTO nft (nft_name, image, price, description,
     // date_create, date_start_bid, date_end_bid, account_id) " +

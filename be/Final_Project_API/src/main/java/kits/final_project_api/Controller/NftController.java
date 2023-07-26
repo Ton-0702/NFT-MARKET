@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.validation.Valid;
 import kits.final_project_api.Entity.NFT;
+import kits.final_project_api.Model.Response.RegisterResponseDto;
+import kits.final_project_api.Repository.NftRepository;
 import kits.final_project_api.Service.AccountService;
 import kits.final_project_api.Service.InterfaceNftPage.NftPageService;
 import kits.final_project_api.Service.NftService;
@@ -15,6 +17,8 @@ import lombok.SneakyThrows;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +36,10 @@ import org.springframework.ui.Model;
 @CrossOrigin
 @RequestMapping("nfts")  //đường dẫn là nfts
 public class NftController {
+
+    @Autowired
+    private NftRepository nftRepository;
+
     @Autowired
     private NftServiceImpl nftServiceImpl;
 
@@ -50,9 +58,10 @@ public class NftController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createNft(@Valid @RequestParam("nft_name") String nft_name, @RequestParam("image") String image, @RequestParam("price") Double price, @RequestParam("description") String description, @RequestParam("date_start_bid") String date_start_bid, @RequestParam("date_end_bid") String date_end_bid) {
-        nftServiceImpl.CreateNft(nft_name, image, price, description, date_start_bid, date_end_bid);
-        return ResponseEntity.ok("Request completed");
+    public ResponseEntity<RegisterResponseDto> createNft(@Valid @RequestParam("nft_name") String nft_name, @RequestParam("image") String image, @RequestParam("price") Double price, @RequestParam("description") String description, @RequestParam("date_start_bid") String date_start_bid, @RequestParam("date_end_bid") String date_end_bid, @Valid @RequestParam("account_id") Long account_id) {
+        nftServiceImpl.CreateNft(nft_name, image, price, description, date_start_bid, date_end_bid, account_id);
+        NFT nft = nftRepository.getIdByNftName(nft_name);
+        return ResponseEntity.status(HttpStatus.OK).body(new RegisterResponseDto("Request Complete", nft, "", "Request Finish"));
     }
 
     //tạm bỏ
@@ -109,6 +118,10 @@ public class NftController {
         System.out.println("timeRemain " + timeRemain);
         System.out.println("Số giờ giữa hai mốc thời gian là: " + hoursBetween + " giờ, " + minutesBetween + " phút, " + secondsBetween + " giây.");
 
+        Long hToS = hoursBetween * 3600;
+        Long mtoS = minutesBetween * 60;
+        Long totalS = hToS + mtoS + secondsBetween;
+        System.out.println("totalS: " + totalS);
 
         System.out.println("ldt " + ldt1);
 
@@ -170,6 +183,7 @@ public class NftController {
         dateTimeBid.put("timeEndBid", timeEndBid);
         dateTimeBid.put("dateBidRemain", daysRemainS);
         dateTimeBid.put("hoursBidRemain", timeRemain);
+        dateTimeBid.put("totalSecondRemain", String.valueOf(totalS));
         //chuyển hash map thành json để show
         ObjectMapper objectMapper = new ObjectMapper();
         String jacksonData = objectMapper.writeValueAsString(dateTimeBid);
