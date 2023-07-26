@@ -15,6 +15,7 @@ import avatar6 from '../../assets/ranking-imgs/avatar6.svg';
 import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {useCurrentUserStore} from 'store/store';
 
 const auctionData = [
   {
@@ -89,10 +90,11 @@ const NftPage = () => {
   // console.log('transactions: ', transactions);
   const [nftId, setNftId] = useState();
 
-  const [currentUser, setCurrentUser] = useState([] || null);
+  // const [currentUser, setCurrentUser] = useState([] || null);
 
-  const token = Cookies.get('token');
   // console.log('token: ', token);
+
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
 
   useEffect(() => {
     // get detail Page
@@ -135,26 +137,26 @@ const NftPage = () => {
   }, [nftId]);
 
   // getUser
-  useEffect(() => {
-    function getUser() {
-      try {
-        function getTokenByUser() {
-          return axios.get(
-            'http://localhost:8080/api/session-address-wallet/' + token
-          );
-        }
-        Promise.all([getTokenByUser()]).then((res) => {
-          // console.log("what is res: ",res);
-          const tokenUserData = res[0].data[0];
-          console.log('tokenUserData NFT-page: ', tokenUserData);
-          setCurrentUser(tokenUserData);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   function getUser() {
+  //     try {
+  //       function getTokenByUser() {
+  //         return axios.get(
+  //           'http://localhost:8080/api/session-address-wallet/' + token
+  //         );
+  //       }
+  //       Promise.all([getTokenByUser()]).then((res) => {
+  //         // console.log("what is res: ",res);
+  //         const tokenUserData = res[0].data[0];
+  //         console.log('tokenUserData NFT-page: ', tokenUserData);
+  //         setCurrentUser(tokenUserData);
+  //       });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   getUser();
+  // }, []);
 
   // CountDown
   useEffect(() => {
