@@ -11,7 +11,7 @@
     <groupId>kits</groupId>
     <artifactId>Final_Project_API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Final_Project_API</name>
     <description>Final_Project_API</description>
     <properties>
