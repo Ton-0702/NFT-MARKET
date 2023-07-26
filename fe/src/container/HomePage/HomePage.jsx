@@ -484,6 +484,10 @@ const TopCreatorStyled = styled.div`
     gap: 30px;
   }
 
+  .body_top_creator .top_creator_item {
+    cursor: pointer;
+  }
+
   @media (max-width: 991.98px) {
     .body_top_creator {
       grid-template-columns: auto auto;
@@ -598,6 +602,10 @@ const DiscoverMoreStyled = styled.div`
     grid-template-columns: 30% 30% 30%;
     gap: 3%;
     justify-content: space-between;
+  }
+
+  .body_discover_more .body_discover_more_item {
+    cursor: pointer;
   }
 
   @media (max-width: 991.98px) {
@@ -904,6 +912,7 @@ const HomePage = () => {
         navigate(`/artist/${artistId}`, {
           state: { dataArtist: res.data[0] },
         });
+        window.scrollTo(0, 0);
       })
       .catch(function (error) {
         console.log(error);
@@ -917,7 +926,6 @@ const HomePage = () => {
       .then((res) => {
         setNftId(res.data);
         console.log(res.data);
-
         navigate(`/nft-detail-page/${nftId}`, {
           state: { dataNft: res.data[0] },
         });
@@ -1014,7 +1022,10 @@ const HomePage = () => {
               </div>
               <div className="header_top_creator_right">
                 <Button
-                  onClick={() => navigate("/ranking")}
+                  onClick={() => {
+                    navigate("/ranking");
+                    window.scrollTo(0, 0);
+                  }}
                   bgColor={"none"}
                   border={"1px solid #A259FF"}
                   content={"View Rankings"}
