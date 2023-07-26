@@ -135,13 +135,13 @@ const Header = () => {
           <div className="header-right">
             <nav className="header-right-nav">
               <div className="nav-item">
-                <a href="market-place" className="nav-item-link">
+                <a href="/market-place" className="nav-item-link">
                   <span>Marketplace</span>
                 </a>
               </div>
 
               <div className="nav-item">
-                <a href="ranking" className="nav-item-link">
+                <a href="/ranking" className="nav-item-link">
                   <span>Rankings</span>
                 </a>
               </div>

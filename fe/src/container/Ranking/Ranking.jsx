@@ -1,26 +1,30 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import styled from 'styled-components';
-import {colors} from '../../Global';
-import {PrimaryLayout} from 'components/Layout';
-import ReactPaginate from 'react-paginate';
+import React, { Fragment, useEffect, useState } from "react";
+import styled from "styled-components";
+import { colors } from "../../Global";
+import { PrimaryLayout } from "components/Layout";
+import ReactPaginate from "react-paginate";
 
-import {dataOfThisMonthFake} from './DataRanking';
-import {dataOfThisWeekFake} from './DataRanking';
-import axios from 'axios';
-import {useSettingsStore} from 'store/store';
+import { dataOfThisMonthFake } from "./DataRanking";
+import { dataOfThisWeekFake } from "./DataRanking";
+import axios from "axios";
+import { useSettingsStore } from "store/store";
+import { redirect, useNavigate } from "react-router-dom";
 // console.log('dataOfThisMonth:', dataOfThisMonthFake);
 
-const Ranking = ({title}) => {
-  const [selectedClass, setSelectedClass] = useState('today');
+const Ranking = ({ title }) => {
+  const [selectedClass, setSelectedClass] = useState("today");
   const [dataTodayTopCreator, setDataTodayTopCreator] = useState();
   const [dataThisWeekTopCreator, setDataThisWeekTopCreator] = useState();
   const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
   const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
+  const [creatorID, setCreatorID] = useState();
 
   const light = useSettingsStore((state) => state.light);
 
   const [totalPage, setTotalPage] = useState();
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+  console.log("creatorID: " + creatorID);
 
   // console.log('data: ', {
   //   dataTodayTopCreator: dataTodayTopCreator,
@@ -37,7 +41,7 @@ const Ranking = ({title}) => {
           );
         }
         function getTopCreatorToday() {
-          return axios.get('http://localhost:8080/api/ranking/today?page=1');
+          return axios.get("http://localhost:8080/api/ranking/today?page=1");
         }
         Promise.all([getTopCreatorAlltime(), getTopCreatorToday()]).then(
           (res) => {
@@ -45,7 +49,7 @@ const Ranking = ({title}) => {
 
             const alltimeTotalPage = res[0].data[0].total_page;
             setTotalPage(alltimeTotalPage);
-            console.log('alltime: ', alltime);
+            console.log("alltime: ", alltime);
 
             const today = res[1].data;
             setDataAlltimeTopCreator(alltime);
@@ -62,18 +66,33 @@ const Ranking = ({title}) => {
     }
     getAllTopCreator();
   }, [page]);
+
+  const handleClick = (artistId) => {
+    console.log(artistId);
+    axios
+      .get(`http://localhost:8080/api/artist/${artistId}`)
+      .then((res) => {
+        navigate(`/artist/${artistId}`, {
+          state: { dataArtist: res.data[0] },
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const handleClickActiveClass = (activeClass) => {
-    if (activeClass === 'today') {
+    if (activeClass === "today") {
       setSelectedClass(activeClass);
       // setDataTopCreator(dataTodayTopCreator);
     }
-    if (activeClass === '7day') {
+    if (activeClass === "7day") {
       setSelectedClass(activeClass);
     }
-    if (activeClass === '30day') {
+    if (activeClass === "30day") {
       setSelectedClass(activeClass);
     }
-    if (activeClass === 'alltime') {
+    if (activeClass === "alltime") {
       setSelectedClass(activeClass);
 
       // setDataTopCreator(dataAlltimeTopCreator);
@@ -94,7 +113,7 @@ const Ranking = ({title}) => {
         <div className="container ranking-container">
           <div className="ranking-content">
             <div className="ranking-title">
-              <h2>{title || 'Top Creators'}</h2>
+              <h2>{title || "Top Creators"}</h2>
               <p className="title-desc">
                 Check out top ranking NFT artists on the NFT Marketplace.
               </p>
@@ -104,22 +123,22 @@ const Ranking = ({title}) => {
                 <ul className="ranking-filter-list">
                   <li
                     className={
-                      selectedClass === 'today'
-                        ? 'ranking-filter-item active'
-                        : 'ranking-filter-item'
+                      selectedClass === "today"
+                        ? "ranking-filter-item active"
+                        : "ranking-filter-item"
                     }
-                    onClick={() => handleClickActiveClass('today')}
+                    onClick={() => handleClickActiveClass("today")}
                   >
                     <span className="ranking-filter-item__desktop">Today</span>
                     <span className="ranking-filter-item__mobile">1d</span>
                   </li>
                   <li
                     className={
-                      selectedClass === '7day'
-                        ? 'ranking-filter-item active'
-                        : 'ranking-filter-item'
+                      selectedClass === "7day"
+                        ? "ranking-filter-item active"
+                        : "ranking-filter-item"
                     }
-                    onClick={() => handleClickActiveClass('7day')}
+                    onClick={() => handleClickActiveClass("7day")}
                   >
                     <span className="ranking-filter-item__desktop">
                       This Week
@@ -128,11 +147,11 @@ const Ranking = ({title}) => {
                   </li>
                   <li
                     className={
-                      selectedClass === '30day'
-                        ? 'ranking-filter-item active'
-                        : 'ranking-filter-item'
+                      selectedClass === "30day"
+                        ? "ranking-filter-item active"
+                        : "ranking-filter-item"
                     }
-                    onClick={() => handleClickActiveClass('30day')}
+                    onClick={() => handleClickActiveClass("30day")}
                   >
                     <span className="ranking-filter-item__desktop">
                       This Month
@@ -141,11 +160,11 @@ const Ranking = ({title}) => {
                   </li>
                   <li
                     className={
-                      selectedClass === 'alltime'
-                        ? 'ranking-filter-item active'
-                        : 'ranking-filter-item'
+                      selectedClass === "alltime"
+                        ? "ranking-filter-item active"
+                        : "ranking-filter-item"
                     }
-                    onClick={() => handleClickActiveClass('alltime')}
+                    onClick={() => handleClickActiveClass("alltime")}
                   >
                     All Time
                   </li>
@@ -175,12 +194,15 @@ const Ranking = ({title}) => {
                       {/* Body */}
                       <tbody className="table-body">
                         {/* today */}
-                        {selectedClass === 'alltime' &&
+                        {selectedClass === "alltime" &&
                           dataTodayTopCreator &&
                           dataTodayTopCreator.length > 0 &&
                           dataTodayTopCreator.map((item, index) => {
                             return (
-                              <Fragment key={index}>
+                              <Fragment
+                                key={index}
+                                onClick={setCreatorID(item.account_id)}
+                              >
                                 <DataTableRanking
                                   index={index + 1}
                                   src={item.avatar}
@@ -193,7 +215,7 @@ const Ranking = ({title}) => {
                             );
                           })}
                         {/* This Week */}
-                        {selectedClass === '7day' &&
+                        {selectedClass === "7day" &&
                           dataOfThisWeekFake &&
                           dataOfThisWeekFake.length > 0 &&
                           dataOfThisWeekFake.map((item, index) => {
@@ -211,7 +233,7 @@ const Ranking = ({title}) => {
                             );
                           })}
                         {/* This Month */}
-                        {selectedClass === '30day' &&
+                        {selectedClass === "30day" &&
                           dataOfThisMonthFake &&
                           dataOfThisMonthFake.length > 0 &&
                           dataOfThisMonthFake
@@ -232,19 +254,23 @@ const Ranking = ({title}) => {
                             })}
 
                         {/* Alltime */}
-                        {selectedClass === 'alltime' &&
+                        {selectedClass === "alltime" &&
                           dataAlltimeTopCreator &&
                           dataAlltimeTopCreator.length > 0 &&
                           dataAlltimeTopCreator.map((item, index) => {
                             return (
-                              <Fragment key={index}>
+                              <Fragment
+                                key={index}
+                              >
                                 <DataTableRanking
+                                  id = {item.account_id}
                                   index={index + 1}
                                   src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
                                   volume={item.volume}
+                                  onclick={() => handleClick(item.account_id)}
                                 ></DataTableRanking>
                               </Fragment>
                             );
@@ -254,7 +280,7 @@ const Ranking = ({title}) => {
 
                     {/* checking no data --> show 'There are no auctions'  */}
                     {/* today */}
-                    {selectedClass === 'today' &&
+                    {selectedClass === "today" &&
                       dataTodayTopCreator &&
                       dataTodayTopCreator.length === 0 && (
                         <div className="no-auction">
@@ -262,7 +288,7 @@ const Ranking = ({title}) => {
                         </div>
                       )}
                     {/* this week */}
-                    {selectedClass === '7day' &&
+                    {selectedClass === "7day" &&
                       dataOfThisWeekFake &&
                       dataOfThisWeekFake.length === 0 && (
                         <div className="no-auction">
@@ -270,7 +296,7 @@ const Ranking = ({title}) => {
                         </div>
                       )}
                     {/* this month */}
-                    {selectedClass === '30day' &&
+                    {selectedClass === "30day" &&
                       dataOfThisMonthFake &&
                       dataOfThisMonthFake.length === 0 && (
                         <div className="no-auction">
@@ -278,7 +304,7 @@ const Ranking = ({title}) => {
                         </div>
                       )}
                     {/* alltime */}
-                    {selectedClass === 'alltime' &&
+                    {selectedClass === "alltime" &&
                       dataAlltimeTopCreator &&
                       dataAlltimeTopCreator.length === 0 && (
                         <div className="no-auction">
@@ -286,7 +312,7 @@ const Ranking = ({title}) => {
                         </div>
                       )}
                     {/* Pagination */}
-                    {selectedClass === 'alltime' &&
+                    {selectedClass === "alltime" &&
                       dataAlltimeTopCreator &&
                       dataAlltimeTopCreator.length > 0 && (
                         <div className="topCreator-pagination">
@@ -372,7 +398,7 @@ const RankingStyled = styled.div`
   }
 
   .ranking-filter-item::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 2px;
@@ -516,7 +542,7 @@ const RankingStyled = styled.div`
     margin-left: 20px;
   }
   .body-data-change {
-    font-weight: ${(prop) => (prop.light ? '600' : '400')};
+    font-weight: ${(prop) => (prop.light ? "600" : "400")};
     line-height: 22.4px;
     color: ${colors.greenColor};
     /* color: ${(prop) =>
@@ -696,21 +722,21 @@ const RankingStyled = styled.div`
   }
 `;
 
-const DataTableRanking = ({index, src, username, change, sold, volume}) => {
+const DataTableRanking = ({ id, index, src, username, change, sold, volume, onclick }) => {
   return (
     <>
-      <tr className="table-row-body">
+      <tr className="table-row-body" onClick={onclick}>
         <td className="table-body-data">
           <span className="body-data-stt">{index || 1}</span>
         </td>
         <td className="table-body-data">
           <img className="table-body-data-img" src={src} alt="avatar" />
           <span className="body-data-username">
-            {username || 'Jaydon Ekstrom Bothman'}
+            {username || "Jaydon Ekstrom Bothman"}
           </span>
         </td>
         <td className="table-body-data">
-          <span className="body-data-change">{change || '+1.41%'}</span>
+          <span className="body-data-change">{change || "+1.41%"}</span>
         </td>
         <td className="table-body-data">
           <span className="body-data-sold">{sold || 602}</span>

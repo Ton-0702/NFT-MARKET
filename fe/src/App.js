@@ -1,18 +1,18 @@
-import './App.css';
-import React from 'react';
-import {Routes, Route} from 'react-router-dom';
-import Ranking from 'container/Ranking/Ranking';
-import {HomePage} from './container/HomePage';
-import {SignUpPage} from 'container/SignUpPage';
-import {SignInPage} from 'container/SignInPage';
-import {MarketPlace} from 'container/MarketPlace';
-import {NftPage} from 'container/NftPage';
-import {ConnectWalletPage} from 'container/ConnectWalletPage';
-import {ArtistPage} from 'container/ArtistPage';
-import {ProfileDetail} from 'container/ProfileDetail';
-import {LoginSuccessPage} from 'container/LoginSuccessPage';
-import {CreateNFTPage} from 'container/CreateNFT';
-import UploadFileToCloud from 'components/UploadFile/UploadFileToCloud';
+import "./App.css";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Ranking from "container/Ranking/Ranking";
+import { HomePage } from "./container/HomePage";
+import { SignUpPage } from "container/SignUpPage";
+import { SignInPage } from "container/SignInPage";
+import { MarketPlace } from "container/MarketPlace";
+import { NftPage } from "container/NftPage";
+import { ConnectWalletPage } from "container/ConnectWalletPage";
+import { ArtistPage } from "container/ArtistPage";
+import { ProfileDetail } from "container/ProfileDetail";
+import { LoginSuccessPage } from "container/LoginSuccessPage";
+import { CreateNFTPage } from "container/CreateNFT";
+import UploadFileToCloud from "components/UploadFile/UploadFileToCloud";
 
 function App() {
   return (
@@ -24,11 +24,11 @@ function App() {
       <Route path="/sign-in" element={<SignInPage />} />
       <Route path="/nft-page" element={<NftPage />} />
       <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-      <Route path="/artist/:artistId" element={<ArtistPage />} />
       <Route path="/profile-details" element={<ProfileDetail />} />
       <Route path="/login-success" element={<LoginSuccessPage />} />
       <Route path="/create-nft" element={<CreateNFTPage />} />
       <Route path="/upload" element={<UploadFileToCloud />} />
+      <Route path="/artist/:artistId" element={<ArtistPage />} />
     </Routes>
   );
 }
