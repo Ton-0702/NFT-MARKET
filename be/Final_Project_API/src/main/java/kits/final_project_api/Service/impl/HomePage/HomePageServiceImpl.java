@@ -145,7 +145,7 @@ public class HomePageServiceImpl implements HomePageService {
             result.add(newMap);
         }
         System.out.println(result);
-        result.sort(Comparator.comparing(m -> (long) m.get("trending"), Comparator.nullsLast(Comparator.reverseOrder())));
+        result.sort(Comparator.comparing(m -> (Double) m.get("highest_bid"), Comparator.nullsLast(Comparator.reverseOrder())));
 
 
         List<Map<String, Object>> firstNElementsResult = result.stream().limit(3).collect(Collectors.toList());
