@@ -5,7 +5,7 @@ import banner from '../../assets/Nft-page-imgs/Banner.jpeg';
 import avatar from '../../assets/HomePage/Avatar1.svg';
 import globe from '../../assets/Nft-page-imgs/Globe.png';
 import {colors} from 'Global';
-
+import { useLocation } from 'react-router-dom';
 import avatar1 from '../../assets/ranking-imgs/avatar.svg';
 import avatar2 from '../../assets/ranking-imgs/avatar2.svg';
 import avatar3 from '../../assets/ranking-imgs/avatar3.svg';
@@ -16,6 +16,7 @@ import avatar7 from '../../assets/ranking-imgs/avatar7.svg';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {useCurrentUserStore} from 'store/store';
+
 
 const auctionData = [
   {
@@ -94,18 +95,25 @@ const NftPage = () => {
 
   // console.log('token: ', token);
 
+  const location = useLocation();
+  const {dataNft} = location.state;
+  console.log(dataNft);
+
   const currentUser = useCurrentUserStore((state) => state.currentUser);
 
   useEffect(() => {
     // get detail Page
     async function getDetail() {
       try {
+        
         const response = await axios.get(
-          `http://localhost:8080/nfts/nft-detail-page/1`
+          `http://localhost:8080/nfts/nft-detail-page/${dataNft.nft_id}`
         );
         console.log(response.data[0]);
         setDataNftPage(response.data[0]);
         const nftId = response.data[0].nft_id;
+        // const nft_name=response.data[0].nft_name;
+        // console.log("nft name: ",nft_name);
         console.log('nftId: ', nftId);
 
         setNftId(nftId);
@@ -313,7 +321,7 @@ const NftPage = () => {
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
-          <div className="banner"></div>
+          <img src={dataNft.image} alt="" className='banner'/>
           <div className="container nft-page-content">
             <div className="content-left">
               <div className="content-left-wrap">
@@ -325,7 +333,7 @@ const NftPage = () => {
                   <div className="content-created-item">
                     <div className="create-by-title">Created By</div>
                     <div className="created-detail">
-                      <img src={avatar} alt="" />
+                      <img src={dataNft.avatar} alt="" />
                       <span className="create-by">
                         {username || 'Orbitian'}
                       </span>
@@ -514,13 +522,14 @@ const NftPageStyled = styled.div`
     padding-bottom: 22px;
     overflow-y: auto;
   }
-  .banner {
+
+  .nft-page-wrap .banner{
     width: 100%;
-    height: 560px;
-    background: url(${banner});
+    max-height: 560px;
+    object-fit: fill;
     background-repeat: no-repeat;
-    background-size: cover;
   }
+
   .nft-page-content {
     margin-top: 32px;
     display: flex;
