@@ -15,6 +15,7 @@ import button1 from '../../assets/Artist/Button1.svg';
 import button2 from '../../assets/Artist/Button2.svg';
 import cate5a from '../../assets/HomePage/Categories/cate5a.png';
 import {useState} from 'react';
+import {useCurrentUserStore} from 'store/store';
 
 const CreatedArtistData = [
   {
@@ -373,7 +374,25 @@ const ArtistStyled = styled.div`
 `;
 
 const ArtistPage = () => {
+  const user = useCurrentUserStore((state) => state.currentUser);
+  console.log('user: ', typeof user);
+
+  // const [copyAddressWallet, setCopyAddressWallet] = useState('');
+
   const [selectedClass, setSelectedClass] = useState('created');
+
+  if (!user) return null;
+
+  // let wallet = '';
+  // if (user.address_wallet) {
+  //   let substring;
+  //   console.log('hieu');
+  // }
+
+  const handleClickCopy = (e) => {
+    const value = e.target;
+    console.log(value);
+  };
 
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === 'created') {
@@ -398,11 +417,14 @@ const ArtistPage = () => {
               </div>
               <div className="body_infor_artist">
                 <div className="header_body_infor_artist">
-                  <h2>Animakid</h2>
+                  <h2>{user.username || 'Animakid'} </h2>
                   <div className="body_infor_artist_button">
                     <Button
+                      onClick={handleClickCopy}
                       img={button1}
-                      bgColor={'#A259FF'}
+                      // bgColor={'#A259FF'}
+                      border={'1px solid #3B3B3B'}
+                      bgColor={'#2B2B2B'}
                       borderRadius={'20px'}
                       padding={'15px 30px'}
                       jutifyContent={'center'}
@@ -410,7 +432,11 @@ const ArtistPage = () => {
                       content={'0xc0E3...B79C'}
                       fontSize={'16px'}
                       fontWeight={'600'}
-                    ></Button>
+                      value={user.address_wallet}
+                      className="address-wallet"
+                    >
+                      {user.address_wallet}
+                    </Button>
                     <Button
                       img={button2}
                       bgColor={'unset'}
@@ -422,7 +448,9 @@ const ArtistPage = () => {
                       content={'Follow'}
                       fontSize={'16px'}
                       fontWeight={'600'}
-                    ></Button>
+                    >
+                      Follow
+                    </Button>
                   </div>
                 </div>
                 <div className="statistical">
