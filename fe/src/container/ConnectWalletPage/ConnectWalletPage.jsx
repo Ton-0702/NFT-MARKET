@@ -357,7 +357,7 @@ export const ConnectWalletPage = () => {
                     borderRadius="20px"
                     img={mask}
                     bgColor="#3B3B3B"
-                    padding="36px 80px"
+                    padding="30px 80px"
                     content="Metamask"
                     textColor="white"
                     fontSize="22px"
