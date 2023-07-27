@@ -1,5 +1,6 @@
 package kits.final_project_api.Repository.NftPage;
 
+import jakarta.websocket.server.PathParam;
 import kits.final_project_api.Entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,13 +24,13 @@ public interface NftPageRepository extends JpaRepository<Transaction, Long> {
     @Query(value = "Select date_create from nft where nft_id=:id", nativeQuery = true)
     String getDateCreate(Integer id);
 
-    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar\n" +
-            "FROM nft AS n\n" +
-            "INNER JOIN account AS acc ON n.account_id = acc.account_id\n" +
-            "WHERE n.nft_name LIKE %:name%\n" +
-            "ORDER BY n.nft_id DESC\n"
+    @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar " +
+            "FROM nft AS n " +
+            "INNER JOIN account AS acc ON n.account_id = acc.account_id " +
+            "WHERE n.nft_name LIKE %:name% " +
+            "ORDER BY n.nft_id DESC "
             , nativeQuery = true)
-    List<Map<String, Object>> getNftInfoByName(String name);
+    List<Map<String, Object>> getNftInfoByName(@PathParam("name") String name);
 
     @Query(value = "SELECT n.nft_id, n.nft_name, n.image, n.price, acc.username, acc.avatar\n" +
             "FROM nft AS n\n" +
