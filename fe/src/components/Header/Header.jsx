@@ -18,7 +18,7 @@ const Header = () => {
   const [tokenUser, setToken] = useState(null);
   const [showSubHeader, setShowSubHeader] = useState(false);
   const token = Cookies.get('token');
-  console.log('hello token: ', token);
+  // console.log('hello token: ', token);
   const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
 
   // console.log('currentUser: ', currentUser);

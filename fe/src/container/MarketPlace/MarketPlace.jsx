@@ -9,7 +9,7 @@ import cate5a from '../../assets/HomePage/Categories/cate5a.png';
 
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-
+import {Navigate, useNavigate} from 'react-router-dom';
 const CreatedMarketPlaceData = [
   {
     type: 'DiscoverMore',
@@ -298,6 +298,9 @@ const MarketPlace = () => {
   const [resultSearch, setResultSearch] = useState();
   const [DataMarketPlacePage, setDataMarketPlacePage] = useState();
 
+  const [nftId, setNftId] = useState();
+  const navigate = useNavigate();
+  console.log('DataMarketPlacePage ' + DataMarketPlacePage);
   useEffect(() => {
     // http://localhost:8080/nfts/nft-detail-page/1
     async function getResultSearch() {
@@ -330,9 +333,44 @@ const MarketPlace = () => {
     const {value} = e.target;
     // console.log(value);
     // setResultSearch((prevState) => ({ ...prevState, [name]: value }));
+
     setResultSearch(value);
   };
+
+  // const handleClickNFT = (nftId) => {
+  //   console.log("nftID: " + nftId);
+  //   axios
+  //     .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+
+  //     .then((res) => {
+  //       setNftId(res.data);
+  //       console.log(res.data);
+  //       navigate(`/nft-detail-page/${nftId}`, {
+  //         state: { dataNft: res.data[0] },
+  //       });
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
+
   // const handleClickSearch = () => {getResultSearch()};
+
+  const handleClickDetailPage = (nftId) => {
+    console.log('nftID ' + nftId);
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+      .then((res) => {
+        setNftId(res.data);
+        console.log(res.data);
+        navigate(`/nft-detail-page/${nftId}`, {
+          state: {dataNft: res.data[0]},
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <PrimaryLayout>
       <MarketPlaceStyled>
@@ -416,12 +454,13 @@ const MarketPlace = () => {
                         <div
                           className="body-market-place-body-grid-item"
                           key={index}
+                          onClick={() => handleClickDetailPage(e.nft_id)}
                         >
                           <Card
                             title={e.nft_name}
                             img_product={e.image}
                             price={e.price}
-                            highest_bid={e.highest_bid}
+                            highest_bid={'8.01'}
                             img_artist={e.avatar}
                             name_artist={e.username}
                             bgColor={colors.background}
