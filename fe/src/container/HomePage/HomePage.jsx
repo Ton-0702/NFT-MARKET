@@ -857,12 +857,10 @@ const HomePage = () => {
   const [nftId, setNftId] = useState();
   const navigate = useNavigate();
 
-
   // console.log("TrendingCollection: ", trendingCollection);
   // console.log("newTrending: ", newTrending);
   // console.log("TopCreator: ", topCreator);
   // console.log("TopCreatorId: ", topCreatorID);
-
 
   useEffect(() => {
     function getAllTopCreator() {
@@ -912,8 +910,7 @@ const HomePage = () => {
       .then((res) => {
         setTopCreatorID(res.data);
         navigate(`/artist/${artistId}`, {
-
-          state: { dataArtist: res.data[0] },
+          state: {dataArtist: res.data[0]},
         });
         window.scrollTo(0, 0);
       })
@@ -922,7 +919,7 @@ const HomePage = () => {
       });
   };
   const handleClickNFT = (nftId) => {
-    console.log("nftID: " + nftId);
+    console.log('nftID: ' + nftId);
     axios
       .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
 
@@ -930,9 +927,9 @@ const HomePage = () => {
         setNftId(res.data);
         console.log(res.data);
         navigate(`/nft-detail-page/${nftId}`, {
-          state: { dataNft: res.data[0] },
-
+          state: {dataNft: res.data[0]},
         });
+        window.scrollTo(0, 0);
       })
       .catch(function (error) {
         console.log(error);
@@ -1026,17 +1023,15 @@ const HomePage = () => {
               </div>
               <div className="header_top_creator_right">
                 <Button
-
                   onClick={() => {
-                    navigate("/ranking");
+                    navigate('/ranking');
                     window.scrollTo(0, 0);
                   }}
-                  bgColor={"none"}
-                  border={"1px solid #A259FF"}
-                  content={"View Rankings"}
-                  borderRadius={"20px"}
-                  textColor={"#fff"}
-
+                  bgColor={'none'}
+                  border={'1px solid #A259FF'}
+                  content={'View Rankings'}
+                  borderRadius={'20px'}
+                  textColor={'#fff'}
                   img={rocketIcon2}
                   padding={'22.5px 50px'}
                   jutifyContent={'center'}
