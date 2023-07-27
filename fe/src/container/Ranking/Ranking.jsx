@@ -75,6 +75,7 @@ const Ranking = ({ title }) => {
         navigate(`/artist/${artistId}`, {
           state: { dataArtist: res.data[0] },
         });
+        window.scrollTo(0, 0);
       })
       .catch(function (error) {
         console.log(error);

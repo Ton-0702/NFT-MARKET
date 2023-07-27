@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import profile_image from "../../assets/profile_detail/profile_image.png";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useCurrentUserStore } from "store/store";
 
 const CreateNFTStyled = styled.div`
   display: flex;
@@ -284,6 +286,9 @@ const CreateNFTStyled = styled.div`
 
 const CreateNFTPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate =useNavigate();
+  const userAddressWallet = useCurrentUserStore(state => state.currentUser);
+  console.log("userAddressWallet:", userAddressWallet.account_id);
   const [formValue, setFormValue] = useState({
     nft_name: "",
     description: "",
@@ -291,6 +296,7 @@ const CreateNFTPage = () => {
     profile_image: document.getElementById("profile_image"),
     date_start_bid: "",
     date_end_bid: "",
+    account_id: userAddressWallet.account_id,
   });
 
   const handleChange = (e) => {
@@ -298,6 +304,7 @@ const CreateNFTPage = () => {
     console.log(name, value);
     setFormValue((prevState) => ({ ...prevState, [name]: value }));
   };
+  
   const handleSubmitForm = (e) => {
     const FormData = require("form-data");
     e.preventDefault();
@@ -309,7 +316,9 @@ const CreateNFTPage = () => {
     formData.append("image", formValue.profile_image);
     formData.append("date_start_bid", formValue.date_start_bid);
     formData.append("date_end_bid", formValue.date_end_bid);
+    formData.append("account_id", userAddressWallet.account_id);
     console.log(formData.get("profile_image"));
+    
     axios
       .post("http://localhost:8080/nfts/create", formData, {
         headers: {
@@ -317,7 +326,10 @@ const CreateNFTPage = () => {
         },
       })
       .then(function (response) {
-        console.log(response);
+        // console.log("response: ", response.data.data[0]);
+        navigate(`/nft-detail-page/${response.data.data.nft_id}`, {
+          state: { dataNft: response.data.data},
+        })
       })
       .catch(function (error) {
         console.log(error);

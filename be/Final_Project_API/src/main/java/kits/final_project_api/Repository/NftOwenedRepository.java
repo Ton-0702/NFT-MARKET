@@ -16,8 +16,10 @@ import java.util.Map;
 
 @Repository
 public interface NftOwenedRepository extends JpaRepository<NFTOwened, Long> {
-    // @Transactional
-    // @Modifying
-    // @Query(value= "INSERT INTO nft_owned(nft_id, account_id, collection_id) VALUES(:nft_id, :account_id, :collection_id)", nativeQuery = true)
-    // void CreateNftOwned(Long nft_id, Long account_id, Integer collection_id);
+    @Transactional
+    @Modifying
+    @Query(value= "INSERT INTO nft_owned(nft_owned_id, account_id, collection_id) VALUES(:nft_id, :account_id, :collection_id)", nativeQuery = true)
+    void CreateNftOwned(Long nft_id, Long account_id, Long collection_id);
+    // @Modifying 
+    // @Query(value = "")
 }

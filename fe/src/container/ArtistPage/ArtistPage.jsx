@@ -1,22 +1,23 @@
-import styled from 'styled-components';
-import {colors} from '../../Global';
-import {PrimaryLayout} from 'components/Layout';
-import {Button} from 'components/Button';
-import {Card} from 'components/Card';
+import styled from "styled-components";
+import { colors } from "../../Global";
+import { PrimaryLayout } from "components/Layout";
+import { Button } from "components/Button";
+import { Card } from "components/Card";
 
-import globe from '../../assets/Artist/Links/Globe.svg';
-import discord from '../../assets/Artist/Links/DiscordLogo.svg';
-import youtube from '../../assets/Artist/Links/YoutubeLogo.svg';
-import twitter from '../../assets/Artist/Links/TwitterLogo.svg';
-import insta from '../../assets/Artist/Links/InstagramLogo.svg';
-import background1 from '../../assets/Artist/background_img.png';
-import avatar1 from '../../assets/Artist/avatar1.png';
-import button1 from '../../assets/Artist/Button1.svg';
-import button2 from '../../assets/Artist/Button2.svg';
-import cate5a from '../../assets/HomePage/Categories/cate5a.png';
-import {useState} from 'react';
-import {useLocation} from 'react-router-dom';
-import {useCurrentUserStore} from 'store/store';
+import globe from "../../assets/Artist/Links/Globe.svg";
+import discord from "../../assets/Artist/Links/DiscordLogo.svg";
+import youtube from "../../assets/Artist/Links/YoutubeLogo.svg";
+import twitter from "../../assets/Artist/Links/TwitterLogo.svg";
+import insta from "../../assets/Artist/Links/InstagramLogo.svg";
+import background1 from "../../assets/Artist/background_img.png";
+import avatar1 from "../../assets/Artist/avatar1.png";
+import button1 from "../../assets/Artist/Button1.svg";
+import button2 from "../../assets/Artist/Button2.svg";
+import cate5a from "../../assets/HomePage/Categories/cate5a.png";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { redirect, useNavigate } from "react-router-dom";
 
 const CreatedArtistData = [
   {
@@ -376,13 +377,29 @@ const ArtistStyled = styled.div`
 
 const ArtistPage = () => {
   const location = useLocation();
-  const {dataArtist} = location.state;
-  const [selectedClass, setSelectedClass] = useState('created');
+  const { dataArtist } = location.state;
+  const [selectedClass, setSelectedClass] = useState("created");
+  const [listDataNFT, setListDataNFT] = useState();
+  const [dataNFTID, setDataNFTID] = useState();
+  const navigate = useNavigate();
 
-  // const user = useCurrentUserStore((state) => state.useCurrentUser);
-  // console.log('user Artist: ', user);
+  console.log(dataArtist.account_id);
 
-  console.log(dataArtist);
+  useEffect(() => {
+    function getListNFTById() {
+      axios
+        .get(`http://localhost:8080/nfts/created-nft/${dataArtist.account_id}`)
+        .then((res) => {
+          console.log(res.data);
+          setListDataNFT(res.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    getListNFTById();
+  }, []);
+
   const handleClickActiveClass = (activeClass) => {
     if (activeClass === 'created') {
       setSelectedClass(activeClass);
@@ -393,6 +410,20 @@ const ArtistPage = () => {
     if (activeClass === 'collection') {
       setSelectedClass(activeClass);
     }
+  };
+
+  const handleClick = (nftID) => {
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .then((res) => {
+        navigate(`/nft-detail-page/${nftID}`, {
+          state: { dataNft: res.data[0] },
+        });
+        window.scrollTo(0, 0);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   return (
     <PrimaryLayout>
@@ -437,7 +468,7 @@ const ArtistPage = () => {
                 </div>
                 <div className="statistical">
                   <div className="statistical_left">
-                    <h4>{dataArtist.volume || 0}+</h4>
+                    <h4>{dataArtist.volume}+</h4>
                     <span>Volume</span>
                   </div>
                   <div className="statistical_middle">
@@ -445,7 +476,7 @@ const ArtistPage = () => {
                     <span>NFTs Sold</span>
                   </div>
                   <div className="statistical_left">
-                    <h4>{dataArtist.followers || 0}</h4>
+                    <h4>3000+</h4>
                     <span>Followers</span>
                   </div>
                 </div>
@@ -529,17 +560,22 @@ const ArtistPage = () => {
           <div className="artist-body-list">
             <div className="container">
               <div className="artist-body-grid">
-                {CreatedArtistData
-                  ? CreatedArtistData.map((e, index) => (
-                      <div className="body-artist-body-grid-item">
+                {listDataNFT
+                  ? listDataNFT.map((e, index) => (
+                      <div
+                        className="body-artist-body-grid-item"
+                        id={e.nft_id}
+                        onClick={() => {
+                          handleClick(e.nft_id);
+                        }}
+                      >
                         <Card
-                          title={e.title}
-                          img_product={e.img}
+                          title={e.nft_name}
+                          img_product={e.image}
                           price={e.price}
-                          highest_bid={e.price}
-                          img_artist={e.img_artist}
-                          name_artist={e.name_artist}
-                          total_sales={e.total_sales}
+                          highest_bid="1.63"
+                          img_artist={e.avatar}
+                          name_artist={e.username}
                           bgColor={colors.background}
                           borderRadius={'20px'}
                         ></Card>

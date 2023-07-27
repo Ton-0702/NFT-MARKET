@@ -14,5 +14,5 @@ public interface NftService {
 
     // void updateNFTOwner(Long nft_id, Long account_id);
     void CreateNft(@Valid String nft_name, String image, Double price, String description, String date_start_bid,
-            String date_end_bid);
+            String date_end_bid, Long account_id);
 }

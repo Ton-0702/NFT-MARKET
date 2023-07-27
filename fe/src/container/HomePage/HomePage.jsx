@@ -484,6 +484,10 @@ const TopCreatorStyled = styled.div`
     gap: 30px;
   }
 
+  .body_top_creator .top_creator_item {
+    cursor: pointer;
+  }
+
   @media (max-width: 991.98px) {
     .body_top_creator {
       grid-template-columns: auto auto;
@@ -598,6 +602,10 @@ const DiscoverMoreStyled = styled.div`
     grid-template-columns: 30% 30% 30%;
     gap: 3%;
     justify-content: space-between;
+  }
+
+  .body_discover_more .body_discover_more_item {
+    cursor: pointer;
   }
 
   @media (max-width: 991.98px) {
@@ -846,13 +854,15 @@ const HomePage = () => {
   const [trendingCollection, setTrendingCollection] = useState();
   const [newTrending, setNewTrending] = useState();
   const [topCreatorID, setTopCreatorID] = useState();
-
+  const [nftId, setNftId] = useState();
   const navigate = useNavigate();
+
 
   // console.log("TrendingCollection: ", trendingCollection);
   // console.log("newTrending: ", newTrending);
   // console.log("TopCreator: ", topCreator);
   // console.log("TopCreatorId: ", topCreatorID);
+
 
   useEffect(() => {
     function getAllTopCreator() {
@@ -902,7 +912,26 @@ const HomePage = () => {
       .then((res) => {
         setTopCreatorID(res.data);
         navigate(`/artist/${artistId}`, {
-          state: {dataArtist: res.data[0]},
+
+          state: { dataArtist: res.data[0] },
+        });
+        window.scrollTo(0, 0);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const handleClickNFT = (nftId) => {
+    console.log("nftID: " + nftId);
+    axios
+      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+
+      .then((res) => {
+        setNftId(res.data);
+        console.log(res.data);
+        navigate(`/nft-detail-page/${nftId}`, {
+          state: { dataNft: res.data[0] },
+
         });
       })
       .catch(function (error) {
@@ -997,12 +1026,17 @@ const HomePage = () => {
               </div>
               <div className="header_top_creator_right">
                 <Button
-                  onClick={() => navigate('/ranking')}
-                  bgColor={'none'}
-                  border={'1px solid #A259FF'}
-                  content={'View Rankings'}
-                  borderRadius={'20px'}
-                  textColor={'#fff'}
+
+                  onClick={() => {
+                    navigate("/ranking");
+                    window.scrollTo(0, 0);
+                  }}
+                  bgColor={"none"}
+                  border={"1px solid #A259FF"}
+                  content={"View Rankings"}
+                  borderRadius={"20px"}
+                  textColor={"#fff"}
+
                   img={rocketIcon2}
                   padding={'22.5px 50px'}
                   jutifyContent={'center'}
@@ -1077,8 +1111,13 @@ const HomePage = () => {
             <div className="body_discover_more">
               {newTrending
                 ? newTrending.map((e, index) => (
-                    <div className="body_discover_more_item" key={index}>
+                    <div
+                      className="body_discover_more_item"
+                      key={e.nft_id}
+                      onClick={() => handleClickNFT(e.nft_id)}
+                    >
                       <Card
+                        number_id={index}
                         type="DiscoverMore"
                         title={e.nft_name}
                         img_product={e.image}
