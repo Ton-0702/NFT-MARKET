@@ -380,7 +380,7 @@ const NftPage = () => {
                     <div className="created-detail">
                       <img src={dataNft.avatar} alt="" />
                       <span className="create-by">
-                        {dataNft.username || 'Orbitian'}
+                        {dataNft.username || currentUser.username || 'Orbitian'}
                       </span>
                     </div>
                   </div>
