@@ -125,7 +125,8 @@ public class NftPageServiceImpl implements NftPageService {
         List<Map<String, Object>> getNftAndUserInfo = nftPageRepository.getNftInfoByName(name);
         List<Map<String, Object>> getTransactionInfo = nftPageRepository.getTransactionInfo();
         List<Map<String, Object>> result = new ArrayList<>();
-
+        System.out.println("highest_bid: "+getTransactionInfo.size());
+        boolean check = false;
         for (Map<String, Object> map1 : getNftAndUserInfo) {
             for (Map<String, Object> map2 : getTransactionInfo) {
 
@@ -133,7 +134,7 @@ public class NftPageServiceImpl implements NftPageService {
                 if (map1.get("nft_id").equals(map2.get("nft_id"))) {
 //
 //                System.out.println("m1.get(n.nft_id): " + map1.get("nft_id") + "   " + "m2.get(cc.nft_id): " + map2.get("nft_id"));
-
+                    check = true;
                     Map<String, Object> newMap = new HashMap<>();
                     newMap.put("nft_id", map1.get("nft_id"));
                     newMap.put("nft_name", map1.get("nft_name"));
@@ -146,7 +147,19 @@ public class NftPageServiceImpl implements NftPageService {
                     result.add(newMap);
                 }
             }
+        }
 
+        if (check == false && getNftAndUserInfo.size() ==1){
+            Map<String, Object> newMap = new HashMap<>();
+            newMap.put("nft_id", getNftAndUserInfo.get(0).get("nft_id"));
+            newMap.put("nft_name", getNftAndUserInfo.get(0).get("nft_name"));
+            newMap.put("image", getNftAndUserInfo.get(0).get("image"));
+            newMap.put("price", getNftAndUserInfo.get(0).get("price"));
+            newMap.put("username", getNftAndUserInfo.get(0).get("username"));
+            newMap.put("avatar", getNftAndUserInfo.get(0).get("avatar"));
+
+            newMap.put("highest_bid", 0.0);
+            result.add(newMap);
         }
 
 
