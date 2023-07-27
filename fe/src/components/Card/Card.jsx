@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import ReactHtmlParser from 'react-html-parser';
+// import ReactHtmlParser from 'react-html-parser';
 
 const CardStyled = styled.div`
   width: 100%;
@@ -131,7 +131,7 @@ const CardTrendingCollectionStyled = styled.div`
     height: 400px;
   }
 
-  .header_card .list_image .list_image_item{
+  .header_card .list_image .list_image_item {
     width: 100px;
     height: 100px;
   }
@@ -182,7 +182,7 @@ const CardTrendingCollectionStyled = styled.div`
     align-items: center;
   }
 
-  .body_card .title_card .info_artist img{
+  .body_card .title_card .info_artist img {
     width: 24px;
     height: 24px;
     object-fit: cover;
@@ -387,7 +387,7 @@ const Card = ({
       <CardTrendingCollectionStyled>
         <div className="header_card">
           <div className="list_image">
-            {img_product.length > 4 ? ReactHtmlParser(type2) : type2}
+            {/* {img_product.length > 4 ? ReactHtmlParser(type2) : type2} */}
           </div>
         </div>
         <div className="body_card">
