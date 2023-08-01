@@ -13,6 +13,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {useCurrentUserStore, useSettingsStore} from 'store/store';
 import DarkMode from 'components/DarkMode/DarkMode';
+import {BASE_URL} from 'store/url';
 
 const Header = () => {
   const [tokenUser, setToken] = useState(null);
@@ -20,57 +21,18 @@ const Header = () => {
   const token = Cookies.get('token');
   // console.log('hello token: ', token);
   const addCurrentUser = useCurrentUserStore((state) => state.addCurrentUser);
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
+  // const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   // console.log('currentUser: ', currentUser);
   const toggleClick = () => {
     setShowSubHeader(!showSubHeader);
   };
+  const {toggleDarkMode} = useSettingsStore();
+  const light = useSettingsStore((state) => state.light);
 
   // console.log('tokenUser:', tokenUser);
-
-  const handleLogoutForm = (e) => {
-    console.log('token logout: ', token);
-    // e.preventDefault();
-    axios
-      .post(`http://localhost:8080/api/logout/${token}`)
-      .then(function (response) {
-        console.log('phan hoi thanh cong logout: ', response.data.data);
-        // const cookies = new Cookies();
-        // cookies.set("token logout", response.data.data);
-        // localStorage.removeItem('metamask-address');
-        // Cookies.remove('token');
-        // navigate('/');
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
-    localStorage.removeItem('metamask-address');
-    Cookies.remove('token');
-    navigate('/');
-  };
-
-  useEffect(() => {
-    function getUser() {
-      try {
-        function getTokenByUser() {
-          return axios.get(
-            'http://localhost:8080/api/session-address-wallet/' + token
-          );
-        }
-        Promise.all([getTokenByUser()]).then((res) => {
-          // console.log("what is res: ",res);
-          const tokenUserData = res[0].data;
-          const dataUser = res[0].data[0];
-          console.log('tokenUserData: ', tokenUserData);
-          setToken(tokenUserData);
-          addCurrentUser(dataUser);
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getUser();
-  }, []);
 
   let address_wallet = '';
   if (tokenUser === '' || tokenUser === null) {
@@ -84,8 +46,26 @@ const Header = () => {
       );
   }
 
-  const {toggleDarkMode} = useSettingsStore();
-  const light = useSettingsStore((state) => state.light);
+  useEffect(() => {
+    function getUser() {
+      try {
+        function getTokenByUser() {
+          return axios.get(`${BASE_URL}/api/session-address-wallet/` + token);
+        }
+        Promise.all([getTokenByUser()]).then((res) => {
+          // console.log("what is res: ",res);
+          const tokenUserData = res[0].data;
+          const dataUser = res[0].data[0];
+          // console.log('tokenUserData: ', tokenUserData);
+          setToken(tokenUserData);
+          addCurrentUser(dataUser);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
 
   useEffect(() => {
     if (light) {
@@ -119,9 +99,27 @@ const Header = () => {
     barIcon.style.transform = 'translateX(100%)';
   };
 
-  const navigate = useNavigate();
-
   // Logout Metamask
+  const handleLogoutForm = (e) => {
+    console.log('token logout: ', token);
+    // e.preventDefault();
+    axios
+      .post(`${BASE_URL}/api/logout/${token}`)
+      .then(function (response) {
+        console.log('phan hoi thanh cong logout: ', response.data.data);
+        // const cookies = new Cookies();
+        // cookies.set("token logout", response.data.data);
+        // localStorage.removeItem('metamask-address');
+        // Cookies.remove('token');
+        // navigate('/');
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+    localStorage.removeItem('metamask-address');
+    Cookies.remove('token');
+    navigate('/');
+  };
 
   return (
     <HeaderStyled>
@@ -155,7 +153,7 @@ const Header = () => {
                 <SignUpButton
                   className="signUp-btn"
                   onClick={() => {
-                    console.log('clicked');
+                    // console.log('clicked');
                     toggleClick();
                   }}
                   width={'200px'}
@@ -166,6 +164,16 @@ const Header = () => {
                 {showSubHeader && token && (
                   <div className="sub-header">
                     <ul className="sub-header-list">
+                      {currentUser?.username && (
+                        <li className="sub-header-items">
+                          <a
+                            href={`/artist/${currentUser?.account_id}`}
+                            className="sub-header-item-link"
+                          >
+                            <span>{currentUser?.username}</span>
+                          </a>
+                        </li>
+                      )}
                       <li className="sub-header-items">
                         <a href="/create-nft" className="sub-header-item-link">
                           <span>Create NFT</span>
@@ -200,6 +208,16 @@ const Header = () => {
                 <div className="close-btn" onClick={handleClickCloseBtn}>
                   <Close></Close>
                 </div>
+                {currentUser?.username && (
+                  <div className="nav-mobile-item">
+                    <a
+                      href={`/artist/${currentUser?.account_id}`}
+                      className="nav-mobile-item-link"
+                    >
+                      <span>{currentUser?.username}</span>
+                    </a>
+                  </div>
+                )}
 
                 <div className="nav-mobile-item">
                   <a href="/create-nft" className="nav-mobile-item-link">
@@ -296,9 +314,15 @@ const NavMobileStyled = styled.div`
 
 // Header Style
 const HeaderStyled = styled.div`
+  padding-bottom: 100px;
   .header {
     background-color: ${colors.backgroundColor2};
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
   .header-wrapper {
     margin: 0 auto;
@@ -308,6 +332,7 @@ const HeaderStyled = styled.div`
     max-width: 1182px;
     height: 100px;
   }
+
   // header left
 
   // header right

@@ -35,7 +35,8 @@ import how_it_work2 from '../../assets/HomePage/HowItWorks/HowItWork2.svg';
 import how_it_work3 from '../../assets/HomePage/HowItWorks/HowItWork3.svg';
 import getNoti from '../../assets/HomePage/GetNoti/Photo.png';
 import {useEffect, useState} from 'react';
-import {redirect, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 
 const trendingCollectionData = [
   {
@@ -866,18 +867,16 @@ const HomePage = () => {
     function getAllTopCreator() {
       try {
         function getOverall() {
-          return axios.get(`http://localhost:8080/api/home/overall-figures`);
+          return axios.get(`${BASE_URL}/api/home/overall-figures`);
         }
         function getTrendingCollection() {
-          return axios.get(
-            `http://localhost:8080/api/home/trending-collection`
-          );
+          return axios.get(`${BASE_URL}/api/home/trending-collection`);
         }
         function getTopCreator() {
-          return axios.get(`http://localhost:8080/api/home/top-creator`);
+          return axios.get(`${BASE_URL}/api/home/top-creator`);
         }
         function getNewTrending() {
-          return axios.get('http://localhost:8080/api/home/trending-nft');
+          return axios.get(`${BASE_URL}/api/home/trending-nft`);
         }
         Promise.all([
           getTopCreator(),
@@ -890,6 +889,7 @@ const HomePage = () => {
           const overallData = res[1].data[0];
           const trendingCollectionData = res[2].data;
           const newTrendingData = res[3].data;
+          console.log('trendingCollectionData: ', trendingCollectionData);
 
           setTopCreator(topCreatorData);
           setOverall(overallData);
@@ -906,7 +906,7 @@ const HomePage = () => {
 
   const handleClick = (artistId) => {
     axios
-      .get(`http://localhost:8080/api/artist/${artistId}`)
+      .get(`${BASE_URL}/api/artist/${artistId}`)
       .then((res) => {
         setTopCreatorID(res.data);
         navigate(`/artist/${artistId}`, {
@@ -921,7 +921,7 @@ const HomePage = () => {
   const handleClickNFT = (nftId) => {
     console.log('nftID: ' + nftId);
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftId}`)
 
       .then((res) => {
         setNftId(res.data);

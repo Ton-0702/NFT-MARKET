@@ -1,13 +1,14 @@
-import { PrimaryLayout } from "components/Layout";
-import styled from "styled-components";
-import { colors } from "Global";
-import { Button } from "components/Button";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {PrimaryLayout} from 'components/Layout';
+import styled from 'styled-components';
+import {colors} from 'Global';
+import {Button} from 'components/Button';
+import React, {useState} from 'react';
+import axios from 'axios';
 
-import profile_image from "../../assets/profile_detail/profile_image.png";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useCurrentUserStore } from "store/store";
+import profile_image from '../../assets/profile_detail/profile_image.png';
+import {Navigate, useNavigate} from 'react-router-dom';
+import {useCurrentUserStore} from 'store/store';
+import {BASE_URL} from 'store/url';
 
 const CreateNFTStyled = styled.div`
   display: flex;
@@ -190,7 +191,7 @@ const CreateNFTStyled = styled.div`
     form
     .profile_detail_form_item
     .profile_image_input
-    input[type="file"] {
+    input[type='file'] {
     display: none;
   }
 
@@ -226,7 +227,7 @@ const CreateNFTStyled = styled.div`
     form
     .profile_detail_form_item
     .profile_background_image_input
-    input[type="file"] {
+    input[type='file'] {
     display: none;
   }
 
@@ -286,50 +287,55 @@ const CreateNFTStyled = styled.div`
 
 const CreateNFTPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate =useNavigate();
-  const userAddressWallet = useCurrentUserStore(state => state.currentUser);
-  console.log("userAddressWallet:", userAddressWallet.account_id);
+  const navigate = useNavigate();
+  const userAddressWallet = useCurrentUserStore((state) => state.currentUser);
+  console.log('userAddressWallet:', userAddressWallet.account_id);
+
   const [formValue, setFormValue] = useState({
-    nft_name: "",
-    description: "",
-    price: "",
-    profile_image: document.getElementById("profile_image"),
-    date_start_bid: "",
-    date_end_bid: "",
+    nft_name: '',
+    description: '',
+    price: '',
+    // profile_image: document.getElementById('profile_image'),
+    profile_image: '',
+    date_start_bid: '',
+    date_end_bid: '',
     account_id: userAddressWallet.account_id,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     console.log(name, value);
-    setFormValue((prevState) => ({ ...prevState, [name]: value }));
+    setFormValue((prevState) => ({...prevState, [name]: value}));
   };
-  
+
   const handleSubmitForm = (e) => {
-    const FormData = require("form-data");
+    const FormData = require('form-data');
     e.preventDefault();
     console.log(formValue);
+    const img = `https://drive.google.com/uc?export=view&id=1B8nZDfctt8VyxTNVbYwzzlVZAn5NsHHz`;
+    // https://drive.google.com/file/d/1B8nZDfctt8VyxTNVbYwzzlVZAn5NsHHz/view
     const formData = new FormData();
-    formData.append("nft_name", formValue.nft_name);
-    formData.append("description", formValue.description);
-    formData.append("price", formValue.price);
-    formData.append("image", formValue.profile_image);
-    formData.append("date_start_bid", formValue.date_start_bid);
-    formData.append("date_end_bid", formValue.date_end_bid);
-    formData.append("account_id", userAddressWallet.account_id);
-    console.log(formData.get("profile_image"));
-    
+    formData.append('nft_name', formValue.nft_name);
+    formData.append('description', formValue.description);
+    formData.append('price', formValue.price);
+    // formData.append('image', formValue.profile_image);
+    formData.append('image', img);
+    formData.append('date_start_bid', formValue.date_start_bid);
+    formData.append('date_end_bid', formValue.date_end_bid);
+    formData.append('account_id', userAddressWallet.account_id);
+    console.log(formData.get('profile_image'));
+
     axios
-      .post("http://localhost:8080/nfts/create", formData, {
+      .post(`${BASE_URL}/nfts/create`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       })
       .then(function (response) {
         // console.log("response: ", response.data.data[0]);
         navigate(`/nft-detail-page/${response.data.data.nft_id}`, {
-          state: { dataNft: response.data.data},
-        })
+          state: {dataNft: response.data.data},
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -418,13 +424,13 @@ const CreateNFTPage = () => {
                     />
                   </div>
                   <Button
-                    content={"Save"}
-                    bgColor={"rgb(71, 30, 84)"}
+                    content={'Save'}
+                    bgColor={'rgb(71, 30, 84)'}
                     textColor={colors.whiteColor}
-                    padding={"10px 0px"}
-                    jutifyContent={"center"}
-                    borderRadius={"12px"}
-                    width={"100%"}
+                    padding={'10px 0px'}
+                    jutifyContent={'center'}
+                    borderRadius={'12px'}
+                    width={'100%'}
                     onClick={handleSubmitForm}
                   ></Button>
                 </div>

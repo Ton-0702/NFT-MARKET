@@ -1,16 +1,15 @@
-import styled from "styled-components";
-import { colors } from "Global";
-import { PrimaryLayout } from "components/Layout";
-import { Button } from "components/Button";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
+import styled from 'styled-components';
+import {colors} from 'Global';
+import {PrimaryLayout} from 'components/Layout';
+import {Button} from 'components/Button';
+import {useLocation} from 'react-router-dom';
+import {useEffect} from 'react';
+import {useState} from 'react';
+import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import Cookiesjs from "js-cookie";
-import profile_image from "../../assets/profile_detail/profile_image.png";
-
+import profile_image from '../../assets/profile_detail/profile_image.png';
+import {BASE_URL} from 'store/url';
 
 const ProfileDetailStyled = styled.div`
   display: flex;
@@ -41,7 +40,7 @@ const ProfileDetailStyled = styled.div`
     display: flex;
   }
 
-  .progressbar li {   
+  .progressbar li {
     position: relative;
     list-style: none;
     width: 33.33%;
@@ -326,72 +325,73 @@ const ProfileDetail = () => {
   const location = useLocation();
   const {address_wallet} = location.state;
 
-  const account = localStorage.getItem("metamask-address")
+  const account = localStorage.getItem('metamask-address');
 
   useEffect(() => {
     axios
-      .post(`http://localhost:8080/api/connect-wallet/${account}`)
+      .post(`${BASE_URL}/api/connect-wallet/${account}`)
       .then(function (response) {
-        
-        console.log("phan hoi thanh cong login: ",response);
+        console.log('phan hoi thanh cong login: ', response);
         const cookies = new Cookies();
-        cookies.set("token", response.data.data);
+        cookies.set('token', response.data.data);
         // navigate("/login-success");
-        navigate("/",  { state: {
-          address_wallet: account
-          } });
+        navigate('/', {
+          state: {
+            address_wallet: account,
+          },
+        });
       })
       .catch(function (error) {
         console.log(error.response.data);
       });
-  })
-
-
-  // const address_wallet_detail = address_wallet[0]
-  console.log("heeloo: ",address_wallet);
-  const [formValue, setFormValue] = useState({
-    address_wallet: address_wallet,
-    username: "",
-    bio: "",
-    email: "",
-    profile_image: document.getElementById("profile_image"),
-    profile_background_image: document.getElementById("profile_background_image"),
   });
 
+  // const address_wallet_detail = address_wallet[0]
+  console.log('heeloo: ', address_wallet);
+  const [formValue, setFormValue] = useState({
+    address_wallet: address_wallet,
+    username: '',
+    bio: '',
+    email: '',
+    profile_image: '',
+    profile_background_image: document.getElementById(
+      'profile_background_image'
+    ),
+  });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     console.log(name, value);
-    setFormValue((prevState) => ({ ...prevState, [name]: value }));
+    setFormValue((prevState) => ({...prevState, [name]: value}));
   };
 
   const handleSubmitForm = (e) => {
-    const FormData = require("form-data");
+    const FormData = require('form-data');
     e.preventDefault();
     console.log(formValue);
+    const url = `https://drive.google.com/uc?export=view&id=1ZW1ypzRmNFWuyPdY6VMQqkQCMM-JfZVS`;
     const formData = new FormData();
-    formData.append("address_wallet", formValue.address_wallet);
-    formData.append("username", formValue.username);
-    formData.append("bio", formValue.bio);
-    formData.append("email", formValue.email);
-    formData.append("price", formValue.price);
-    formData.append("image", formValue.profile_image);
-    formData.append("background", formValue.profile_background_image);
-    console.log("formData:", formData.get("email"));
-    
+    formData.append('address_wallet', formValue.address_wallet);
+    formData.append('username', formValue.username);
+    formData.append('bio', formValue.bio);
+    formData.append('email', formValue.email);
+    formData.append('price', formValue.price);
+    formData.append('image', url);
+    formData.append('background', formValue.profile_background_image);
+    console.log('formData:', formData.get('email'));
+
     axios
-      .post("http://localhost:8080/api/register/connect-wallet", formData, {
+      .post(`${BASE_URL}/api/register/connect-wallet`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
           // 'Access-Control-Allow-Credentials': 'true',
         },
       })
       .then(function (response) {
-        
-        console.log("phan hoi thanh cong: ",response.data.data);
+        console.log('phan hoi thanh cong: ', response.data.data);
         const cookies = new Cookies();
-        cookies.set("token", response.data.data);
-        navigate("/login-success");
+        cookies.set('token', response.data.data);
+        navigate('/login-success');
       })
       .catch(function (error) {
         console.log(error.response.data);
@@ -412,15 +412,14 @@ const ProfileDetail = () => {
             <div className="profile_detail_form">
               <form>
                 <div className="profile_detail_form_left">
-                <input
-                      type="hidden"
-                      name="address_waleet"
-                      id="address_waleet"
-                      // placeholder="Enter username"
-                      value={address_wallet}
-                      // onChange={handleChange}
-                      
-                    />
+                  <input
+                    type="hidden"
+                    name="address_waleet"
+                    id="address_waleet"
+                    // placeholder="Enter username"
+                    value={address_wallet}
+                    // onChange={handleChange}
+                  />
                   <div className="profile_detail_form_item">
                     <label htmlFor="username">Username</label>
                     <input
@@ -556,10 +555,9 @@ const ProfileDetail = () => {
                       content={'Save'}
                       bgColor={'rgb(71, 30, 84)'}
                       textColor={colors.whiteColor}
-
-                      padding={"10px 0px"}
-                      jutifyContent={"center"}
-                      borderRadius={"12px"}
+                      padding={'10px 0px'}
+                      jutifyContent={'center'}
+                      borderRadius={'12px'}
                       onClick={handleSubmitForm}
                     ></Button>
                   </div>

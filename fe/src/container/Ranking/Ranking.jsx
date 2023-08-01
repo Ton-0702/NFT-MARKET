@@ -8,8 +8,8 @@ import {dataOfThisMonthFake} from './DataRanking';
 import {dataOfThisWeekFake} from './DataRanking';
 import axios from 'axios';
 import {useSettingsStore} from 'store/store';
-import {redirect, useNavigate} from 'react-router-dom';
-// console.log('dataOfThisMonth:', dataOfThisMonthFake);
+import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 
 const Ranking = ({title}) => {
   const [selectedClass, setSelectedClass] = useState('today');
@@ -17,14 +17,15 @@ const Ranking = ({title}) => {
   const [dataThisWeekTopCreator, setDataThisWeekTopCreator] = useState();
   const [dataThisMonthTopCreator, setDataThisMonthTopCreator] = useState();
   const [dataAlltimeTopCreator, setDataAlltimeTopCreator] = useState();
-  const [creatorID, setCreatorID] = useState();
+  // const [creatorID, setCreatorID] = useState();
 
   const light = useSettingsStore((state) => state.light);
 
   const [totalPage, setTotalPage] = useState();
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
-  console.log('creatorID: ' + creatorID);
+
+  // console.log('creatorID: ' + creatorID);
 
   // console.log('data: ', {
   //   dataTodayTopCreator: dataTodayTopCreator,
@@ -36,12 +37,10 @@ const Ranking = ({title}) => {
     function getAllTopCreator() {
       try {
         function getTopCreatorAlltime() {
-          return axios.get(
-            `http://localhost:8080/api/ranking/all?page=${page}`
-          );
+          return axios.get(`${BASE_URL}/api/ranking/all?page=${page}`);
         }
         function getTopCreatorToday() {
-          return axios.get('http://localhost:8080/api/ranking/today?page=1');
+          return axios.get(`${BASE_URL}/api/ranking/today?page=1`);
         }
         Promise.all([getTopCreatorAlltime(), getTopCreatorToday()]).then(
           (res) => {
@@ -70,7 +69,7 @@ const Ranking = ({title}) => {
   const handleClick = (artistId) => {
     console.log(artistId);
     axios
-      .get(`http://localhost:8080/api/artist/${artistId}`)
+      .get(`${BASE_URL}/api/artist/${artistId}`)
       .then((res) => {
         navigate(`/artist/${artistId}`, {
           state: {dataArtist: res.data[0]},
@@ -202,13 +201,15 @@ const Ranking = ({title}) => {
                             return (
                               <Fragment key={index}>
                                 <DataTableRanking
-                                  onClick={setCreatorID(item.account_id)}
+                                  onclick={() => handleClick(item.account_id)}
+                                  id={item.account_id}
                                   index={index + 1}
                                   src={item.avatar}
                                   username={item.username}
                                   change={item.change}
                                   sold={item.nfts_sold}
                                   volume={item.volume}
+                                  // onClick={setCreatorID(item.account_id)}
                                 ></DataTableRanking>
                               </Fragment>
                             );
@@ -260,6 +261,7 @@ const Ranking = ({title}) => {
                             return (
                               <Fragment key={index}>
                                 <DataTableRanking
+                                  onclick={() => handleClick(item.account_id)}
                                   id={item.account_id}
                                   index={index + 1}
                                   src={item.avatar}
@@ -267,7 +269,6 @@ const Ranking = ({title}) => {
                                   change={item.change}
                                   sold={item.nfts_sold}
                                   volume={item.volume}
-                                  onclick={() => handleClick(item.account_id)}
                                 ></DataTableRanking>
                               </Fragment>
                             );
@@ -731,7 +732,7 @@ const DataTableRanking = ({
 }) => {
   return (
     <>
-      <tr className="table-row-body" onClick={onclick}>
+      <tr className="table-row-body" data_id={id} onClick={onclick}>
         <td className="table-body-data">
           <span className="body-data-stt">{index || 1}</span>
         </td>
