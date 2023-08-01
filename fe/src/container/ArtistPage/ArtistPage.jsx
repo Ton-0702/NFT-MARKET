@@ -1,23 +1,25 @@
-import styled from "styled-components";
-import { colors } from "../../Global";
-import { PrimaryLayout } from "components/Layout";
-import { Button } from "components/Button";
-import { Card } from "components/Card";
+import styled from 'styled-components';
+import {colors} from '../../Global';
+import {PrimaryLayout} from 'components/Layout';
+import {Button} from 'components/Button';
+import {Card} from 'components/Card';
 
-import globe from "../../assets/Artist/Links/Globe.svg";
-import discord from "../../assets/Artist/Links/DiscordLogo.svg";
-import youtube from "../../assets/Artist/Links/YoutubeLogo.svg";
-import twitter from "../../assets/Artist/Links/TwitterLogo.svg";
-import insta from "../../assets/Artist/Links/InstagramLogo.svg";
-import background1 from "../../assets/Artist/background_img.png";
-import avatar1 from "../../assets/Artist/avatar1.png";
-import button1 from "../../assets/Artist/Button1.svg";
-import button2 from "../../assets/Artist/Button2.svg";
-import cate5a from "../../assets/HomePage/Categories/cate5a.png";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { redirect, useNavigate } from "react-router-dom";
+import globe from '../../assets/Artist/Links/Globe.svg';
+import discord from '../../assets/Artist/Links/DiscordLogo.svg';
+import youtube from '../../assets/Artist/Links/YoutubeLogo.svg';
+import twitter from '../../assets/Artist/Links/TwitterLogo.svg';
+import insta from '../../assets/Artist/Links/InstagramLogo.svg';
+import background1 from '../../assets/Artist/background_img.png';
+import avatar1 from '../../assets/Artist/avatar1.png';
+import button1 from '../../assets/Artist/Button1.svg';
+import button2 from '../../assets/Artist/Button2.svg';
+import cate5a from '../../assets/HomePage/Categories/cate5a.png';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
+import {useCurrentUserStore} from 'store/store';
 
 const CreatedArtistData = [
   {
@@ -376,19 +378,29 @@ const ArtistStyled = styled.div`
 `;
 
 const ArtistPage = () => {
-  const location = useLocation();
-  const { dataArtist } = location.state;
-  const [selectedClass, setSelectedClass] = useState("created");
+  const [selectedClass, setSelectedClass] = useState('created');
   const [listDataNFT, setListDataNFT] = useState();
-  const [dataNFTID, setDataNFTID] = useState();
+  // const [dataNFTID, setDataNFTID] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log('location: ', location);
+  // const {dataArtist} = location.state;
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
+  // console.log(dataArtist.account_id);
 
-  console.log(dataArtist.account_id);
+  if (!location.state) {
+    // var data = currentUser;
+    var {account_id, address_wallet, biography, username} = currentUser;
+  } else {
+    var {dataArtist} = location.state;
+  }
 
   useEffect(() => {
     function getListNFTById() {
       axios
-        .get(`http://localhost:8080/nfts/created-nft/${dataArtist.account_id}`)
+        .get(
+          `${BASE_URL}/nfts/created-nft/${dataArtist?.account_id || account_id}`
+        )
         .then((res) => {
           console.log(res.data);
           setListDataNFT(res.data);
@@ -414,10 +426,10 @@ const ArtistPage = () => {
 
   const handleClick = (nftID) => {
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftID}`)
       .then((res) => {
         navigate(`/nft-detail-page/${nftID}`, {
-          state: { dataNft: res.data[0] },
+          state: {dataNft: res.data[0]},
         });
         window.scrollTo(0, 0);
       })
@@ -425,6 +437,7 @@ const ArtistPage = () => {
         console.log(error);
       });
   };
+
   return (
     <PrimaryLayout>
       <ArtistStyled>
@@ -435,11 +448,16 @@ const ArtistPage = () => {
           <div className="container">
             <div className="infor_artist">
               <div className="avatar">
-                <img src={dataArtist.avatar} alt="" />
+                <img
+                  src={`${
+                    dataArtist?.avatar ? dataArtist.avatar : background1
+                  }`}
+                  alt=""
+                />
               </div>
               <div className="body_infor_artist">
                 <div className="header_body_infor_artist">
-                  <h2>{dataArtist.username}</h2>
+                  <h2>{dataArtist?.username || currentUser.username}</h2>
                   <div className="body_infor_artist_button">
                     <Button
                       img={button1}
@@ -448,7 +466,9 @@ const ArtistPage = () => {
                       padding={'15px 30px'}
                       jutifyContent={'center'}
                       textColor={colors.whiteColor}
-                      content={'0xc0E3...B79C'}
+                      content={`${
+                        dataArtist ? '0xc0E3...B79C' : address_wallet
+                      } `}
                       fontSize={'16px'}
                       fontWeight={'600'}
                     ></Button>
@@ -468,21 +488,21 @@ const ArtistPage = () => {
                 </div>
                 <div className="statistical">
                   <div className="statistical_left">
-                    <h4>{dataArtist.volume}+</h4>
+                    <h4>{dataArtist?.volume || 0}+</h4>
                     <span>Volume</span>
                   </div>
                   <div className="statistical_middle">
-                    <h4>{dataArtist.nfts_sold}+</h4>
+                    <h4>{dataArtist?.nfts_sold || 0}+</h4>
                     <span>NFTs Sold</span>
                   </div>
                   <div className="statistical_left">
-                    <h4>3000+</h4>
+                    <h4>{dataArtist?.followers || 2}+</h4>
                     <span>Followers</span>
                   </div>
                 </div>
                 <div className="bio">
                   <h5>Bio</h5>
-                  <p>{dataArtist.biography}</p>
+                  <p>{dataArtist?.biography || currentUser.biography}</p>
                 </div>
                 <div className="links">
                   <h5>Links</h5>

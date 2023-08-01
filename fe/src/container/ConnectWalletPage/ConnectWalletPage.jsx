@@ -1,15 +1,16 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { EthereumInstance } from "sdk/metamask.js";
-import background from "../../assets/ConnectWalletPage/WalletBackground.svg";
-import { Button } from "components/Button";
-import mask from "../../assets/ConnectWalletPage/Metamask.svg";
-import coin from "../../assets/ConnectWalletPage/Coinbase.svg";
-import wallet from "../../assets/ConnectWalletPage/WalletConnect.svg";
-import axios from "axios";
-import { colors } from "Global";
-import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
+import styled from 'styled-components';
+import {useState, useEffect} from 'react';
+import {EthereumInstance} from 'sdk/metamask.js';
+import background from '../../assets/ConnectWalletPage/WalletBackground.svg';
+import {Button} from 'components/Button';
+import mask from '../../assets/ConnectWalletPage/Metamask.svg';
+import coin from '../../assets/ConnectWalletPage/Coinbase.svg';
+import wallet from '../../assets/ConnectWalletPage/WalletConnect.svg';
+import axios from 'axios';
+import {colors} from 'Global';
+import {useNavigate} from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import {BASE_URL} from 'store/url';
 
 const StyledConnectWalletPage = styled.div`
   :root {
@@ -20,7 +21,7 @@ const StyledConnectWalletPage = styled.div`
   }
 
   body {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
   }
 
@@ -101,7 +102,7 @@ const StyledConnectWalletPage = styled.div`
   }
 
   .progressbar li:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 50%;
     height: 1px;
@@ -116,7 +117,7 @@ const StyledConnectWalletPage = styled.div`
 
   .progressbar li.active:before {
     background: rgb(71, 30, 84);
-    content: "✔";
+    content: '✔';
     color: #ffffff;
   }
 
@@ -280,33 +281,33 @@ const StyledConnectWalletPage = styled.div`
 `;
 
 export const ConnectWalletPage = () => {
-  const [address, setAddress] = useState(localStorage.getItem("address"));
+  const [address, setAddress] = useState(localStorage.getItem('address'));
   const [metamaskAddress, setMetamaskAddress] = useState(
-    localStorage.getItem("metamask-address")
+    localStorage.getItem('metamask-address')
   );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("metamask-address")) {
+    if (localStorage.getItem('metamask-address')) {
       EthereumInstance.getEthereumAccounts();
     }
   }, []);
   const connectMetamask = async (setMetamaskAddress) => {
     // if ()
-    if (localStorage.getItem("metamask-address")) {
+    if (localStorage.getItem('metamask-address')) {
       EthereumInstance.getEthereumAccounts();
-      const account = localStorage.getItem("metamask-address");
-      console.log("accountMEtaMask: ", account);
+      const account = localStorage.getItem('metamask-address');
+      console.log('accountMEtaMask: ', account);
 
       axios
-        .post(`http://localhost:8080/api/connect-wallet/${account}`)
+        .post(`${BASE_URL}/api/connect-wallet/${account}`)
         .then(function (response) {
-          console.log("phan hoi thanh cong login: ", response);
+          console.log('phan hoi thanh cong login: ', response);
           const cookies = new Cookies();
-          cookies.set("token", response.data.data);
+          cookies.set('token', response.data.data);
           // navigate("/login-success");
-          navigate("/", {
+          navigate('/', {
             state: {
               address_wallet: account,
             },
@@ -317,12 +318,12 @@ export const ConnectWalletPage = () => {
         });
     } else {
       const account = await EthereumInstance.connectMetaMaskWallet();
-      console.log("account: ", account);
+      console.log('account: ', account);
       setMetamaskAddress(account);
 
       if (account != null) {
         setTimeout(() => {
-          navigate("/profile-details", {
+          navigate('/profile-details', {
             state: {
               address_wallet: account[0],
             },

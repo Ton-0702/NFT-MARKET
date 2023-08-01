@@ -17,6 +17,7 @@ import axios from 'axios';
 import {useCurrentUserStore} from 'store/store';
 import {Card} from 'components/Card';
 import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 
 const auctionData = [
   {
@@ -78,8 +79,7 @@ const auctionData = [
 ];
 
 const NftPage = () => {
-  let TIME = 2000;
-  const [count, setCount] = useState(TIME); // seconds
+  const [count, setCount] = useState(); // seconds
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -98,34 +98,14 @@ const NftPage = () => {
   const [selectedClass, setSelectedClass] = useState('created');
   const [listDataNFT, setListDataNFT] = useState();
   const navigate = useNavigate();
-  console.log('dataNft: ', dataNft);
+  // console.log('dataNft: ', dataNft);
   const currentUser = useCurrentUserStore((state) => state.currentUser);
 
   useEffect(() => {
-    // get detail Page
-    // async function getDetail() {
-    //   try {
-    //     const response = await axios.get(
-    //       `http://localhost:8080/nfts/nft-detail-page/${dataNft.nft_id}`
-    //       // `http://localhost:8080/nfts/nft-detail-page/${13}`
-    //     );
-    //     console.log(response.data[0]);
-    //     setDataNftPage(response.data[0]);
-    //     const nftId = response.data[0].nft_id;
-    //     // const nft_name=response.data[0].nft_name;
-    //     // console.log("nft name: ",nft_name);
-    //     console.log('nftId: ', nftId);
-
-    //     setNftId(nftId);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-
     // getListNFTbyId
     function getListNFTById() {
       axios
-        .get(`http://localhost:8080/nfts/created-nft/${dataNft.account_id}`)
+        .get(`${BASE_URL}/nfts/created-nft/${dataNft.account_id}`)
         // .get(`http://localhost:8080/nfts/created-nft/${13}`)
         .then((res) => {
           console.log(res.data);
@@ -139,6 +119,27 @@ const NftPage = () => {
     // getDetail();
   }, []);
 
+  const getHighestBidCompleted = async () => {
+    // console.log('getCompleteTransaction nftID: ', dataNft.nft_id);
+
+    try {
+      if (dataNft.nft_id) {
+        await axios
+          .get(
+            `https://danielaws.tk/group1/transaction/historyHighestBid/${dataNft.nft_id}`
+          )
+          .then((res) => {
+            const data = res.data[0];
+            alert(
+              `the user ${data.username} has won with ${data.highest_bid} ETH`
+            );
+          });
+      }
+    } catch (error) {
+      console.log('getHighestBidCompleted Err: ', error);
+    }
+  };
+
   // get day and time end bid
   useEffect(() => {
     // console.log('nftId endbids', dataNft.nft_id);
@@ -146,18 +147,18 @@ const NftPage = () => {
       try {
         if (dataNft.nft_id) {
           const response = await axios.get(
-            `http://localhost:8080/nfts/date-start-end-bid/${dataNft.nft_id}`
+            `${BASE_URL}/nfts/date-start-end-bid/${dataNft.nft_id}`
           );
           // console.log(response);
           const data = response.data;
-          console.log('timeEndBid: ', data);
+          // console.log('timeEndBid: ', data);
           const secondsRemain = Number(data.totalSecondRemain);
           if (secondsRemain <= 86000) {
             setCount(secondsRemain);
           } else {
             setCount(0);
           }
-          console.log('secondsRemain:', secondsRemain);
+          // console.log('secondsRemain:', secondsRemain);
         }
       } catch (error) {
         console.error(error);
@@ -172,11 +173,11 @@ const NftPage = () => {
       try {
         if (dataNft.nft_id) {
           const response = await axios.get(
-            `http://localhost:8080/transaction/history/${dataNft.nft_id}`
+            `${BASE_URL}/transaction/history/${dataNft.nft_id}`
           );
           // console.log(response);
           const data = response.data;
-          console.log('dataTransaction: ', data);
+          // console.log('dataTransaction: ', data);
           setTransactions(data);
         }
       } catch (error) {
@@ -184,7 +185,7 @@ const NftPage = () => {
       }
     }
     historyTransaction();
-  }, [dataNft.nft_id]);
+  }, [dataNft.nft_id, count]);
 
   // handleClickActiveClass
   const handleClickActiveClass = (activeClass) => {
@@ -202,7 +203,7 @@ const NftPage = () => {
   // handleClick
   const handleClick = (nftID) => {
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftID}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftID}`)
       .then((res) => {
         navigate(`/nft-detail-page/${nftID}`, {
           state: {dataNft: res.data[0]},
@@ -229,9 +230,10 @@ const NftPage = () => {
           formData.append('nft_id', dataNft.nft_id);
           try {
             axios.post(
-              `http://localhost:8080/transaction/complete-transaction`,
+              `${BASE_URL}/transaction/complete-transaction`,
               formData
             );
+            getHighestBidCompleted();
             console.log('Transaction success');
           } catch (error) {
             console.log('transaction end bid: ', error);
@@ -271,7 +273,7 @@ const NftPage = () => {
     formData.append('highest_bid', inputValue);
     async function postTransactionBid() {
       axios
-        .post(`http://localhost:8080/transaction/create`, formData)
+        .post(`${BASE_URL}/transaction/create`, formData)
         .then(function (response) {
           console.log(response);
         })
@@ -364,7 +366,7 @@ const NftPage = () => {
     <PrimaryLayout>
       <NftPageStyled className="nft-page">
         <div className="nft-page-wrap">
-          <img src={dataNft.image} alt="" className="banner" />
+          <img src={dataNft.image || banner} alt="" className="banner" />
           <div className="container nft-page-content">
             <div className="content-left">
               <div className="content-left-wrap">
@@ -378,7 +380,7 @@ const NftPage = () => {
                   <div className="content-created-item">
                     <div className="create-by-title">Created By</div>
                     <div className="created-detail">
-                      <img src={dataNft.avatar} alt="" />
+                      <img src={dataNft.avatar || avatar} alt="" />
                       <span className="create-by">
                         {dataNft.username || currentUser.username || 'Orbitian'}
                       </span>

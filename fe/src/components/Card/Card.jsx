@@ -387,6 +387,7 @@ const Card = ({
       <CardTrendingCollectionStyled>
         <div className="header_card">
           <div className="list_image">
+            {type2}
             {/* {img_product.length > 4 ? ReactHtmlParser(type2) : type2} */}
           </div>
         </div>

@@ -9,7 +9,8 @@ import cate5a from '../../assets/HomePage/Categories/cate5a.png';
 
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Navigate, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {BASE_URL} from 'store/url';
 const CreatedMarketPlaceData = [
   {
     type: 'DiscoverMore',
@@ -307,7 +308,7 @@ const MarketPlace = () => {
       // console.log('oke');
       try {
         const response = await axios.get(
-          `http://localhost:8080/nfts/search-nft/${resultSearch}`
+          `${BASE_URL}/nfts/search-nft/${resultSearch}`
         );
         console.log(response.data);
         setDataMarketPlacePage(response.data);
@@ -359,7 +360,7 @@ const MarketPlace = () => {
   const handleClickDetailPage = (nftId) => {
     console.log('nftID ' + nftId);
     axios
-      .get(`http://localhost:8080/nfts/nft-detail-page/${nftId}`)
+      .get(`${BASE_URL}/nfts/nft-detail-page/${nftId}`)
       .then((res) => {
         setNftId(res.data);
         console.log(res.data);
